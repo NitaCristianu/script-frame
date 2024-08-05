@@ -10,8 +10,11 @@ def main():
 
     app = App(screen)
 
+    initialRenders = 0
+
     while True:
-        for event in pygame.event.get():
+        events = pygame.event.get()
+        for event in events:
             # Default events
             if event.type == pygame.QUIT:
                 pygame.quit()
@@ -20,10 +23,18 @@ def main():
                 App.width = event.w
                 App.height = event.h
                 screen = pygame.display.set_mode((event.w, event.h), pygame.RESIZABLE)
-            app.processEvent(event)
-            
+                app.screen = pg.Surface((event.w, event.h), pg.SRCALPHA)
+                app.update()
+                app.draw()
+        app.processEvents(events)
+
         app.update()
-        app.draw()
+        if initialRenders < 2:
+            initialRenders += 1
+            app.draw()
+        # app.draw()
+
 
 if __name__ == "__main__":
     main()
+ 
