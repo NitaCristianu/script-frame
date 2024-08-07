@@ -1,0 +1,14 @@
+def hex_to_rgb(hex_color):
+    hex_color = hex_color.lstrip('#')
+    
+    # Determine if the hex color includes alpha
+    if len(hex_color) == 6:
+        # Convert the hex string to an integer tuple (R, G, B)
+        rgb_tuple = tuple(int(hex_color[i:i+2], 16) for i in (0, 2, 4))
+        return rgb_tuple
+    elif len(hex_color) == 8:
+        # Convert the hex string to an integer tuple (R, G, B, A)
+        rgba_tuple = tuple(int(hex_color[i:i+2], 16) for i in (0, 2, 4, 6))
+        return rgba_tuple
+    else:
+        return hex_color

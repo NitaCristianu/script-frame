@@ -102,6 +102,13 @@ class Area:
         for child in self.children:
             child.update()
 
+    def drawContent(self):
+        """
+        draws only the content whithout children
+        """
+        pass
+
     def draw(self):
+        self.drawContent()
         for child in self.children:
             child.draw()

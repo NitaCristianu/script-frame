@@ -38,14 +38,14 @@ class App:
     def __setMousePos(self):
         self.mpos = pg.mouse.get_pos()
 
-    def relative(self, numcode: str | int | float,index = 0, area: Area =None) -> int:
+    def relative(self, numcode: str | int | float, index=0, area: Area = None) -> int:
         """
         Returns the number relative to the screen.
         Example:
         0.4x represents 40% of the x axis.
         0.2y is 20% of y axis.
-        
-        
+
+
         index
         0 - position x
         1 - position y
@@ -55,25 +55,25 @@ class App:
         if isinstance(numcode, (float | int)):
             return int(numcode)
 
-        
         if area and hasattr(area, "parent") and area.parent:
             # replace relative to parent
             # scaled to parent width and height
             # offset parent position
-            
-            numcode = numcode.replace("x", f" * {self.relative(area.parent.w,index, area.parent)}  ") 
-            numcode = numcode.replace("y", f" * {self.relative(area.parent.h,index, area.parent)}")
-             
+
+            numcode = numcode.replace(
+                "x", f" * {self.relative(area.parent.w, index, area.parent)}  ")
+            numcode = numcode.replace(
+                "y", f" * {self.relative(area.parent.h, index, area.parent)}")
+
             if (index == 0):
-                numcode += f" + {self.relative(area.parent.x,0, area.parent)}"
+                numcode += f" + {self.relative(area.parent.x, 0, area.parent)}"
             if (index == 1):
-                numcode += f" + {self.relative(area.parent.y,1, area.parent)}"
+                numcode += f" + {self.relative(area.parent.y, 1, area.parent)}"
 
         else:
             # the regular case using screen position
             numcode = numcode.replace("x", f" * {self.width} ")
             numcode = numcode.replace("y", f" * {self.height} ")
-
 
         # Add more validation to avoid malicious code execution via eval
         allowed_chars = "0123456789. *+-/"

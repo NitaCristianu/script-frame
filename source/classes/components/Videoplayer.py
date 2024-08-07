@@ -14,5 +14,5 @@ class VideoPlayer(Tab):
     def update(self):
         super().update()
 
-    def draw(self):
-        super().draw()
+    def drawContent(self):
+        super().drawContent()

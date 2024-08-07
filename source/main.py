@@ -5,6 +5,7 @@ from config.consts import *
 
 def main():
     pygame.init()
+    pygame.font.init()
     screen = pygame.display.set_mode(INITIAL_VIEWPORT_SIZE, pygame.RESIZABLE)
     pygame.display.set_caption(NAME)
 
@@ -23,7 +24,7 @@ def main():
                 App.width = event.w
                 App.height = event.h
                 screen = pygame.display.set_mode((event.w, event.h), pygame.RESIZABLE)
-                app.screen = pg.Surface((event.w, event.h), pg.SRCALPHA)
+                app.screen = pg.Surface((event.w, event.h), pg.SRCALPHA, 32)
                 app.update()
                 app.draw()
         app.processEvents(events)
@@ -33,6 +34,7 @@ def main():
             initialRenders += 1
             app.draw()
         # app.draw()
+
 
 
 if __name__ == "__main__":
