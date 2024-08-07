@@ -109,9 +109,11 @@ class App:
         self.D.update()
         self.deltatime = self.clock.tick(30)
 
-    def refresh(self) -> None:
+    def refresh(self, section: pg.Rect | None = None ) -> None:
+        if section == None: section = pg.Rect(0, 0, self.width, self.height)
+        
         self.display.blit(self.screen, (0, 0))
-        pg.display.flip()
+        pg.display.update(section)
 
     def draw(self) -> None:
         self.A.draw()

@@ -41,7 +41,7 @@ class Tab(Area):
         if self.detectHover and self.onHoverModifiedColor != 0:
             if self.onhoverStart or self.onHoverEnd or self.mup or self.mdown:
                 self.draw()
-                self.app.refresh()
+                self.app.refresh(self.rect)
 
     def setBorders(self, borderValue: int):
         self.b0 = borderValue

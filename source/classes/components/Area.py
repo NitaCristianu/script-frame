@@ -30,7 +30,7 @@ class Area:
         self,
         dimension: dimension_type,
         app: any,  # this is App type, but can't write specifically due to circlular import
-        detectHover = False
+        detectHover=False
     ) -> None:
         # Give unique id and accces to the main screen
         self.id = uuid4()
@@ -59,11 +59,15 @@ class Area:
         return False
 
     @property
+    def rect(self):
+        return pg.Rect(self.x, self.y, self.w, self.h)
+
+    @property
     def mup(self):
         if self.isHoveredCurrently and not self.app.mbuttons[0] and self.app.oldmbuttons[0]:
             return True
         return False
-            
+
     @property
     def mdown(self):
         if self.isHoveredCurrently and self.app.mbuttons[0] and not self.app.oldmbuttons[0]:
@@ -73,13 +77,15 @@ class Area:
     @property
     def onhoverStart(self):
         if not self.detectHover:
-            print(f"onHoverStart can't be used if area's detectHover is false\nArea ID : {self.id}")
+            print(f"onHoverStart can't be used if area's detectHover is false\nArea ID : {
+                  self.id}")
         return self.hovered and not self.oldhovered and self.detectHover
 
     @property
     def onHoverEnd(self):
         if not self.detectHover:
-            print(f"onHoverEnd can't be used if area's detectHover is false\nArea ID : {self.id}")
+            print(f"onHoverEnd can't be used if area's detectHover is false\nArea ID : {
+                  self.id}")
         return not self.hovered and self.oldhovered and self.detectHover
 
     def isRelative(self):
