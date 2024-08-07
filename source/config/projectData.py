@@ -7,4 +7,4 @@ class Element:
         self.name = name
 
 
-elements = [Element("A")]
+elements = [Element("This"), Element("is"), Element("ScriptFrame")]

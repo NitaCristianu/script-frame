@@ -22,27 +22,30 @@ class Area:
 
     mpos: tuple[int, int]
     hoverable: bool
+    isHoveredCurrently: bool
     relative: bool
+    detectHover: bool
 
     def __init__(
         self,
         dimension: dimension_type,
         app: any,  # this is App type, but can't write specifically due to circlular import
+        detectHover = False
     ) -> None:
         # Give unique id and accces to the main screen
         self.id = uuid4()
         self.app = app
-
         self.x = self.y = self.w = self.h = 0
         self.mpos = 0
-        self.relative = self.hoverable = False
+        self.relative = self.hoverable = self.hovered = self.oldhovered = self.detectHover = False
         self.children = []
+        self.detectHover = detectHover
         self.parent = None
 
         self.computeDimension(dimension)
 
     @property
-    def hovered(self):
+    def isHoveredCurrently(self):
         if not self.hoverable:
             return self.hoverable
         (x, y) = self.app.mpos
@@ -50,10 +53,34 @@ class Area:
 
     @property
     def clicked(self):
-        if self.hovered and self.app.mup:
+        if self.isHoveredCurrently and self.app.mup:
             # self.app.draw()
             return True
         return False
+
+    @property
+    def mup(self):
+        if self.isHoveredCurrently and not self.app.mbuttons[0] and self.app.oldmbuttons[0]:
+            return True
+        return False
+            
+    @property
+    def mdown(self):
+        if self.isHoveredCurrently and self.app.mbuttons[0] and not self.app.oldmbuttons[0]:
+            return True
+        return False
+
+    @property
+    def onhoverStart(self):
+        if not self.detectHover:
+            print(f"onHoverStart can't be used if area's detectHover is false\nArea ID : {self.id}")
+        return self.hovered and not self.oldhovered and self.detectHover
+
+    @property
+    def onHoverEnd(self):
+        if not self.detectHover:
+            print(f"onHoverEnd can't be used if area's detectHover is false\nArea ID : {self.id}")
+        return not self.hovered and self.oldhovered and self.detectHover
 
     def isRelative(self):
         return any(isinstance(item, str) for item in self.dimension)
@@ -65,10 +92,10 @@ class Area:
         dimension = self.dimension
 
         if self.app:
-            self.x = self.app.relative(str(dimension[0]),0, self)
-            self.y = self.app.relative(str(dimension[1]),1, self)
-            self.w = self.app.relative(str(dimension[2]),2, self)
-            self.h = self.app.relative(str(dimension[3]),3, self)
+            self.x = self.app.relative(str(dimension[0]), 0, self)
+            self.y = self.app.relative(str(dimension[1]), 1, self)
+            self.w = self.app.relative(str(dimension[2]), 2, self)
+            self.h = self.app.relative(str(dimension[3]), 3, self)
         else:
             self.x = self.y = self.w = self.h = 0
 
@@ -101,6 +128,10 @@ class Area:
 
         for child in self.children:
             child.update()
+
+        if self.detectHover:
+            self.oldhovered = self.hovered
+            self.hovered = self.isHoveredCurrently
 
     def drawContent(self):
         """

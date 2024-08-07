@@ -52,8 +52,10 @@ class Text(Tab):
                  fontColor="#ececec",
                  padding=0,
                  autoHeight=True,
+                 detectHover = False,
+                 onHoverModifiedColor = 0.3,
                  ) -> None:
-        super().__init__(dimension, app, color, borderValue)
+        super().__init__(dimension, app, color, borderValue, detectHover=detectHover, onHoverModifiedColor=onHoverModifiedColor)
         self.setFont(font, italic, weight, fontHeight)
         self.text = text
         self.fontColor = fontColor

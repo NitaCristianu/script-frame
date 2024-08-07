@@ -2,7 +2,7 @@ import pygame as pg
 from uuid import uuid4
 from classes.components.Area import *
 from typing import Any, List, Optional
-from utils.colors import hex_to_rgb
+from utils.colors import hex_to_rgb, modifyRGB
 
 
 class Tab(Area):
@@ -19,22 +19,29 @@ class Tab(Area):
         app: any,
         color: str | tuple[int, int, int, int] = "#ffffff",
         borderValue=0,
+        detectHover = False,
+        onHoverModifiedColor = 0.3,
     ) -> None:
-        super().__init__(dimension, app)
+        super().__init__(dimension, app, detectHover=detectHover)
         self.b0 = borderValue
         self.b1 = borderValue
         self.b2 = borderValue
         self.b3 = borderValue
+        self.onHoverModifiedColor = onHoverModifiedColor
         self.color = color
         self.parsedColor = hex_to_rgb(color)
 
     def __setattr__(self, name: str, value: Any) -> None:
-        if (name == "color"):
+        if name == "color":
             self.parsedColor = hex_to_rgb(value)
         return super().__setattr__(name, value)
 
     def update(self):
         super().update()
+        if self.detectHover and self.onHoverModifiedColor != 0:
+            if self.onhoverStart or self.onHoverEnd or self.mup or self.mdown:
+                self.draw()
+                self.app.refresh()
 
     def setBorders(self, borderValue: int):
         self.b0 = borderValue
@@ -44,11 +51,16 @@ class Tab(Area):
 
     def drawContent(self):
         super().drawContent()
-        if (self.color == "#00000000"): return
         surface = pg.Surface((self.w, self.h), pg.SRCALPHA)
+
+        color = self.parsedColor
+        if self.hovered:
+            color = modifyRGB(color, self.onHoverModifiedColor)
+        if self.mdown:
+            color = modifyRGB(color, self.onHoverModifiedColor*1.2)
         pg.draw.rect(
             surface,
-            self.parsedColor,
+            color,
             pg.Rect(0, 0, self.w, self.h),
             0,
             -1,

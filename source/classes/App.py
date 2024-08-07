@@ -18,6 +18,8 @@ class App:
 
     clock = pg.time.Clock()
     deltatime = 0  # time between 2 renders
+    mbuttons = (False, False, False)
+    oldmbuttons = (False, False, False)
 
     mup = False
 
@@ -37,6 +39,8 @@ class App:
 
     def __setMousePos(self):
         self.mpos = pg.mouse.get_pos()
+        self.oldmbuttons = self.mbuttons
+        self.mbuttons = pg.mouse.get_pressed()
 
     def relative(self, numcode: str | int | float, index=0, area: Area = None) -> int:
         """
@@ -105,10 +109,13 @@ class App:
         self.D.update()
         self.deltatime = self.clock.tick(30)
 
+    def refresh(self) -> None:
+        self.display.blit(self.screen, (0, 0))
+        pg.display.flip()
+
     def draw(self) -> None:
         self.A.draw()
         self.B.draw()
         self.C.draw()
         self.D.draw()
-        self.display.blit(self.screen, (0, 0))
-        pg.display.flip()
+        self.refresh()
