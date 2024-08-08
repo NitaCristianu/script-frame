@@ -1,11 +1,11 @@
 import pygame as pg
 from uuid import uuid4
-from classes.components.Area import *
+from classes.components.core.Area import *
 from typing import Any, List, Optional
 from utils.colors import hex_to_rgb, modifyRGB
 
 
-class Tab(Area):
+class Rect(Area):
 
     color: pg.Color
     b0: int
@@ -51,7 +51,8 @@ class Tab(Area):
 
     def drawContent(self):
         super().drawContent()
-        surface = pg.Surface((self.w, self.h), pg.SRCALPHA)
+        x,y,w,h = max(self.x, 0), max(self.y, 0), max(self.w, 0), max(self.h, 0)
+        surface = pg.Surface((w, h), pg.SRCALPHA)
 
         color = self.parsedColor
         if self.hovered:
@@ -61,7 +62,7 @@ class Tab(Area):
         pg.draw.rect(
             surface,
             color,
-            pg.Rect(0, 0, self.w, self.h),
+            pg.Rect(0, 0, w, h),
             0,
             -1,
             self.b0,
@@ -69,4 +70,4 @@ class Tab(Area):
             self.b2,
             self.b3,
         )
-        self.app.screen.blit(surface, (self.x, self.y))
+        self.app.screen.blit(surface, (x, y))

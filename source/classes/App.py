@@ -1,10 +1,10 @@
 import pygame as pg
-from classes.components.Tab import *
+from classes.components.core.Rect import *
 from config.consts import INITIAL_WIDTH, INITIAL_HEIGHT
-from classes.components.ElementsTab import ElementsTab
-from classes.components.Videoplayer import VideoPlayer
-from classes.components.BottomProps import BottomPropsTab
-from classes.components.RightProps import RightPropsTab
+from classes.components.mains.ElementsTab import ElementsTab
+from classes.components.mains.Videoplayer import VideoPlayer
+from classes.components.mains.BottomProps import BottomPropsTab
+from classes.components.mains.RightProps import RightPropsTab
 
 
 class App:
@@ -20,13 +20,13 @@ class App:
     deltatime = 0  # time between 2 renders
     mbuttons = (False, False, False)
     oldmbuttons = (False, False, False)
-
     mup = False
+    resize = True
 
-    A: Tab
-    B: Tab
-    C: Tab
-    D: Tab
+    A: Rect
+    B: Rect
+    C: Rect
+    D: Rect
 
     def __init__(self, screen: pg.Surface) -> None:
         self.display = screen
@@ -36,6 +36,7 @@ class App:
         self.C = BottomPropsTab(("0.25x", "0.5y", "0.5x", "0.5y"), self)
         self.D = RightPropsTab(("0.75x", 0, "0.25x", "1y"), self)
         self.__setMousePos()
+        self.resize = True
 
     def __setMousePos(self):
         self.mpos = pg.mouse.get_pos()
@@ -108,6 +109,7 @@ class App:
         self.C.update()
         self.D.update()
         self.deltatime = self.clock.tick(30)
+        self.resize = False
 
     def refresh(self, section: pg.Rect | None = None ) -> None:
         if section == None: section = pg.Rect(0, 0, self.width, self.height)

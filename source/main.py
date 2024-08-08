@@ -25,6 +25,7 @@ def main():
                 App.height = event.h
                 screen = pygame.display.set_mode((event.w, event.h), pygame.RESIZABLE)
                 app.screen = pg.Surface((event.w, event.h), pg.SRCALPHA, 32)
+                app.resize = True
                 app.update()
                 app.draw()
         app.processEvents(events)
@@ -33,7 +34,6 @@ def main():
         if initialRenders < 2:
             initialRenders += 1
             app.draw()
-        # app.draw()
 
 
 

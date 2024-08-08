@@ -28,8 +28,8 @@ class Area:
 
     def __init__(
         self,
-        dimension: dimension_type,
-        app: any,  # this is App type, but can't write specifically due to circlular import
+        dimension: dimension_type = (0, 0, 0, 0),
+        app: any = None,  # this is App type, but can't write specifically due to circlular import
         detectHover=False
     ) -> None:
         # Give unique id and accces to the main screen

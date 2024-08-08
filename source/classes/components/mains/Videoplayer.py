@@ -1,16 +1,15 @@
-from classes.components.Tab import Tab
+from classes.components.core.Rect import Rect
 from typing import List, Optional
-from classes.components.Area import *
+from classes.components.core.Area import *
 
-class BottomPropsTab(Tab):
+class VideoPlayer(Rect):
     def __init__(
         self,
         dimension: tuple[int, int, int, int],
         app: any,
     ) -> None:
         super().__init__(dimension, app)
-        self.add_child(Tab((0, '50', '1x', 50), app, color="green"))
-        self.color = "#1e1e24"
+        self.color = "#ffffff"
 
     def update(self):
         super().update()

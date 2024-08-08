@@ -1,35 +1,39 @@
 import pygame as pg
-from classes.components.Tab import *
+import os
+from classes.components.core.Rect import *
 
 FONTS = {
     'Poppins': {
         'italic': {
-            'black': "Z:\\Projects\\Video-Editor\\assets\\font\\blackitalic.ttf",
-            'extrabold': "Z:\\Projects\\Video-Editor\\assets\\font\\extrabolditalic.ttf",
-            'bold': "Z:\\Projects\\Video-Editor\\assets\\font\\bolditalic.ttf",
-            'semibold': "Z:\\Projects\\Video-Editor\\assets\\font\\semibolditalic.ttf",
-            'medium': "Z:\\Projects\\Video-Editor\\assets\\font\\mediumitalic.ttf",
-            'normal': "Z:\\Projects\\Video-Editor\\assets\\font\\italic.ttf",
-            'thin': "Z:\\Projects\\Video-Editor\\assets\\font\\thinitalic.ttf",
-            'light': "Z:\\Projects\\Video-Editor\\assets\\font\\lightitalic.ttf",
-            'extralight': "Z:\\Projects\\Video-Editor\\assets\\font\\extralightitalic.ttf",
+            'black': r"assets\font\blackitalic.ttf",
+            'extrabold': r"assets\font\extrabolditalic.ttf",
+            'bold': r"assets\font\bolditalic.ttf",
+            'semibold': r"assets\font\semibolditalic.ttf",
+            'medium': r"assets\font\mediumitalic.ttf",
+            'normal': r"assets\font\italic.ttf",
+            'thin': r"assets\font\thinitalic.ttf",
+            'light': r"assets\font\lightitalic.ttf",
+            'extralight': r"assets\font\extralightitalic.ttf",
         },
         'normal': {
-            'black': "Z:\\Projects\\Video-Editor\\assets\\font\\black.ttf",
-            'extrabold': "Z:\\Projects\\Video-Editor\\assets\\font\\extrabold.ttf",
-            'bold': "Z:\\Projects\\Video-Editor\\assets\\font\\bold.ttf",
-            'semibold': "Z:\\Projects\\Video-Editor\\assets\\font\\semibold.ttf",
-            'medium': "Z:\\Projects\\Video-Editor\\assets\\font\\medium.ttf",
-            'normal': "Z:\\Projects\\Video-Editor\\assets\\font\\regular.ttf",
-            'thin': "Z:\\Projects\\Video-Editor\\assets\\font\\thin.ttf",
-            'light': "Z:\\Projects\\Video-Editor\\assets\\font\\light.ttf",
-            'extralight': "Z:\\Projects\\Video-Editor\\assets\\font\\extralight.ttf",
+            'black': r"assets\font\black.ttf",
+            'extrabold': r"assets\font\extrabold.ttf",
+            'bold': r"assets\font\bold.ttf",
+            'semibold': r"assets\font\semibold.ttf",
+            'medium': r"assets\font\medium.ttf",
+            'normal': r"assets\font\regular.ttf",
+            'thin': r"assets\font\thin.ttf",
+            'light': r"assets\font\light.ttf",
+            'extralight': r"assets\font\extralight.ttf",
+
         }
     }
 }
+print(os.getcwd())
+print(os.path.relpath(FONTS['Poppins']['normal']['normal']))
 
 
-class Text(Tab):
+class Text(Rect):
 
     text: str
     align: str
@@ -52,10 +56,11 @@ class Text(Tab):
                  fontColor="#ececec",
                  padding=0,
                  autoHeight=True,
-                 detectHover = False,
-                 onHoverModifiedColor = 0.3,
+                 detectHover=False,
+                 onHoverModifiedColor=0.3,
                  ) -> None:
-        super().__init__(dimension, app, color, borderValue, detectHover=detectHover, onHoverModifiedColor=onHoverModifiedColor)
+        super().__init__(dimension, app, color, borderValue,
+                         detectHover=detectHover, onHoverModifiedColor=onHoverModifiedColor)
         self.setFont(font, italic, weight, fontHeight)
         self.text = text
         self.fontColor = fontColor
