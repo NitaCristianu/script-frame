@@ -15,6 +15,8 @@ class Image(Rect):
                  pngSource="",
                  forceWidth=False,
                  forceHeight=False,
+                 centerImage=False,
+                 scale=(1, 1)
                  ) -> None:
         super().__init__(
             dimension,
@@ -24,13 +26,15 @@ class Image(Rect):
             detectHover,
             onHoverModifiedColor,
         )
+        self.centerImage = centerImage
+        self.scale = scale
         self.forceWidth = forceWidth
         self.forceHeight = forceHeight
         self.pngSource = pngSource
         self.parsedSVGcolor = (0, 0, 0, 0)
         self.image = self.getImage()
-        self.width = 0 # the actual width
-        self.height = 0 # the actual height
+        self.width = 0  # the actual width
+        self.height = 0  # the actual height
 
     def getImage(self):
         self.computeDimension()
@@ -42,27 +46,29 @@ class Image(Rect):
             return pg.transform.scale(
                 pg.image.load("assets\\images\\" +
                               self.pngSource).convert_alpha(),
-                (self.w, self.h)
+                (self.w * self.scale[0], self.h * self.scale[1])
             )
         if self.forceWidth:
             image = pg.image.load("assets\\images\\" +
                                   self.pngSource).convert_alpha()
             original_width, original_height = image.get_size()
-            self.height = max(int(self.w * (original_height / original_width)), 0)
+            self.height = max(
+                int(self.w * (original_height / original_width)), 0)
             self.width = max(0, self.w)
             return pg.transform.scale(
                 image,
-                (self.width, self.height)
+                (self.width * self.scale[0], self.height * self.scale[1])
             )
         if self.forceHeight:
             image = pg.image.load("assets\\images\\" +
                                   self.pngSource).convert_alpha()
             original_width, original_height = image.get_size()
-            self.width = max(int(self.h * (original_width / original_height)), 0)
+            self.width = max(
+                int(self.h * (original_width / original_height)), 0)
             self.height = max(self.h, 0)
             return pg.transform.scale(
                 image,
-                (self.width, self.height)
+                (self.width*self.scale[0], self.height*self.scale[1])
             )
 
     def update(self):
@@ -72,12 +78,27 @@ class Image(Rect):
 
     def drawContent(self):
         super().drawContent()
-        b0,b1,b2,b3 = self.b0, self.b1, self.b2, self.b3
+        b0, b1, b2, b3 = self.b0, self.b1, self.b2, self.b3
+        isCentered = self.centerImage
         if b0 > 0 and b1 > 0 and b2 > 0 and b3 > 0:
-            cornered_surface = pg.Surface((self.width, self.height), pg.SRCALPHA)
-            
-            pg.draw.rect(cornered_surface, (255, 255, 255, 255), pg.Rect(0, 0, self.width, self.height), 0, -1, b0, b1, b2, b3)
-            cornered_surface.blit(self.image, (0, 0), special_flags=pg.BLEND_RGB_MULT)
+            cornered_surface = pg.Surface(
+                (self.width, self.height), pg.SRCALPHA)
+
+            pg.draw.rect(cornered_surface, (255, 255, 255, 255), pg.Rect(
+                0, 0, self.width, self.height), 0, -1, b0, b1, b2, b3)
+            image_rect = self.image.get_rect(
+                center=(self.x + self.w//2, self.y + self.h//2))
+            if self.centerImage:
+                cornered_surface.blit(
+                    self.image, image_rect.topleft, special_flags=pg.BLEND_RGB_MULT)
+            else:
+                cornered_surface.blit(self.image, (0, 0),
+                                      special_flags=pg.BLEND_RGB_MULT)
             self.app.screen.blit(cornered_surface, (self.x, self.y))
         else:
-            self.app.screen.blit(self.image, (self.x, self.y))
+            if self.centerImage:
+                image_rect = self.image.get_rect(
+                    center=(self.x + self.w//2, self.y + self.h//2))
+                self.app.screen.blit(self.image, image_rect.topleft)
+            else:
+                self.app.screen.blit(self.image, (self.x, self.y))

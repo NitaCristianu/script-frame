@@ -29,8 +29,6 @@ FONTS = {
         }
     }
 }
-print(os.getcwd())
-print(os.path.relpath(FONTS['Poppins']['normal']['normal']))
 
 
 class Text(Rect):
@@ -84,9 +82,11 @@ class Text(Rect):
         h = self.autoHeight and self.fontHeight or self.h
         if (self.align == 'center'):
             text_rect = text_surface.get_rect(
-                center=((self.x + (self.x + self.w))/2, (self.y + self.y + h)/2))
+                center=((self.x + self.w//2, self.y + h//2))
+            )
         else:
             text_rect = text_surface.get_rect(
-                topleft=(self.x + self.padding, self.y+h/2 - self.fontHeight/1.5)
+                topleft=(self.x + self.padding, self.y +
+                         h/2 - self.fontHeight/1.5)
             )
         self.app.screen.blit(text_surface, text_rect)

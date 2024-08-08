@@ -15,7 +15,7 @@ class ElementsTab(Rect):
     page = 0
     elements_per_page = 0
     num_of_pages = 0
-    
+
     leftArrow = None
     rightArrow = None
     createButton = None
@@ -40,7 +40,7 @@ class ElementsTab(Rect):
         pad = self.pad
         self.children[0].clearChildren()
         self.app.refresh()
-        maxheight = self.h + self.y - pad * 2 - 50
+        maxheight = self.h + self.y - pad * 2 - 65
         self.elements_per_page = 0
         index = 0
         while True:
@@ -50,7 +50,7 @@ class ElementsTab(Rect):
                 self.elements_per_page = index
                 break
             index += 1
-        self.num_of_pages = floor(len(elements) / self.elements_per_page) 
+        self.num_of_pages = floor(len(elements) / self.elements_per_page)
         self.page = min(self.page, self.num_of_pages)
         firstElement = self.page*self.elements_per_page
         lastElement = min(firstElement + self.elements_per_page, len(elements))
@@ -81,9 +81,10 @@ class ElementsTab(Rect):
 
             ))
             self.children[0].add_child([text])
+
+        top = maxheight - pad + 20
+        height = abs(top - maxheight) + 45
         if (self.elements_per_page < len(elements)):
-            top = max(y + 50 + pad, maxheight - 25)
-            height = abs(top - maxheight) + 50
             dimension = (pad*2, top, (self.w-pad*6) /
                          3, height)
 
@@ -110,39 +111,84 @@ class ElementsTab(Rect):
 
             ))
 
-            dimension = (pad*4 + (self.w-pad*6)/3*2, top, (self.w-pad*6) /
-                         3, height)
-
-            self.children[0].add_child(Rect(
-                dimension=dimension,
-                app=self.app,
-                color="#222221",
-                borderValue=8,
-                detectHover=True,
-                onHoverModifiedColor=0.07
-
-            ))
-
             self.leftArrow = self.children[0].children[leftArrowIndex]
             self.rightArrow = self.children[0].children[leftArrowIndex + 1]
-            self.createButton = self.children[0].children[leftArrowIndex + 2]
+
+            self.rightArrow.add_child(Image(
+                (self.rightArrow.dimension[0], self.rightArrow.dimension[1],
+                 self.rightArrow.dimension[2], self.rightArrow.dimension[3]),
+                self.app,
+                pngSource="right.png",
+                forceHeight=True,
+                centerImage=True,
+                scale=(0.8, 0.8)
+            ))
+            self.leftArrow.add_child(Image(
+                (self.leftArrow.dimension[0], self.leftArrow.dimension[1],
+                 self.leftArrow.dimension[2], self.leftArrow.dimension[3]),
+                self.app,
+                pngSource="left.png",
+                forceHeight=True,
+                centerImage=True,
+                scale=(0.8, 0.8)
+            ))
         else:
             self.leftArrow = None
             self.rightArrow = None
-            self.createButton = None
+
+        createbuttonIndex = len(self.children[0].children)
+        if self.leftArrow:
+            dimension = (pad*4 + (self.w-pad*6)/3*2, top, (self.w-pad*6) /
+                         3, height)
+        else:
+            dimension = (pad*2, top, self.w-pad*4, height)
+
+        self.children[0].add_child(Rect(
+            dimension=dimension,
+            app=self.app,
+            color="#222221",
+            borderValue=8,
+            detectHover=True,
+            onHoverModifiedColor=0.07
+
+        ))
+        self.createButton = self.children[0].children[createbuttonIndex]
+        if not self.leftArrow:
+            self.createButton.add_child(
+                Text(
+                    self.createButton.dimension,
+                    self.app,
+                    text="Create",
+                    padding= 50,
+                    autoHeight=False,
+                    align="center",
+                    weight='bold',
+                    fontHeight= 30,
+                )
+            )
+        else:
+            self.createButton.add_child(Image(
+                self.createButton.dimension,
+                self.app,
+                pngSource="create.png",
+                forceHeight=True,
+                centerImage=True,
+                scale=(0.5, 0.5)
+            ))
+
         self.draw()
         self.app.refresh()
 
     def update(self):
         super().update()
-        
+
         if self.rightArrow and self.rightArrow.clicked:
             self.page = min(self.page+1, self.num_of_pages)
             self.setElements()
         if self.leftArrow and self.leftArrow.clicked:
             self.page = max(self.page-1, 0)
             self.setElements()
-        
+
         if self.app.resize:
             self.setElements()
         if self.oldElements != elements:

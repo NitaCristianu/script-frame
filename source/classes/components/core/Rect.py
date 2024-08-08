@@ -21,6 +21,7 @@ class Rect(Area):
         borderValue=0,
         detectHover = False,
         onHoverModifiedColor = 0.15,
+        
     ) -> None:
         super().__init__(dimension, app, detectHover=detectHover)
         self.b0 = borderValue
