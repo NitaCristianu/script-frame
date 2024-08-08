@@ -20,7 +20,7 @@ class Rect(Area):
         color: str | tuple[int, int, int, int] = "#ffffff",
         borderValue=0,
         detectHover = False,
-        onHoverModifiedColor = 0.3,
+        onHoverModifiedColor = 0.15,
     ) -> None:
         super().__init__(dimension, app, detectHover=detectHover)
         self.b0 = borderValue
@@ -59,6 +59,7 @@ class Rect(Area):
             color = modifyRGB(color, self.onHoverModifiedColor)
         if self.mdown:
             color = modifyRGB(color, self.onHoverModifiedColor*1.2)
+        
         pg.draw.rect(
             surface,
             color,

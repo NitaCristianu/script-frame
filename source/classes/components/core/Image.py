@@ -22,7 +22,7 @@ class Image(Rect):
             color,
             borderValue,
             detectHover,
-            onHoverModifiedColor
+            onHoverModifiedColor,
         )
         self.forceWidth = forceWidth
         self.forceHeight = forceHeight
@@ -36,6 +36,8 @@ class Image(Rect):
         self.computeDimension()
         if self.pngSource == "":
             return pg.Surface((0, 0))
+        self.width = self.w
+        self.height = self.h
         if self.forceWidth == self.forceHeight:
             return pg.transform.scale(
                 pg.image.load("assets\\images\\" +
@@ -70,4 +72,12 @@ class Image(Rect):
 
     def drawContent(self):
         super().drawContent()
-        self.app.screen.blit(self.image, (self.x, self.y))
+        b0,b1,b2,b3 = self.b0, self.b1, self.b2, self.b3
+        if b0 > 0 and b1 > 0 and b2 > 0 and b3 > 0:
+            cornered_surface = pg.Surface((self.width, self.height), pg.SRCALPHA)
+            
+            pg.draw.rect(cornered_surface, (255, 255, 255, 255), pg.Rect(0, 0, self.width, self.height), 0, -1, b0, b1, b2, b3)
+            cornered_surface.blit(self.image, (0, 0), special_flags=pg.BLEND_RGB_MULT)
+            self.app.screen.blit(cornered_surface, (self.x, self.y))
+        else:
+            self.app.screen.blit(self.image, (self.x, self.y))

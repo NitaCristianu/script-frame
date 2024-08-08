@@ -87,6 +87,6 @@ class Text(Rect):
                 center=((self.x + (self.x + self.w))/2, (self.y + self.y + h)/2))
         else:
             text_rect = text_surface.get_rect(
-                topleft=(self.x + self.padding, self.y+h/2 - self.fontHeight/2)
+                topleft=(self.x + self.padding, self.y+h/2 - self.fontHeight/1.5)
             )
         self.app.screen.blit(text_surface, text_rect)

@@ -25,6 +25,7 @@ class Area:
     isHoveredCurrently: bool
     relative: bool
     detectHover: bool
+    
 
     def __init__(
         self,
@@ -87,6 +88,9 @@ class Area:
             print(f"onHoverEnd can't be used if area's detectHover is false\nArea ID : {
                   self.id}")
         return not self.hovered and self.oldhovered and self.detectHover
+
+    def clearChildren(self):
+        self.children.clear()
 
     def isRelative(self):
         return any(isinstance(item, str) for item in self.dimension)
