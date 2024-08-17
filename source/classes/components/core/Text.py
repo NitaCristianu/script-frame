@@ -31,6 +31,13 @@ FONTS = {
 }
 
 
+def getFont(font="Poppins",
+            italic=False,
+            weight='normal',
+            fontHeight=25
+            ) -> pg.font.Font:
+    return pg.font.Font(FONTS[font][italic and "italic" or "normal"][weight], fontHeight)
+
 class Text(Rect):
 
     text: str
@@ -44,7 +51,7 @@ class Text(Rect):
                  dimension: tuple[int, int, int, int],
                  app: any,
                  color: str = "#00000000",
-                 borderValue=0,
+                 borderRadius=0,
                  font="Poppins",
                  italic=False,
                  weight='normal',
@@ -57,7 +64,7 @@ class Text(Rect):
                  detectHover=False,
                  onHoverModifiedColor=0.3,
                  ) -> None:
-        super().__init__(dimension, app, color, borderValue,
+        super().__init__(dimension, app, color, borderRadius,
                          detectHover=detectHover, onHoverModifiedColor=onHoverModifiedColor)
         self.setFont(font, italic, weight, fontHeight)
         self.text = text
@@ -73,8 +80,7 @@ class Text(Rect):
                 weight='normal',
                 fontHeight=25
                 ) -> None:
-        self.font = pg.font.Font(
-            FONTS[font][italic and "italic" or "normal"][weight], fontHeight)
+        self.font = getFont(font, italic, weight, fontHeight)
 
     def drawContent(self):
         if not self.enabled: return False

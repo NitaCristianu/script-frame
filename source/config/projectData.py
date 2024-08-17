@@ -1,18 +1,31 @@
+from typing import List
+import pygame as pg
+
 class Element:
 
     source : str
     name : str
     icon : str
     instance : any
+    color : pg.Color
+    start : float
+    end : float
+    layer : int
     x: int
     y: int
-
+    selected : bool
+ 
     def __init__(self, name: str, icon = "customicon.png", source = "circle") -> None:
         self.name = name
         self.icon = icon
         self.source = source
         self.instance = self.getClassInstance()
         self.x = self.y = 0
+        self.start = 2
+        self.layer = 0
+        self.end = 4
+        self.color = "#cdced3"
+        self.selected = False
 
     def getClassInstance(self):
         import importlib.util
@@ -30,4 +43,6 @@ class Element:
 
         return Class()
 
-elements = []
+elements: List["Element"] = [
+    Element("circle")
+]

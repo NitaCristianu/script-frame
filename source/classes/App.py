@@ -8,31 +8,47 @@ from utils.event import *
 
 class App:
 
+    #--------- app components
     display: pg.Surface
     screen: pg.Surface
+    event = None
+
+    #-------- app related
+    windowMode = 0
+    #                 0 - main editor
+    #                 1 - element gallery
+
+    deltatime = 0  # time between 2 renders
+    currentTime = 0 # total time
+    resize = True
+    clock = pg.time.Clock()
     width = INITIAL_WIDTH
     height = INITIAL_HEIGHT
-    mpos: tuple[int, int]
 
-    clock = pg.time.Clock()
-    deltatime = 0  # time between 2 renders
-    mbuttons = (False, False, False)
-    oldmbuttons = (False, False, False)
+    #----- inputs
+    mbuttons = (False, False, False, False, False)
+    oldmbuttons = (False, False, False, False, False)
+    mpos: tuple[int, int]
+    oldmpos: tuple[int, int]
     mup = False
-    resize = True
-    event = None
-    currentTime = 0
-    windowMode = 0
-    # 0 - main editor
-    # 1 - element gallery
+    doubleclick = False
+    dragging = False
+    lastClick = 0
+
+    #------ video related
+    videotime = 0
+    videolenght = 5000 # 5000 ms
+    videospeedmul = 1
+    videorunning = False
 
     def __init__(self, screen: pg.Surface) -> None:
         self.display = screen
         self.screen = pg.Surface((INITIAL_WIDTH, INITIAL_HEIGHT), pg.SRCALPHA)
         self.keyboard = self.oldkeyboard = pg.key.get_pressed()
-        self.setInput()
         self.resize = True
         self.event = EventManager()
+        self.mpos = self.oldmpos = pg.mouse.get_pos()
+        self.setInput()
 
         self.MainEditor = MainEditor(app = self)
         self.ElementGallery = ElementGallery(app = self)
@@ -40,19 +56,27 @@ class App:
         self.setWindowMode(0, update = False)
 
     def setInput(self):
-        self.setMup()
+        self.doubleclick = False
+        self.mup = self.oldmbuttons[0] and not self.mbuttons[0]
         self.oldkeyboard = self.keyboard
         self.keyboard = pg.key.get_pressed()
+        self.oldmpos = self.mpos
         self.mpos = pg.mouse.get_pos()
         self.oldmbuttons = self.mbuttons
         self.mbuttons = pg.mouse.get_pressed()
         self.holdingShift = self.keyboard[pg.K_LSHIFT] or self.keyboard[pg.K_RIGHT]
         self.holdingCtrl = self.keyboard[pg.K_LCTRL] or self.keyboard[pg.K_LCTRL]
 
+        if self.mup:
+            if self.currentTime - self.lastClick <= 400:
+                self.doubleclick = True
+            self.lastClick = self.currentTime
+
     def setWindowMode(self, mode : int, update = True):
         self.windowMode = mode
         self.MainEditor.enabled = mode == 0
         self.ElementGallery.enabled = mode == 1
+        self.videorunning = False
         
         if self.update:
             self.update()
@@ -108,9 +132,6 @@ class App:
         except Exception as e:
             return 0
 
-    def setMup(self):
-        self.mup = self.oldmbuttons[0] and self.mbuttons[0]
-
     def keyUp(self, keyName):
         return self.keyboard[keyName] and not self.oldkeyboard[keyName]
 
@@ -118,13 +139,13 @@ class App:
         # Initializing
         self.setInput()
         self.event.process_events()
-        self.deltatime = self.clock.tick(30)
-        self.currentTime += self.deltatime
 
         self.ElementGallery.update()
         self.MainEditor.update()
         
         self.resize = False
+        self.deltatime = self.clock.tick(30)
+        self.currentTime += self.deltatime
 
     def refresh(self, section: pg.Rect | None = None ) -> None:
         if section == None: section = pg.Rect(0, 0, self.width, self.height)

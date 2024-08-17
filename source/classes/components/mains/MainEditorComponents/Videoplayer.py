@@ -11,18 +11,16 @@ class VideoPlayer(Rect):
         super().__init__(dimension, app)
         self.color = "#000000"
         size = (1600, 900)
-        self.t = 0
         self.videosize = size
         self.oldvideosize = size
-        self.active = False
         
     def update(self):
 
         if self.app.keyUp(pg.K_SPACE):
-            self.active = not self.active
+            self.app.videorunning = not self.app.videorunning
 
-        if self.active:
-            self.t += self.app.deltatime 
+        if self.app.videorunning:
+            self.app.videotime += self.app.deltatime 
             self.drawContent()
             self.app.refresh(self.rect)
         if self.videosize != self.oldvideosize or self.app.resize:
@@ -35,17 +33,20 @@ class VideoPlayer(Rect):
     def drawContent(self):
         if self.videosize == (0,0): return
         frame: pg.Surface = pg.Surface(self.videosize, pg.SRCALPHA, 32)
-        t: int = self.t
+        t: int = self.app.videotime
         super().drawContent()
         for element in elements:
+            
+            if t < element.start*1000 or t > element.end*1000: return
             result: pg.Surface = element.instance.render(
-                t/1000,
+                t/1000 - element.start,
                 pg.Surface(tuple(x*2 for x in self.videosize), pg.SRCALPHA, 32)
             )
             frame.blit(
                 result,
                 (element.x, element.y)
             )
+        
         scaled = None
         # B is video rect
         # A is video display rect

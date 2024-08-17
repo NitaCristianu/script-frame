@@ -9,7 +9,7 @@ class Image(Rect):
                  dimension: tuple[int, int, int, int],
                  app: any,
                  color: str | tuple[int, int, int, int] = "#00000000",
-                 borderValue=0,
+                 borderRadius=0,
                  detectHover=False,
                  onHoverModifiedColor=0.3,
                  pngSource="",
@@ -22,7 +22,7 @@ class Image(Rect):
             dimension,
             app,
             color,
-            borderValue,
+            borderRadius,
             detectHover,
             onHoverModifiedColor,
         )
@@ -80,14 +80,14 @@ class Image(Rect):
     def drawContent(self):
         if not self.enabled: return False
         super().drawContent()
-        b0, b1, b2, b3 = self.b0, self.b1, self.b2, self.b3
+        borderRadius = self.borderRadius
         isCentered = self.centerImage
-        if b0 > 0 and b1 > 0 and b2 > 0 and b3 > 0:
+        if borderRadius > 0:
             cornered_surface = pg.Surface(
                 (self.width, self.height), pg.SRCALPHA)
 
             pg.draw.rect(cornered_surface, (255, 255, 255, 255), pg.Rect(
-                0, 0, self.width, self.height), 0, -1, b0, b1, b2, b3)
+                0, 0, self.width, self.height), 0, borderRadius)
             image_rect = self.image.get_rect(
                 center=(self.x + self.w//2, self.y + self.h//2))
             if self.centerImage:

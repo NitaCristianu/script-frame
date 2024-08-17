@@ -30,7 +30,7 @@ class ElementsTab(Rect):
         self.pad = 10
         self.add_child(
             Rect((self.pad, 1 * self.pad, f'1x - {2*self.pad}', f'1y - {self.pad*2}'), app,
-                 color="#18181b", borderValue=16)
+                 color="#18181b", borderRadius=4)
         )
         self.tabIndex = 0
         self.color = "#0d0d12"
@@ -69,7 +69,7 @@ class ElementsTab(Rect):
                 fontHeight=20,
                 padding=60,
                 detectHover=True,
-                borderValue=8,
+                borderRadius=4,
                 color="#222221",
                 onHoverModifiedColor=0.15,
                 align='left',
@@ -80,7 +80,7 @@ class ElementsTab(Rect):
                 app=self.app,
                 dimension=(pad + 20, y + pad, 30, 30),
                 pngSource="customicon.png",
-                borderValue=0,
+                borderRadius=0,
 
             ))
             self.children[0].add_child([text])
@@ -96,7 +96,7 @@ class ElementsTab(Rect):
                 dimension=dimension,
                 app=self.app,
                 color="#222221",
-                borderValue=8,
+                borderRadius=4,
                 detectHover=True,
                 onHoverModifiedColor=0.07
 
@@ -108,7 +108,7 @@ class ElementsTab(Rect):
                 dimension=dimension,
                 app=self.app,
                 color="#222221",
-                borderValue=8,
+                borderRadius=4,
                 detectHover=True,
                 onHoverModifiedColor=0.07
 
@@ -150,7 +150,7 @@ class ElementsTab(Rect):
             dimension=dimension,
             app=self.app,
             color="#222221",
-            borderValue=8,
+            borderRadius=4,
             detectHover=True,
             onHoverModifiedColor=0.07
 

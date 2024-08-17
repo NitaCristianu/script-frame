@@ -11,8 +11,8 @@ class Textbox(Text):
     changed = False
     placeholder = ""
 
-    def __init__(self, dimension: tuple[int, int, int, int], app: any, color: str = "#00000000", borderValue=0, font="Poppins", italic=False, weight='normal', fontHeight=25, text="", align="center", fontColor="#ececec", padding=0, autoHeight=True, detectHover=True, onHoverModifiedColor=0, placeholder = "") -> None:
-        super().__init__(dimension, app, color, borderValue, font, italic, weight, fontHeight, text, align, fontColor, padding, autoHeight, detectHover, onHoverModifiedColor)
+    def __init__(self, dimension: tuple[int, int, int, int], app: any, color: str = "#00000000", borderRadius=0, font="Poppins", italic=False, weight='normal', fontHeight=25, text="", align="center", fontColor="#ececec", padding=0, autoHeight=True, detectHover=True, onHoverModifiedColor=0, placeholder = "") -> None:
+        super().__init__(dimension, app, color, borderRadius, font, italic, weight, fontHeight, text, align, fontColor, padding, autoHeight, detectHover, onHoverModifiedColor)
         self.holding = self.changed = False
         self.lastDeleted = self.delay = 0
         self.placeholder = placeholder
@@ -48,10 +48,12 @@ class Textbox(Text):
 
     def drawContent(self):
         if not self.enabled: return False
+        
         text = len(self.input) > 0 and self.input or self.placeholder
         color = len(self.input) > 0 and self.fontColor or modifyRGB(hex_to_rgb(self.fontColor), -.4)
         text_surface = self.font.render(text, True, color)
         h = self.autoHeight and self.fontHeight or self.h
+        
         if self.align == 'center':
             text_rect = text_surface.get_rect(
                 center=((self.x + self.w//2, self.y + h//2))

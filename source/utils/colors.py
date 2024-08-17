@@ -22,3 +22,12 @@ def modifyRGB(rgbColor: tuple[int, int, int] | tuple[int, int, int, int], n: flo
     return (
         tuple(int(clamp(i + n * 255, 0, 255)) for i in rgbColor)
     )
+
+def invertColor(rgbColor:tuple[int, int, int] | tuple[int, int, int, int] ):
+    if isinstance(rgbColor, str): return rgbColor
+    return (
+        255 - rgbColor[0],
+        255 - rgbColor[1],
+        255 - rgbColor[2],
+        len(rgbColor) == 3 and 255 or rgbColor[3]
+    )
