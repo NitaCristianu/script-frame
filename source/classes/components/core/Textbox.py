@@ -1,5 +1,6 @@
 from classes.components.core.Text import *
 from utils.keyconsts import *
+from pygame import gfxdraw
 
 selected_id = None  # Global variable to store the selected textbox id
 
@@ -49,6 +50,19 @@ class Textbox(Text):
     def drawContent(self):
         if not self.enabled: return False
         
+        x,y,w,h = max(self.x, 0), max(self.y, 0), max(self.w, 0), max(self.h, 0)
+        surface = pg.Surface((w, h), pg.SRCALPHA)
+
+        AAfilledRoundedRect(
+            surface,
+            pg.Rect(0,0,w,h),
+            hex_to_rgb(self.color),
+            self.borderRadius
+        )
+        
+
+
+        self.app.screen.blit(surface, (x, y))
         text = len(self.input) > 0 and self.input or self.placeholder
         color = len(self.input) > 0 and self.fontColor or modifyRGB(hex_to_rgb(self.fontColor), -.4)
         text_surface = self.font.render(text, True, color)

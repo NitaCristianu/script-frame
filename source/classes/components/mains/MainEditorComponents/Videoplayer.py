@@ -35,9 +35,10 @@ class VideoPlayer(Rect):
         frame: pg.Surface = pg.Surface(self.videosize, pg.SRCALPHA, 32)
         t: int = self.app.videotime
         super().drawContent()
+        elements.sort(key= lambda el: -el.layer)
         for element in elements:
-            
-            if t < element.start*1000 or t > element.end*1000: return
+            if t < element.start*1000 or t > element.end*1000: continue
+
             result: pg.Surface = element.instance.render(
                 t/1000 - element.start,
                 pg.Surface(tuple(x*2 for x in self.videosize), pg.SRCALPHA, 32)

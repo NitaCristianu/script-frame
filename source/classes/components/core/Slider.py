@@ -1,0 +1,98 @@
+from classes.components.core.Rect import *
+from utils.math import *
+from pygame import gfxdraw
+
+class Slider(Rect):
+    
+    def __init__(self, dimension: tuple[int, int, int, int], app: any, color: str | tuple[int, int, int, int] = "#ffffff", borderRadius=0, detectHover=False, onHoverModifiedColor=0.15) -> None:
+        super().__init__(dimension, app, color, borderRadius, detectHover, onHoverModifiedColor)
+        self.value = 0.5
+        self.padding = 10
+        self.dragging = False
+    
+    def getValuePoint(self):
+        r = self.h  // 6
+        centerA = (int(r*1.5), int(self.h/2))
+        centerB = (int(self.w - r*1.5), int(self.h/2))
+        return (
+            int(centerA[0] + (centerB[0] - centerA[0]) * self.value),
+            int(centerA[1] + (centerB[1] - centerA[1]) * self.value)
+        )
+
+
+    def update(self):
+        super().update()
+        if not self.enabled: return
+        center = self.getValuePoint()
+        r = self.h // 6
+        dist_Sqr = distPoints(*self.app.mpos, center[0] + self.x, center[1] + self.y)
+        if self.app.mbuttons[0] and dist_Sqr < r * r:
+            self.dragging = True
+        if not self.app.mbuttons[0] and self.app.oldmbuttons[0]:
+            self.dragging = False
+            self.drawContent()
+            self.app.refresh(self.rect) 
+
+        if self.dragging:
+            delta = self.app.mpos[0] - self.app.oldmpos[0]
+            delta /= self.w - 2 * self.padding
+            self.value += delta
+            self.value = clamp(self.value, 0, 1)
+            self.drawContent()
+            self.app.refresh(self.rect) 
+
+    def drawContent(self):
+        if not self.enabled: return
+        super().drawContent()
+        r = self.h  // 6
+        color = hex_to_rgb("#1992e8")
+        centerA = (int(r*1.5), int(self.h/2))
+        centerB = (int(self.w - r*1.5), int(self.h/2))
+        surf = pg.Surface((self.w, self.h), pg.SRCALPHA)
+        AAfilledRoundedRect(surf, 
+                            pg.Rect(centerA[0] - r//2,
+                                    centerA[1] - r //2,
+                                    centerB[0] - centerA[0],
+                                    centerB[1] - centerA[1] + r),
+                            color,
+                            r
+                            )
+        gfxdraw.filled_circle(surf,
+                              *centerA,
+                              int(r*1.5),
+                              hex_to_rgb(self.color))
+        gfxdraw.aacircle(surf,
+                              *centerA,
+                              int(r),
+                              color)
+        gfxdraw.filled_circle(surf,
+                              *centerA,
+                              int(r),
+                              modifyRGB(color, 0))
+        
+        centerC = self.getValuePoint()
+
+        modifier = self.dragging and .85 or .4
+
+        gfxdraw.aacircle(surf,
+                              *centerC,
+                              int(r*1.5),
+                              modifyRGB(hex_to_rgb(self.color), modifier)
+                              )
+
+        gfxdraw.filled_circle(surf,
+                              *centerC,
+                              int(r*1.5),
+                              modifyRGB(hex_to_rgb(self.color), modifier)
+                              )
+        gfxdraw.aacircle(surf,
+                              *centerC,
+                              int(r),
+                              color)
+        gfxdraw.filled_circle(surf,
+                              *centerC,
+                              int(r),
+                              color)
+        self.app.screen.blit(surf, (self.x, self.y))
+
+

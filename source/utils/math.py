@@ -3,3 +3,6 @@ def inRect(ax = 0, ay = 0, x = 0, y = 0, w = 0, h = 0):
 
 def clamp(x: float, mi : float, ma : float):
     return min(max(x, mi), ma)
+
+def distPoints(ax, ay, bx, by):
+    return (bx - ax) * (bx - ax) + (by - ay) * (by - ay)

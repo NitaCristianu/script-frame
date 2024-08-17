@@ -2,6 +2,7 @@ from classes.components.core.Rect import Rect
 from classes.components.core.Area import *
 from classes.components.core.Text import *
 from config.projectData import *
+from config.consts import *
 from pygame import gfxdraw
 from utils.colors import *
 from utils.shapes import *
@@ -134,7 +135,7 @@ class Timeline(Rect):
         gfxdraw.vline(
             surf,
             int(videotime_x),
-            top,
+            2,
             bottom,
             hex_to_rgb("#6de6b7")
         )
@@ -155,6 +156,9 @@ class Timeline(Rect):
 
         if self.app.mbuttons[0] and not self.app.oldmbuttons[0]:
             self.selectedInTimeline = self.getSelected()
+            if self.hoveredElement:
+                self.hoveredElement.selected = True
+                self.app.event.fire_event(SELECT_ELEMENT_EVENT)
         if self.selectedInTimeline == "timeline" and self.app.doubleclick:
             if self.app.holdingShift:
                 self.app.videotime = round(self.getMouseTime() * 1000, 1)
@@ -174,6 +178,8 @@ class Timeline(Rect):
             elif selecting == "element" and self.hoveredElement:
                 hovered = self.hoveredElement
                 hovered.selected = True
+                mLayer = int(max(self.app.mpos[1] - self.layersTop, 0)/self.layerSize)
+                hovered.layer = mLayer
                 if self.app.holdingShift:
                     delta = hovered.start
                     hovered.start = round(change+hovered.start, 1)
@@ -191,8 +197,12 @@ class Timeline(Rect):
                    self.app.videotime += change * 1000
 
             if selecting == "timeline" or selecting == "outside":
+                found = False
                 for element in elements:
+                    found = True
                     element.selected = False
+                if found : self.app.event.fire_event(SELECT_ELEMENT_EVENT)
+
                 self.draw()
                 self.app.refresh(self.rect)
             else:
