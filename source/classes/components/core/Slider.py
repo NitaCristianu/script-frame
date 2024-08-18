@@ -9,6 +9,7 @@ class Slider(Rect):
         self.value = 0.5
         self.padding = 10
         self.dragging = False
+        self.binds['changed'] = None
     
     def getValuePoint(self):
         r = self.h  // 6
@@ -38,6 +39,8 @@ class Slider(Rect):
             delta /= self.w - 2 * self.padding
             self.value += delta
             self.value = clamp(self.value, 0, 1)
+            if self.binds['changed']:
+                self.binds['changed'](self)
             self.drawContent()
             self.app.refresh(self.rect) 
 

@@ -7,7 +7,7 @@ class Prop:
     name : str
     value : any
     propType : str
-    additional : any 
+
 
 class Element:
 
@@ -56,5 +56,5 @@ class Element:
 
 elements: List["Element"] = [
     Element("circle", startend=(0, 2), layer = 0),
-    Element("rect", startend=(0, 3), layer = 1),
+    # Element("rect", startend=(0, 3), layer = 1),
 ]

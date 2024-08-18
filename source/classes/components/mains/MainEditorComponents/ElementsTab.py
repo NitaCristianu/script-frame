@@ -8,6 +8,14 @@ from config.consts import *
 
 element_size = 30
 
+def selectElementById(id: str, self : any):
+    if not self.app.holdingCtrl:
+        for element in elements:
+            element.selected = False
+
+    matching_element = next((element for element in elements if element.id == id), None)
+    matching_element.selected = not matching_element.selected
+    self.app.event.fire_event(SELECT_ELEMENT_EVENT)
 
 class ElementsTab(Rect):
 
@@ -76,6 +84,8 @@ class ElementsTab(Rect):
                 autoHeight=False
 
             )
+            text.props['id'] = element.id
+            text.binds['onclick'] = lambda text: selectElementById(text.props['id'], self)
             text.add_child(Image(
                 app=self.app,
                 dimension=(pad + 20, y + pad, 30, 30),

@@ -1,9 +1,9 @@
 import pygame as pg
 from uuid import uuid4
 from classes.components.core.Area import *
+from utils.shapes import *
 from typing import Any, List, Optional
 from utils.colors import hex_to_rgb, modifyRGB
-from utils.shapes import *
 
 
 class Rect(Area):

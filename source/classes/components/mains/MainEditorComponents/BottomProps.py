@@ -25,6 +25,8 @@ class Timeline(Rect):
         self.selectedInTimeline = "outside"
         self.elementsrect = []
         self.hoveredElement : "Element" = None
+        
+        app.event.add_listener(APPLY_PROPS, lambda: (self.draw(), app.refresh(self.rect)))
 
     def drawTimeline(self):
         timelinecolor = "#928b8d"
@@ -157,6 +159,9 @@ class Timeline(Rect):
         if self.app.mbuttons[0] and not self.app.oldmbuttons[0]:
             self.selectedInTimeline = self.getSelected()
             if self.hoveredElement:
+                if not self.app.holdingCtrl:
+                    for element in elements:
+                        element.selected = False
                 self.hoveredElement.selected = True
                 self.app.event.fire_event(SELECT_ELEMENT_EVENT)
         if self.selectedInTimeline == "timeline" and self.app.doubleclick:

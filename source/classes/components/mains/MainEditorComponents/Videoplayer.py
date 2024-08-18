@@ -1,7 +1,7 @@
 from classes.components.core.Rect import Rect
 from config.projectData import *
+from config.consts import *
 from classes.components.core.Area import *
-
 class VideoPlayer(Rect):
     def __init__(
         self,
@@ -13,6 +13,8 @@ class VideoPlayer(Rect):
         size = (1600, 900)
         self.videosize = size
         self.oldvideosize = size
+        
+        app.event.add_listener(APPLY_PROPS, lambda: (self.draw(), app.refresh(self.rect)))
         
     def update(self):
 
@@ -39,13 +41,18 @@ class VideoPlayer(Rect):
         for element in elements:
             if t < element.start*1000 or t > element.end*1000: continue
 
+            # element.instance.update()
+            element.instance._surf = pg.Surface(tuple(x*2 for x in self.videosize), pg.SRCALPHA, 32)
             result: pg.Surface = element.instance.render(
                 t/1000 - element.start,
                 pg.Surface(tuple(x*2 for x in self.videosize), pg.SRCALPHA, 32)
             )
+            if hasattr(element.instance, 'lenght'):
+                element.end = element.start + element.instance.lenght
+                print(element.name, element.instance.lenght)
             frame.blit(
                 result,
-                (element.x, element.y)
+                (element.x-self.videosize[0], element.y-self.videosize[1])
             )
         
         scaled = None

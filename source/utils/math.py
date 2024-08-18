@@ -1,6 +1,13 @@
 def inRect(ax = 0, ay = 0, x = 0, y = 0, w = 0, h = 0):
     return ax > x and ax < x + w and ay > y and ay < y + h 
 
+def invLerp(a, b, v):
+    if b == a: return 0
+    return (v-a) / (b-a)
+
+def lerp(a,b,t):
+    return a + (b-a) * t
+
 def clamp(x: float, mi : float, ma : float):
     return min(max(x, mi), ma)
 

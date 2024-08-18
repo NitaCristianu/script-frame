@@ -43,6 +43,12 @@ class Area:
         self.detectHover = detectHover
         self.enabled = True
         self.parent = None
+        self.binds = {
+            'onclick': None,
+        }
+        self.props = {
+            
+        }
 
         self.computeDimension(dimension)
 
@@ -143,6 +149,8 @@ class Area:
         if self.detectHover:
             self.oldhovered = self.hovered
             self.hovered = self.isHoveredCurrently
+            if self.binds['onclick'] != None and self.clicked:
+                self.binds['onclick'](self)
 
     def drawContent(self):
         """
