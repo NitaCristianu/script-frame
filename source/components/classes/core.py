@@ -40,7 +40,6 @@ class Core:
         self._reqtime = 0
         self._t = t
         self._surf = surf
-
         for element in self._elements.values():
             if element.enabled: element.render()
     

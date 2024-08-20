@@ -10,7 +10,7 @@ def AAfilledRoundedRect(surface, rect, color, radius=10):
     radius  : integer, fixed radius for the rounded corners
     """
     rect = pygame.Rect(rect)
-    color = pygame.Color(*color)
+    color = pygame.Color(*(isinstance(color, pygame.Color) and color or (isinstance(color, tuple) and pygame.Color(*color) or pygame.Color(color))))
     alpha = color.a
     color.a = 0  # Set alpha to 0 for blending later
 

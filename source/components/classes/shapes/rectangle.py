@@ -1,12 +1,13 @@
 from components.classes.shape import *
 from utils.shapes import *
+from math import ceil
 
-class Rect(Shape):
+class Rectangle(Shape):
     def __init__(self, **args) -> None:
         self.color = (255, 255, 255, 0)
         self.w = 0
         self.h = 0
-        self.borderRadius = 32
+        self.borderRadius = 0
         super().__init__(**args)
 
     def surf(self):
@@ -14,7 +15,12 @@ class Rect(Shape):
         
         AAfilledRoundedRect(
             surf,
-            pg.Rect(self.x, self.y, self.w, self.h),
+            pg.Rect(
+                ceil(self.x),
+                ceil(self.y),
+                ceil(self.w),
+                ceil(self.h),
+            ),
             self.color,
             self.borderRadius
         )

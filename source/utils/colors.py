@@ -31,3 +31,16 @@ def invertColor(rgbColor:tuple[int, int, int] | tuple[int, int, int, int] ):
         255 - rgbColor[2],
         len(rgbColor) == 3 and 255 or rgbColor[3]
     )
+
+VALID_COLORS = {
+    'black', 'white', 'red', 'green', 'blue', 'yellow', 'cyan', 'magenta', 'gray', 
+    'lightgray', 'darkgray', 'lightblue', 'darkblue', 'lightgreen', 'darkgreen', 
+    'lightred', 'darkred', 'lightyellow', 'darkyellow', 'lightcyan', 'darkcyan', 
+    'lightmagenta', 'darkmagenta', 'orange', 'purple', 'brown', 'pink'
+}
+
+def isStringAColor(a:any):
+    if not isinstance(a, str): return False
+    if (len(a) == 7 or len(a) == 9) and a[0] == "#": return True
+    if a in VALID_COLORS: return True
+    return False

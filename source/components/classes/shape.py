@@ -1,6 +1,7 @@
 from typing import Any
 from components.classes.core import *
 from components.utils.easing import *
+from utils.colors import *
 from utils.math import *
 import pygame as pg
 
@@ -43,12 +44,30 @@ class Shape:
         y = self.y + h / 2
         master._surf.blit(self.surf(), (x, y))
 
-    def _transform_number(self, keys, time):
-        return keys[0][0] + (keys[1][0] - keys[0][0]) * time
+    def _transform_text(self, a, b, time):
+        # Determine the length of the result string
+        max_len = max(len(a), len(b))
+        
+        # Pad the shorter strings with spaces
+        a = a.ljust(max_len)
+        b = b.ljust(max_len)
+        
+        # Create the blended string
+        blended = []
+        for i in range(max_len):
+            if time < i / max_len:
+                blended.append(a[i])
+            else:
+                blended.append(b[i])
+        
+        return ''.join(blended)
 
-    def _transform_tuple(self, keys, time):
-        a = isinstance(keys[0][0], pg.Color) and keys[0][0] or (isinstance(keys[0][0], tuple) and pg.Color(*keys[0][0]) or pg.Color(keys[0][0]))
-        b = isinstance(keys[0][1], pg.Color) and keys[0][1] or (isinstance(keys[1][0], tuple) and pg.Color(*keys[1][0]) or pg.Color(keys[1][0]))
+    def _transform_number(self, a, b, time):
+        return a + (b - a) * time
+
+    def _transform_tuple(self, a, b, time):
+        a = isinstance(a, pg.Color) and a or (isinstance(a, tuple) and pg.Color(*a) or pg.Color(a))
+        b = isinstance(b, pg.Color) and b or (isinstance(b, tuple) and pg.Color(*b) or pg.Color(b))
         return a.lerp(b, time)
         
 
@@ -72,12 +91,14 @@ class Shape:
                 data = self.get_keyframes(name, t)
                 times = tuple(float(t) for t in list(data.keys()))
                 keys = tuple(data.values())
-
+                ab = (keys[0][0], keys[1][0])
                 time = keys[1][1](invLerp(times[0], times[1], t))
                 if isinstance(value, (int, float)):
-                    result = self._transform_number(keys, time)
-                if isinstance(value, pg.Color) or isinstance(value, tuple) and all(isinstance(i, (int, float)) for i in value) or isinstance(value, str):
-                    result = self._transform_tuple(keys, time)
+                    result = self._transform_number(*ab, time)
+                elif isinstance(value, pg.Color) or isinstance(value, tuple) and all(isinstance(i, (int, float)) for i in value) or isStringAColor(value):
+                    result = self._transform_tuple(*ab, time)
+                elif isinstance(value, str):
+                    result = self._transform_text(*ab, time)
                 setattr(self, name, result)
                     
             
