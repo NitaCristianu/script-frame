@@ -2,17 +2,22 @@ import pygame as pg
 from config.projectData import *
 from components.classes.core import *
 from components.classes.shapes.rect import *
-from pygame import gfxdraw
 
 class Main(Core):
 
-    def render(self, t : float, surf : pg.Surface) -> None:
-        super().render(t)
-        self.rect = Rect(
+    def start(self):
+        super().start()
+        self.add("A",Rect(
             x = 10,
             y = 10,
-            w = 300,
-            h = 300
-        )
-        self.wait(0.5)
+            w = 0,
+            h = 900,
+            color = "red"
+        ))
+ 
+    def render(self, t : float, surf : pg.Surface) -> None:
+        super().render(t, surf)
+        self.play(self.get("A").transform, totalTime=1.5, name = "color", value = "blue")
+        self.play(self.get("A").transform, totalTime=1.5, name = "w", value = 1600)
+        self.wait(2.7)
         return surf

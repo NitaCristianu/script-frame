@@ -42,14 +42,12 @@ class VideoPlayer(Rect):
             if t < element.start*1000 or t > element.end*1000: continue
 
             # element.instance.update()
-            element.instance._surf = pg.Surface(tuple(x*2 for x in self.videosize), pg.SRCALPHA, 32)
             result: pg.Surface = element.instance.render(
                 t/1000 - element.start,
                 pg.Surface(tuple(x*2 for x in self.videosize), pg.SRCALPHA, 32)
             )
             if hasattr(element.instance, 'lenght'):
                 element.end = element.start + element.instance.lenght
-                print(element.name, element.instance.lenght)
             frame.blit(
                 result,
                 (element.x-self.videosize[0], element.y-self.videosize[1])
