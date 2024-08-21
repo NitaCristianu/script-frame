@@ -3,6 +3,7 @@ from classes.components.core.Rect import *
 from config.consts import INITIAL_WIDTH, INITIAL_HEIGHT
 from classes.components.mains.MainEditor import *
 from classes.components.mains.ElementGallery import *
+from classes.components.mains.RenderMode import *
 from utils.event import *
 
 
@@ -17,6 +18,7 @@ class App:
     windowMode = 0
     #                 0 - main editor
     #                 1 - element gallery
+    #                 2 - render mode
 
     deltatime = 0  # time between 2 renders
     currentTime = 0 # total time
@@ -52,6 +54,7 @@ class App:
 
         self.MainEditor = MainEditor(app = self)
         self.ElementGallery = ElementGallery(app = self)
+        self.RenderTab = RenderMode(app = self)
 
         self.setWindowMode(0, update = False)
 
@@ -76,6 +79,7 @@ class App:
         self.windowMode = mode
         self.MainEditor.enabled = mode == 0
         self.ElementGallery.enabled = mode == 1
+        self.RenderTab.enabled = mode == 2
         self.videorunning = False
         
         if self.update:
@@ -142,6 +146,7 @@ class App:
 
         self.ElementGallery.update()
         self.MainEditor.update()
+        self.RenderTab.update()
         
         self.resize = False
         self.deltatime = self.clock.tick(30)
@@ -156,4 +161,5 @@ class App:
     def draw(self) -> None:
         self.MainEditor.draw()
         self.ElementGallery.draw()
+        self.RenderTab.draw()
         self.refresh()

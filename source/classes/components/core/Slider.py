@@ -53,24 +53,24 @@ class Slider(Rect):
         centerB = (int(self.w - r*1.5), int(self.h/2))
         surf = pg.Surface((self.w, self.h), pg.SRCALPHA)
         AAfilledRoundedRect(surf, 
-                            pg.Rect(centerA[0] - r//2,
-                                    centerA[1] - r //2,
+                            pg.Rect(centerA[0] - r//6,
+                                    centerA[1] - r//6,
                                     centerB[0] - centerA[0],
-                                    centerB[1] - centerA[1] + r),
+                                    centerB[1] - centerA[1] + r//3),
                             color,
                             r
                             )
         gfxdraw.filled_circle(surf,
                               *centerA,
-                              int(r*1.5),
+                              int(r*0.6),
                               hex_to_rgb(self.color))
         gfxdraw.aacircle(surf,
                               *centerA,
-                              int(r),
+                              int(r*0.5),
                               color)
         gfxdraw.filled_circle(surf,
                               *centerA,
-                              int(r),
+                              int(r*0.5),
                               modifyRGB(color, 0))
         
         centerC = self.getValuePoint()
@@ -79,23 +79,15 @@ class Slider(Rect):
 
         gfxdraw.aacircle(surf,
                               *centerC,
-                              int(r*1.5),
+                              int(r*.6),
                               modifyRGB(hex_to_rgb(self.color), modifier)
                               )
 
         gfxdraw.filled_circle(surf,
                               *centerC,
-                              int(r*1.5),
+                              int(r*.6),
                               modifyRGB(hex_to_rgb(self.color), modifier)
                               )
-        gfxdraw.aacircle(surf,
-                              *centerC,
-                              int(r),
-                              color)
-        gfxdraw.filled_circle(surf,
-                              *centerC,
-                              int(r),
-                              color)
         self.app.screen.blit(surf, (self.x, self.y))
 
 

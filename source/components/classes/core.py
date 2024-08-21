@@ -15,6 +15,25 @@ class Core:
         self._elements : Dict[str, 'Shape'] = {}
         self._t = 0
 
+    def setProp(self, name : str, value : any, inputType : str, **args):
+        prop = self.getProp(name)
+        if prop != "__nonexistent":
+            prop['value'] = value
+            return
+        self.props.append({
+            'name' : name,
+            'value' : value,
+            'propType' : inputType,
+            **args
+        })
+    
+    def getProp(self, name: str):
+        try:
+            return next(iter(prop['value'] for prop in self.props if prop['name'] == name), "__nonexistent")
+        except:
+            return "__nonexistent"
+    
+
     @property
     def lenght(self): return self._reqtime
 
@@ -26,6 +45,8 @@ class Core:
     def play(self, callback, totalTime = 1, **args) -> None:
         if self._t >= self._reqtime and self._t <= self._reqtime + totalTime:
             callback(totalTime = totalTime, t = self._t, **args)
+        elif self._t > self._reqtime + totalTime:
+            callback(totalTime = totalTime, t = totalTime, **args)
         # if self._t < self._reqtime:
         #     callback(totalTime = totalTime, t = 1, **args)
 

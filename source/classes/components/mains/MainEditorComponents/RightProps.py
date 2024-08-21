@@ -22,9 +22,14 @@ class RightPropsTab(Rect):
 
     def addProp(self, lastY, prop) -> Area:
         obj = None
+        title_size = 10
+        x = self.x + padding
+        y = lastY + gap + title_size
+        w = self.w - padding * 2
+        showtitle = True
         if prop['propType'] == 'slider':
             obj = Slider(
-                (self.x + padding, lastY + gap, self.w - padding * 2, propSize),
+                (x, y, w, propSize),
                 self.app,
                 self.color,
                 onHoverModifiedColor = 0
@@ -43,27 +48,33 @@ class RightPropsTab(Rect):
             
         if prop['propType'] == 'consttext1':
             obj = Text(
-                (self.x + padding, lastY + gap, self.w - padding * 2, propSize/4),
+                (x, y-20, w, propSize/4),
                 self.app,
                 onHoverModifiedColor= 0,
                 fontHeight=propSize/3,
                 autoHeight=True,
                 text=prop['value']
             )
+            showtitle = False
         
+        
+        if not showtitle:
+            self.add_child(obj)
+            return obj        
         obj2 = Rect(
-            (obj.dimension[0] - padding,
-             obj.dimension[1] - padding,
-             obj.dimension[2] + padding * 2,
-             obj.dimension[3] + padding * 2,
-             ),
-             app = self.app,
-             color="#0d0e0f",
-             borderRadius=16
+            (x - padding/2, y-title_size, w + padding, obj.h + 2 * title_size),
+            self.app,
+            color="#1b1b1b"
         )
-
+        obj2.add_child(Text(
+            (x, y-title_size, w, 0),
+            app = self.app,
+            text = prop["name"],
+            fontHeight=title_size
+        ))
         obj2.add_child(obj)
         self.add_child(obj2)
+        
         return obj2
 
     def setProps(self, element = None):

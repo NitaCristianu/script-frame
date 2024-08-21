@@ -1,6 +1,7 @@
 from classes.components.core.Rect import Rect
 from classes.components.core.Area import *
 from classes.components.core.Text import *
+from classes.components.mains.MainEditorComponents.Videoplayer import *
 from config.projectData import *
 from config.consts import *
 from pygame import gfxdraw
@@ -26,7 +27,8 @@ class Timeline(Rect):
         self.elementsrect = []
         self.hoveredElement : "Element" = None
         
-        app.event.add_listener(APPLY_PROPS, lambda: (self.draw(), app.refresh(self.rect)))
+
+        app.event.add_listener(APPLY_PROPS, lambda: (self.app.draw(), app.refresh(self.rect)))
 
     def drawTimeline(self):
         timelinecolor = "#928b8d"
@@ -88,6 +90,9 @@ class Timeline(Rect):
 
         self.app.screen.blit(surf, (x_start, top))
 
+    def upperTab(self):
+        pass
+
     def drawElements(self):
         x_start = x_start_offset
         x_end = self.w - 2
@@ -148,6 +153,7 @@ class Timeline(Rect):
             return
         super().drawContent()
         self.drawTimeline()
+        self.upperTab()
         self.drawElements()
 
     def update(self):
@@ -252,16 +258,38 @@ class BottomPropsTab(Rect):
         dimension: tuple[int, int, int, int],
         app: any,    ) -> None:
         super().__init__(dimension, app)
-        self.color = "#1e1e24"
+        self.color = BGR_COLOR
 
         self.add_child([
             Timeline((0, 45, '1x', '1y-50'), self.app, color = "#0e0e0e", borderRadius=4)
         ])
         self.onHoverModifiedColor = 0
     
+        self.add_child(Text(
+            dimension=(10, 10, 120, '25'),
+            app = self.app,
+            text="RENDER",
+            weight="semibold",
+            color="#262626",
+            autoHeight=False,
+            padding=10,
+            fontHeight=20,
+            borderRadius=4,
+            detectHover=True
+        ))
+
+    @property
+    def renderButton(self):
+        return self.children[1]
 
     def update(self):
         super().update()
+
+        if self.renderButton.clicked:
+            self.app.setWindowMode(2)
+            self.app.draw()
+            self.app.event.fire_event(RENDER_VIDEO)
+
 
     def drawContent(self):
         super().drawContent()

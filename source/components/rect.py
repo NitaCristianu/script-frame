@@ -8,6 +8,7 @@ class Main(Core):
 
     def start(self):
         super().start()
+        self.setProp("x", 0, "slider", min = 0, max = 500)
         self.add("B",Rectangle(
             x = 0,
             y = 0,
@@ -20,7 +21,8 @@ class Main(Core):
             y = 50,
             w = 0,
             h = 700,
-            color = "#ffaaaaa0"
+            color = "#ffaaaaa0",
+            borderRadius = 15
         ))
         self.add("titlu", Text(
             text = "Hello World12",
@@ -31,11 +33,15 @@ class Main(Core):
         ))
  
     def render(self, t : float, surf : pg.Surface) -> None:
-        
         super().render(t, surf)
-        self.play(self.get("A").transform, totalTime=3.5, name = "color", value = "#bb5b5a80")
-        self.play(self.get("A").transform, totalTime=3.5, name = "w", value = 1600)
-        self.play(self.get("titlu").transform, totalTime=1.5, name = "x", value = 200)
+        x = self.getProp("x")
+        self.play(self.get("A").transform, totalTime=2.5, name = "color", value = "#bb5b5a80")
+        self.play(self.get("A").transform, totalTime=2.5, name = "w", value = 1600)
+        self.play(self.get("titlu").transform, totalTime=1.5, name = "x", value = x)
         self.play(self.get("titlu").transform, totalTime=1.5, name = "text", value = "Hello Matei Oprea")
-        self.wait(5.7)
+        self.wait(2.5)
+        self.play(self.get("titlu").transform, totalTime=1.5, name = "x", value = 0)
+        self.wait(1.5)
+        self.play(self.get("titlu").transform, totalTime=1.5, name = "x", value = 1600)
+        self.wait(1.5)
         return surf

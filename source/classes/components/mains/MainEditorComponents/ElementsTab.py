@@ -38,10 +38,10 @@ class ElementsTab(Rect):
         self.pad = 10
         self.add_child(
             Rect((self.pad, 1 * self.pad, f'1x - {2*self.pad}', f'1y - {self.pad*2}'), app,
-                 color="#18181b", borderRadius=4)
+                 color="#28282d", borderRadius=4)
         )
         self.tabIndex = 0
-        self.color = "#0d0d12"
+        self.color = "#0e0e0e"
         
         app.event.add_listener(ADD_ELEMENT_EVENT, lambda : self.setElements())
 
@@ -68,17 +68,17 @@ class ElementsTab(Rect):
         for i in range(firstElement, lastElement):
             index = i - firstElement
             element = elements[i]
-            y = 50 * index + pad * (index + 1) + pad
+            y = 50 * index + pad/2 * index + pad * 1.5
             w = self.w - pad * 2
-            text = Text(
-                dimension=(pad*2, y, w - pad * 2, 50),
+            text = Text( 
+                dimension=(pad*1.5, y, w - pad, 50),
                 app=self.app,
                 text=element.name,
                 fontHeight=20,
                 padding=60,
                 detectHover=True,
                 borderRadius=4,
-                color="#222221",
+                color="#1e1e1e",
                 onHoverModifiedColor=0.15,
                 align='left',
                 autoHeight=False
@@ -174,6 +174,7 @@ class ElementsTab(Rect):
                     text="Create",
                     padding= 50,
                     autoHeight=False,
+                    fontColor="#f7cd04",
                     align="center",
                     weight='bold',
                     fontHeight= 30,

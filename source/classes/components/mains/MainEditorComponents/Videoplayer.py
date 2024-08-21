@@ -2,6 +2,28 @@ from classes.components.core.Rect import Rect
 from config.projectData import *
 from config.consts import *
 from classes.components.core.Area import *
+
+def renderFrame(videosize, t):
+    frame: pg.Surface = pg.Surface(videosize, pg.SRCALPHA, 32)
+    elements.sort(key= lambda el: -el.layer)
+    for element in elements:
+        if t < element.start*1000 or t > element.end*1000: continue
+
+        # element.instance.update()
+        result: pg.Surface = element.instance.render(
+            t/1000 - element.start,
+            pg.Surface(tuple(x*2 for x in videosize), pg.SRCALPHA, 32)
+        )
+        if hasattr(element.instance, 'lenght'):
+            element.end = element.start + element.instance.lenght
+        frame.blit(
+            result,
+            (element.x-videosize[0], element.y-videosize[1])
+        )
+    
+    return frame
+
+
 class VideoPlayer(Rect):
     def __init__(
         self,
@@ -9,10 +31,11 @@ class VideoPlayer(Rect):
         app: any,
     ) -> None:
         super().__init__(dimension, app)
-        self.color = "#000000"
+        self.color = "#0e0e0e"
         size = (1600, 900)
         self.videosize = size
         self.oldvideosize = size
+        self.lastRender = app.currentTime 
         
         app.event.add_listener(APPLY_PROPS, lambda: (self.draw(), app.refresh(self.rect)))
         
@@ -34,35 +57,16 @@ class VideoPlayer(Rect):
 
     def drawContent(self):
         if self.videosize == (0,0): return
-        frame: pg.Surface = pg.Surface(self.videosize, pg.SRCALPHA, 32)
-        t: int = self.app.videotime
+        if self.app.currentTime - self.lastRender < 1000/30: return
         super().drawContent()
-        elements.sort(key= lambda el: -el.layer)
-        for element in elements:
-            if t < element.start*1000 or t > element.end*1000: continue
-
-            # element.instance.update()
-            result: pg.Surface = element.instance.render(
-                t/1000 - element.start,
-                pg.Surface(tuple(x*2 for x in self.videosize), pg.SRCALPHA, 32)
-            )
-            if hasattr(element.instance, 'lenght'):
-                element.end = element.start + element.instance.lenght
-            frame.blit(
-                result,
-                (element.x-self.videosize[0], element.y-self.videosize[1])
-            )
-        
-        scaled = None
-        # B is video rect
-        # A is video display rect
-
+        self.lastRender = self.app.currentTime
+        frm = renderFrame(self.videosize, self.app.videotime)
         # rescaling video to fit the screen``
         scale_width = self.w / self.videosize[0]
         scale_height = self.h / self.videosize[1]
         scale = min(scale_width, scale_height)
         scaledSize = (self.videosize[0] * scale, self.videosize[1] * scale)
-        scaled = pg.transform.scale(frame, scaledSize)
+        scaled = pg.transform.scale(frm, scaledSize)
         center = (self.x + self.w//2, self.y + self.h//2)
         topleft = (center[0] - scaledSize[0]//2, center[1] - scaledSize[1]//2)
         
