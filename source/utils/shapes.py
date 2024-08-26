@@ -1,5 +1,13 @@
 import pygame
 
+def applyCorners(surf: pygame.Surface, radius = 4):
+    mask = pygame.Surface(surf.get_size(), pygame.SRCALPHA, 32)
+    mask.fill((0,0,0,0))
+    pygame.draw.rect(mask, (255, 255, 255, 255), pygame.Rect(0, 0, *surf.get_size()), border_radius=radius)
+    cloned = surf.copy()
+    cloned.blit(mask, (0, 0), special_flags=pygame.BLEND_RGBA_MULT)
+    return cloned
+
 def AAfilledRoundedRect(surface, rect, color, radius=10):
     """
     Draws an anti-aliased filled rounded rectangle with a fixed corner radius.
@@ -29,7 +37,7 @@ def AAfilledRoundedRect(surface, rect, color, radius=10):
     draw_rect = pygame.Rect(
         max(0, -rect.left), 
         max(0, -rect.top), 
-        rect.width, 
+        rect.width,  
         rect.height
     )
 

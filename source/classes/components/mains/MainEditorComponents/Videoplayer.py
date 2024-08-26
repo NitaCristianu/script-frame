@@ -104,7 +104,7 @@ class VideoPlayer(Rect):
         if self.app.keyUp(pg.K_SPACE):
             self.app.videorunning = not self.app.videorunning
         if self.app.videorunning:
-            self.app.videotime += self.app.deltatime 
+            self.app.videotime += self.app.deltatime * self.app.playbackspeed
             self.drawContent()
             self.app.refresh(self.rect)
         if self.videosize != self.oldvideosize or self.app.resize:
@@ -179,7 +179,7 @@ class VideoPlayer(Rect):
         elements.sort(key= lambda el: -el.layer)
         for element in elements:
             # if element appears on the video
-            if t < element.start*1000 or t > element.end*1000: continue
+            if t < element.start*1000 or t > element.end*1000 or not element.type == "video" : continue
 
             element.instance.render_start(t/1000 - element.start)
             result: pg.Surface = element.instance.render_end()

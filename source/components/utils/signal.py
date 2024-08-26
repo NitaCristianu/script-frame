@@ -20,6 +20,7 @@ class Signal(Generic[T]):
         self.shared = True
         self.name = signalName
         self.master.setProperty(self, propType, **kargs)
+        return self
 
 
     def extract(self, val: T | Callable[[], T]) -> T:

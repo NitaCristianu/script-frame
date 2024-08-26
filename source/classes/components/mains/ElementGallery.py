@@ -70,7 +70,7 @@ class ElementGallery(Rect):
         if self.CancelButton.clicked: self.exit()
         
         if self.elementNameBox.changed:
-            inp = self.elementNameBox.input + ".py"
+            inp = self.elementNameBox.value + ".py"
             self.fileExists = False
             
             for filename in os.listdir(COMPONENTS_FOLDER_PATH):
@@ -85,7 +85,7 @@ class ElementGallery(Rect):
             self.app.refresh(self.rect)
 
         if self.CreateButton.clicked:
-            filename = self.elementNameBox.input
+            filename = self.elementNameBox.value
             if not len(filename) > 0: return
             if self.fileExists:
                 elements.append(Element(

@@ -23,7 +23,9 @@ class Node:
         
     def reset(self):
         for key in self.attributes.keys():
-            getattr(self, key).reset()
+            signal = getattr(self, key)
+            if not isinstance(signal, Signal): continue
+            signal.reset()
         for child in self.children:
             child.reset()
         

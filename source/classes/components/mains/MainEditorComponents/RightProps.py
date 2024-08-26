@@ -1,6 +1,7 @@
 from classes.components.core.Rect import *
 from classes.components.core.Slider import *
 from classes.components.core.ColorPicker import *
+from classes.components.core.Textbox import *
 from classes.components.core.Text import *
 from config.projectData import *
 from config.consts import *
@@ -32,7 +33,7 @@ class RightPropsTab(Rect):
             obj = Slider(
                 (x, y, w, propSize),
                 self.app,
-                color="#232323",
+                color="#181818",
                 onHoverModifiedColor = 0
             )
             obj.value = invLerp(
@@ -64,6 +65,19 @@ class RightPropsTab(Rect):
                 prop['value'] = colorpicker.value
                 self.app.event.fire_event(APPLY_PROPS)
             obj.binds['changed'] = set
+        elif prop['propType'] == 'textbox':
+            obj = Textbox(
+                (x, y, w, propSize),
+                self.app,
+                starterInput = prop['value'],
+                placeholder="enter text",
+                fontHeight=15,
+                autoHeight=False
+            )
+            def set(textbox):
+                prop['value'] = textbox.value
+                self.app.event.fire_event(APPLY_PROPS)
+            obj.binds['changed'] = set
         
         
         if not showtitle:
@@ -72,8 +86,8 @@ class RightPropsTab(Rect):
         obj2 = Rect(
             (x - padding/2, y-title_size - 5, w + padding, obj.h + 2 * title_size + 10),
             self.app,
-            color="#232323",
-            borderRadius=16
+            color="#181818",
+            borderRadius=4
         )
         obj2.add_child(Text(
             (x, y-title_size, w, 0),
@@ -107,13 +121,13 @@ class RightPropsTab(Rect):
                 'propType' : 'consttext1',
             },
         ]
-        props: List['Prop'] = [
-            *element.instance.props,
-            ]
+        if element.type == "video":
+            defaults: List['Prop'] = [
+                *defaults,
+                *element.instance.props,
+                ]
 
         for prop in defaults:
-            lastY += self.addProp(lastY, prop).h + gap
-        for prop in props:
             lastY += self.addProp(lastY, prop).h + gap
         self.draw()
         self.app.refresh(self.rect)

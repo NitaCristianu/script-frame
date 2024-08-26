@@ -9,15 +9,20 @@ class Main(Scene):
 
     def __init__(self) -> None:
         super().__init__()
-        self.a = self.add(rectangle(self,
-                                    color = pg.Color("blue")
+        self.a = self.add(text(self,
+                                    color = pg.Color("white"),
+                                    # centered = True,
+                                    weight = 'bold',
+                                    fontheight = 100,
+                                    centered = True,
+                                    x = 800,
+                                    y = 450
                                     ))
-        self.a.w.share("rect width", "slider", min = 0, max = 500)
         self.a.color.share("rect color", "color1")
+        self.signalA = Signal("Scrie ceva", self).share("textA", "textbox")
 
     def render(self):
-        self.a.radius(0, 1)
-        self.a.h(700, 1)
+        self.a.text("Scrie Ceva", 1)
         self.wait(2)
-        self.a.radius(100, 1)
+        self.a.text(self.signalA(), .4, linear)
         self.wait(2)

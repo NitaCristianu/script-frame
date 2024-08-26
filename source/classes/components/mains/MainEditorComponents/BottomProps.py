@@ -23,7 +23,7 @@ class Timeline(Rect):
         self.lineFont = getFont(fontHeight=10, weight='semibold')
         self.layersTop = 0
         self.layerSize = 50
-        self.seconds = 5
+        self.timeline_lenght = 5
         self.selectedInTimeline = "outside"
         self.elementsrect = []
         self.hoveredElement : "Element" = None
@@ -31,6 +31,12 @@ class Timeline(Rect):
         
 
         app.event.add_listener(APPLY_PROPS, lambda: (self.app.draw(), app.refresh(self.rect)))
+
+    def getTimelineStartTime(self):
+        return min(-self.currentTime, -self.timeline_lenght+self.currentTime)
+
+    def getTimelineEndTime(self):
+        return max(-self.currentTime, -self.timeline_lenght+self.currentTime)
 
     def drawTimeline(self):
         timelinecolor = "#928b8d"
@@ -92,8 +98,15 @@ class Timeline(Rect):
 
         self.app.screen.blit(surf, (x_start, top))
 
-    def upperTab(self):
-        pass
+    def getElementSize(self, element):
+        element_start = element.start
+        element_end = element.end
+        duration = element_end - element_start
+        left = int(-(-element_start - self.currentTime - 1) * self.second_length * self.zoomlevel)
+        top = int(element.layer * self.layerSize + 2)
+        width = int(duration * self.second_length * self.zoomlevel)
+        height = int(self.layerSize - 4)
+        return left, top, width, height
 
     def drawElements(self):
         x_start = x_start_offset
@@ -103,19 +116,11 @@ class Timeline(Rect):
         surf = pg.Surface((x_end - x_start, bottom ), pg.SRCALPHA)
 
         self.elementsrect.clear()
+
         for element in elements:
-            element_start = element.start
-            element_end = element.end
-            duration = element_end - element_start # in seconds
-            top = element.layer * self.layerSize + 2
-            left = -(-element_start - self.currentTime - 1) * self.second_length * self.zoomlevel
-            width = duration * self.second_length * self.zoomlevel
-            height = self.layerSize - 4
             
-            left = int(left)
-            top = int(top)
-            width = int(width)
-            height = int(height)
+            left, top, width, height = self.getElementSize(element)
+            
             self.elementsrect.append((left+self.x+x_start, top+self.layersTop, width, height))
 
             color = hex_to_rgb(element.color)
@@ -125,27 +130,44 @@ class Timeline(Rect):
             gfxdraw.box(
                 surf,
                 pg.Rect(left, top, width, height),
-                color
+                lighter
             )
             gfxdraw.rectangle(
                 surf,
                 pg.Rect(left, top, width+1, height+1),
-                color
+                lighter
             )
             gfxdraw.box(
                 surf,
                 pg.Rect(left, top+height/2, width, height/2),
-                lighter
+                color
             )
             gfxdraw.rectangle(
                 surf,
                 pg.Rect(left, top+height/2, width+1, height/2+1),
-                lighter
+                color
             )
             text_surf = self.elementFont.render(len(element.name) < 10 and element.name or element[:7]+"...", True, inverted)
-            text_rect = text_surf.get_rect(center = (left, top + height * 0.75))
+            text_rect = text_surf.get_rect(center = (left, top + height * 0.25))
             surf.blit(text_surf, pg.Rect(left + 3, text_rect.y, text_rect.w, text_rect.h))
             
+            if element.type == 'audio':
+                sample_padding = 10
+                sample_start_x = left + sample_padding
+                sample_end_x = left + width - sample_padding
+                x = sample_start_x
+                increment = (1 / len(element.times)) * (sample_end_x-sample_start_x)
+                
+                for val in element.times:
+                    x += increment
+                    y = clamp(val*height//8, 0, height//4-3)
+                    center = top + int(height*.75)
+                    pg.draw.aaline(
+                        surf,
+                        inverted,
+                        (int(x), center+y),
+                        (int(x), center-y)
+                    )
            
             if element.selected:
                 gfxdraw.rectangle(
@@ -175,14 +197,19 @@ class Timeline(Rect):
             return
         super().drawContent()
         self.drawTimeline()
-        self.upperTab()
         self.drawElements()
 
     def update(self):
         if not self.enabled: return
         super().update()
         self.layersTop = 35 + self.y
-        self.second_length = self.w / self.seconds
+        self.second_length = self.w / self.timeline_lenght
+
+        oldvideotime = self.app.videotime - self.app.deltatime * self.app.playbackspeed
+        for element in (x for x in elements if x.type == "audio"):
+            if self.app.videotime > element.start*1000 and oldvideotime < element.start*1000 and self.app.videorunning: 
+                element.pygamesound.play()
+
 
         if self.app.mbuttons[0] and not self.app.oldmbuttons[0]:
             self.selectedInTimeline = self.getSelected()
@@ -221,9 +248,8 @@ class Timeline(Rect):
                 else:
                     hovered.start += change
                     hovered.end += change
-
-
             elif selecting == "videomark":
+                self.app.videorunning = False
                 if self.app.holdingShift:
                    self.app.videotime = round(self.app.videotime + change * 1000, 1)
                 else:
@@ -246,8 +272,11 @@ class Timeline(Rect):
             self.drawContent()
             self.app.refresh(self.rect)
 
+    def getTimeMarkPosition(self, time) -> float:
+        return (time + self.currentTime + 1) * self.second_length * self.zoomlevel
+
     def getVideoTimeMarkPosition(self) -> float:
-        return (self.app.videotime/1000 + self.currentTime + 1) * self.second_length * self.zoomlevel
+        return self.getTimeMarkPosition(self.app.videotime/1000)
 
     def getMouseTime(self) -> float:
         mx, my = self.app.mpos
@@ -275,6 +304,7 @@ class Timeline(Rect):
         return "timeline"
 
 class BottomPropsTab(Rect):
+    
     def __init__(
         self,
         dimension: tuple[int, int, int, int],

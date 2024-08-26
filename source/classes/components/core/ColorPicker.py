@@ -28,7 +28,6 @@ class ColorPicker(Rect):
             self.satpos = x - self.x
             self.lumpos = y - self.y
             hue = max(0, min(100, int(self.value.hsla[0])))
-            print(hue)
             color = pg.Color(0)
             color.hsla = (hue, xt, yt, 100)
             self.value = color

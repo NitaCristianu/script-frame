@@ -12,12 +12,14 @@ class Textbox(Text):
     changed = False
     placeholder = ""
 
-    def __init__(self, dimension: tuple[int, int, int, int], app: any, color: str = "#00000000", borderRadius=0, font="Poppins", italic=False, weight='normal', fontHeight=25, text="", align="center", fontColor="#ececec", padding=0, autoHeight=True, detectHover=True, onHoverModifiedColor=0, placeholder = "") -> None:
+    def __init__(self, dimension: tuple[int, int, int, int], app: any, color: str = "#00000000", borderRadius=0, font="Poppins", italic=False, weight='normal', fontHeight=25, text="", align="center", fontColor="#ececec", padding=0, autoHeight=True, detectHover=True, onHoverModifiedColor=0, placeholder = "", starterInput = "") -> None:
         super().__init__(dimension, app, color, borderRadius, font, italic, weight, fontHeight, text, align, fontColor, padding, autoHeight, detectHover, onHoverModifiedColor)
         self.holding = self.changed = False
         self.lastDeleted = self.delay = 0
         self.placeholder = placeholder
-        self.lastPressedTime = self.input = self.text = ""
+        self.value = starterInput
+        self.lastPressedTime = self.text = ""
+        self.binds['changed'] = None
 
     def applyKey(self, key: str):
         capslock = pg.key.get_mods() & pg.KMOD_CAPS
@@ -25,11 +27,11 @@ class Textbox(Text):
         isUpper = holdShift != capslock
         
         if len(key) == 1:
-            self.input = self.input + (isUpper and key.upper() or key)
+            self.value = self.value + (isUpper and key.upper() or key)
         elif key == "BACKSPACE":
-            self.input = self.input[:-1]
+            self.value = self.value[:-1]
         elif key == "SPACE":
-            self.input = self.input + " "
+            self.value = self.value + " "
 
         self.lastDeleted = self.app.currentTime
         self.lastPressedTime = key
@@ -41,10 +43,10 @@ class Textbox(Text):
         return selected_id == self.id
         
     def read(self):
-        return self.input or ""
+        return self.value or ""
     
     def setInput(self, value: str):
-        self.input = value
+        self.value = value
         return True
 
     def drawContent(self):
@@ -63,8 +65,8 @@ class Textbox(Text):
 
 
         self.app.screen.blit(surface, (x, y))
-        text = len(self.input) > 0 and self.input or self.placeholder
-        color = len(self.input) > 0 and self.fontColor or modifyRGB(hex_to_rgb(self.fontColor), -.4)
+        text = len(self.value) > 0 and self.value or self.placeholder
+        color = len(self.value) > 0 and self.fontColor or modifyRGB(hex_to_rgb(self.fontColor), -.4)
         text_surface = self.font.render(text, True, color)
         h = self.autoHeight and self.fontHeight or self.h
         
@@ -110,6 +112,7 @@ class Textbox(Text):
                 self.lastPressedTime = ""
             
             if self.changed:
-                self.text = len(self.input) > 0 and self.input or self.placeholder
+                self.text = len(self.value) > 0 and self.value or self.placeholder
+                self.binds['changed'](self)
                 self.app.draw()
                 self.app.refresh(self.rect)

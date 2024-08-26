@@ -6,6 +6,7 @@ from config.consts import *
 def main():
     pygame.init()
     pygame.font.init()
+    pygame.mixer.init()
     screen = pygame.display.set_mode(INITIAL_VIEWPORT_SIZE, pygame.RESIZABLE)
     pygame.display.set_caption(NAME)
 

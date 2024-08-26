@@ -40,6 +40,7 @@ class App:
 
     #------ video related
     videotime = 0
+    playbackspeed = 1
     videolenght = 5000 # 5000 ms
     videospeedmul = 1
     videorunning = False
