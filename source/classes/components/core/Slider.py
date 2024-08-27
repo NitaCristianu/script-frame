@@ -1,4 +1,5 @@
 from classes.components.core.Rect import *
+from classes.components.core.Text import *
 from utils.math import *
 from pygame import gfxdraw
 
@@ -9,7 +10,9 @@ class Slider(Rect):
         self.value = 0.5
         self.padding = 10
         self.dragging = False
+        self.range = (0, 1)
         self.binds['changed'] = None
+        self.font = getFont(fontHeight=10, weight='extralight')
     
     def getValuePoint(self):
         r = self.h  // 6
@@ -60,6 +63,10 @@ class Slider(Rect):
                             color,
                             r
                             )
+        
+        text_surf = self.font.render(f'{round(lerp(self.range[0], self.range[1], self.value)*100)/100}', 1, modifyRGB(hex_to_rgb(self.color), .6))
+        text_rect = text_surf.get_rect(center = (self.x + self.w//2, self.y + self.h//4))                
+
         gfxdraw.filled_circle(surf,
                               *centerA,
                               int(r*0.6),
@@ -88,6 +95,8 @@ class Slider(Rect):
                               int(r*.6),
                               modifyRGB(hex_to_rgb(self.color), modifier)
                               )
+                              
         self.app.screen.blit(surf, (self.x, self.y))
+        self.app.screen.blit(text_surf, text_rect)
 
 

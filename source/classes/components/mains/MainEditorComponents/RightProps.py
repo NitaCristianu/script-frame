@@ -5,7 +5,7 @@ from classes.components.core.Textbox import *
 from classes.components.core.Text import *
 from config.projectData import *
 from config.consts import *
-from typing import Union
+from typing import Optional
 
 gap = 15
 padding = 15
@@ -22,7 +22,7 @@ class RightPropsTab(Rect):
         self.color = "#1e1e24"
         app.event.add_listener(SELECT_ELEMENT_EVENT, lambda : self.setProps())
 
-    def addProp(self, lastY, prop) -> Area:
+    def addProp(self, lastY, prop, element: Optional['Element'] = None) -> Area:
         obj = None
         title_size = 15
         x = self.x + padding
@@ -36,13 +36,28 @@ class RightPropsTab(Rect):
                 color="#181818",
                 onHoverModifiedColor = 0
             )
-            obj.value = invLerp(
-                prop['min'],
-                prop['max'],
-                prop['value']
-            )
+            obj.range = (prop['min'], prop['max'])
+            if not element:
+                obj.value = invLerp(
+                    prop['min'],
+                    prop['max'],
+                    prop['value']
+                )
+            elif element and element.type == 'audio':
+                name = prop['name']
+                if name == 'volume': name = 'volumemul'
+                obj.value = invLerp(
+                    prop['min'],
+                    prop['max'],
+                    getattr(element, name)
+                )
             def set(slider):
-                prop['value'] = lerp(prop['min'], prop['max'], slider.value)
+                if element and element.type == "audio":
+                    name = prop['name']
+                    if name == 'volume': name = 'volumemul'
+                    setattr(element, name, lerp(prop['min'], prop['max'], slider.value))
+                elif not element:
+                    prop['value'] = lerp(prop['min'], prop['max'], slider.value)
                 self.app.event.fire_event(APPLY_PROPS)
             obj.binds['changed'] = set
         elif prop['propType'] == 'consttext1':
@@ -62,7 +77,10 @@ class RightPropsTab(Rect):
                 color = prop['value']
             )
             def set(colorpicker):
-                prop['value'] = colorpicker.value
+                if element and element.type == "audio":
+                    pass
+                else:
+                    prop['value'] = colorpicker.value
                 self.app.event.fire_event(APPLY_PROPS)
             obj.binds['changed'] = set
         elif prop['propType'] == 'textbox':
@@ -121,6 +139,17 @@ class RightPropsTab(Rect):
                 'propType' : 'consttext1',
             },
         ]
+        if element.type == "audio":
+            defaults: List['Prop'] = [
+                *defaults,
+                {
+                    'name' : 'volume',
+                    'value' : 1,
+                    'propType' : 'slider',
+                    'min' : 0.01,
+                    'max' : 10
+                }
+            ]
         if element.type == "video":
             defaults: List['Prop'] = [
                 *defaults,
@@ -128,7 +157,9 @@ class RightPropsTab(Rect):
                 ]
 
         for prop in defaults:
-            lastY += self.addProp(lastY, prop).h + gap
+            element_arg = None
+            if element.type == 'audio': element_arg = element
+            lastY += self.addProp(lastY, prop, element_arg).h + gap
         self.draw()
         self.app.refresh(self.rect)
 

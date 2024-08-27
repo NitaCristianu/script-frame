@@ -22,7 +22,7 @@ class Timeline(Rect):
         self.detectHover = True
         self.lineFont = getFont(fontHeight=10, weight='semibold')
         self.layersTop = 0
-        self.layerSize = 50
+        self.layerSize = 100
         self.timeline_lenght = 5
         self.selectedInTimeline = "outside"
         self.elementsrect = []
@@ -150,24 +150,32 @@ class Timeline(Rect):
             text_surf = self.elementFont.render(len(element.name) < 10 and element.name or element[:7]+"...", True, inverted)
             text_rect = text_surf.get_rect(center = (left, top + height * 0.25))
             surf.blit(text_surf, pg.Rect(left + 3, text_rect.y, text_rect.w, text_rect.h))
-            
-            if element.type == 'audio':
-                sample_padding = 10
-                sample_start_x = left + sample_padding
-                sample_end_x = left + width - sample_padding
-                x = sample_start_x
-                increment = (1 / len(element.times)) * (sample_end_x-sample_start_x)
-                
-                for val in element.times:
-                    x += increment
-                    y = clamp(val*height//8, 0, height//4-3)
+             
+            if element.type == 'audio' and element.selected:
+                data = element.data
+                downscale_factor = 500
+                leftchannel = []
+                rightchannel = []
+                for index in range(0, len(data), downscale_factor):
+                    leftval = data[index][0]
+                    leftval *= element.volumemul * 8
+                    y0 = -clamp(-leftval, 0, height//4)
+                    rightval = data[index][1]
+                    rightval *= element.volumemul * 8
+                    y1 = clamp(rightval, 0, height//4)
                     center = top + int(height*.75)
-                    pg.draw.aaline(
-                        surf,
-                        inverted,
-                        (int(x), center+y),
-                        (int(x), center-y)
-                    )
+                    leftchannel.append((int(index / len(data) * width + left), center-y0))
+                    rightchannel.append((int(index / len(data) * width + left), center-y1))
+                gfxdraw.filled_polygon(
+                    surf,
+                    leftchannel,
+                    inverted
+                )
+                gfxdraw.filled_polygon(
+                    surf,
+                    rightchannel,
+                    inverted
+                )
            
             if element.selected:
                 gfxdraw.rectangle(
@@ -208,7 +216,10 @@ class Timeline(Rect):
         oldvideotime = self.app.videotime - self.app.deltatime * self.app.playbackspeed
         for element in (x for x in elements if x.type == "audio"):
             if self.app.videotime > element.start*1000 and oldvideotime < element.start*1000 and self.app.videorunning: 
+                element.pygamesound.set_volume(element.volumemul)
                 element.pygamesound.play()
+            elif not self.app.videorunning:
+                element.pygamesound.stop()
 
 
         if self.app.mbuttons[0] and not self.app.oldmbuttons[0]:

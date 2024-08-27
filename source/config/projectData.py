@@ -1,9 +1,9 @@
 from typing import List
 import pygame as pg
 from uuid import uuid4
-from typing import List
+from typing import List, Literal
+from utils.audio import *
 import wave
-import numpy as np
 
 class Prop:
     name : str
@@ -40,7 +40,7 @@ class Element:
         self.start = self.end = 0
         self.x = self.y = 0
         self.id = uuid4().hex
-        self.type = "video"
+        self.type: Literal['video', 'audio'] = 'video'
         self.selected = False
         self.dragging = False
 
@@ -51,6 +51,9 @@ class Element:
 
         if len(self.source) > 0:
             self.instance = self.getInstance()
+        
+        if self.type == 'audio':
+            self.volumemul = 1
 
     def getFullSource(self):
         if self.type == 'audio':
@@ -66,10 +69,10 @@ class Element:
 
             self.freq = self.instance.getframerate()
             self.nframes = self.instance.getnframes()
-            self.signal_wave = self.instance.readframes(-1)
             self.lenght = self.nframes / self.freq
-            self.signal_array = np.frombuffer(self.signal_wave, dtype=np.int16)
-            self.times = np.linspace(0, self.lenght, num = len(self.signal_array) // 5000)
+        
+            self.data, self.framerate = read_wav(self.getFullSource(), downsample_factor=10)
+
             self.end = self.start + self.lenght
             
             self.instance.close()
@@ -92,5 +95,5 @@ class Element:
 pg.mixer.init()
 elements: List["Element"] = [
     Element("testobj"),
-    Element("test.wav", type = "audio")
+    Element("test3.wav", type = "audio")
 ]
