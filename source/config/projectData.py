@@ -3,6 +3,7 @@ import pygame as pg
 from uuid import uuid4
 from typing import List, Literal
 from utils.audio import *
+from config.consts import *
 import wave
 
 class Prop:
@@ -57,9 +58,9 @@ class Element:
 
     def getFullSource(self):
         if self.type == 'audio':
-            return f'source\\components\\audio\\{self.source}'
+            return COMPONENTS_DIRECTORY + f'\\audio\\{self.source}'
         else:
-            return f'source\\components\\{self.source}.py'
+            return COMPONENTS_DIRECTORY + f'\\{self.source}.py'
 
 
     def getInstance(self):
@@ -94,6 +95,6 @@ class Element:
 
 pg.mixer.init()
 elements: List["Element"] = [
-    Element("testobj"),
-    Element("test3.wav", type = "audio")
+    Element("testobj", layer = 1),
+    Element("test.wav", type = "audio")
 ]

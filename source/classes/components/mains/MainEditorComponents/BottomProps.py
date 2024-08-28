@@ -10,14 +10,16 @@ from utils.colors import *
 from utils.shapes import *
 from utils.math import *
 from math import ceil
+from typing import Literal
 
 x_start_offset = 2
 
-class Timeline(Rect):
+class BottomPad(Rect):
     def __init__(self, dimension: tuple[int, int, int, int], app: any, color: str | tuple[int, int, int, int] = "#ffffff", borderRadius=0, detectHover=False, onHoverModifiedColor=0) -> None:
         super().__init__(dimension, app, color, borderRadius, detectHover, onHoverModifiedColor)
 
         self.currentTime = 0.5
+        self.mode: Literal["timeline", "recordingmic"] = "timeline"
         self.zoomlevel = 1
         self.detectHover = True
         self.lineFont = getFont(fontHeight=10, weight='semibold')
@@ -38,7 +40,7 @@ class Timeline(Rect):
     def getTimelineEndTime(self):
         return max(-self.currentTime, -self.timeline_lenght+self.currentTime)
 
-    def drawTimeline(self):
+    def drawTimelineBgr(self):
         timelinecolor = "#928b8d"
         x_start = self.x + x_start_offset
         x_end = self.x + self.w - x_start_offset
@@ -52,48 +54,54 @@ class Timeline(Rect):
         # Create a transparent surface for drawing
         surf = pg.Surface((x_dist, bottom - top), pg.SRCALPHA)
         
-        currentX = int(t % int(distance / 5))
-        while currentX < x_end:
-            pg.gfxdraw.vline(
-                surf,
-                int(currentX),
-                2,
-                4,
-                hex_to_rgb(timelinecolor),
-            )
-            currentX += distance / 5               
+        scale = max(int(1/self.zoomlevel),1)
+        currentX = int(t % max(int(distance / 5), 1))
+        if self.zoomlevel > .4:
+            while currentX < x_end:
+                pg.gfxdraw.vline(
+                    surf,
+                    int(currentX),
+                    2,
+                    4,
+                    hex_to_rgb(timelinecolor),
+                )
+                currentX += distance / 5            
         
         
         # Draw directly onto the main screen
         currentX = int(offset)
         currentT = ceil(self.currentTime)
+        # currentT -= currentT%2
+        i = currentT%scale
         while currentX < x_end:
             # Draw thicker lines
-            pg.gfxdraw.vline(
-                surf,
-                int(currentX + 0.5),
-                2,
-                7,
-                hex_to_rgb(timelinecolor),
-            )
-            pg.gfxdraw.vline(
-                surf,
-                int(currentX - 0.5),
-                2,
-                7,
-                hex_to_rgb(timelinecolor),
-            )
-            text_surf = self.lineFont.render(f"{-int(currentT)} s", True, hex_to_rgb("#c2cbcd"))
-            text_rect = text_surf.get_rect(center=(currentX + 1, 20))
-            surf.blit(text_surf, text_rect)
-            pg.gfxdraw.vline(
-                surf,
-                int(currentX),
-                35,
-                bottom,
-                hex_to_rgb("#262626"),
-            )
-            currentX += distance             
+            i+=1
+            if i%scale == 0:
+                pg.gfxdraw.vline(
+                    surf,
+                    int(currentX + 0.5),
+                    2,
+                    7,
+                    hex_to_rgb(timelinecolor),
+                )
+                pg.gfxdraw.vline(
+                    surf,
+                    int(currentX - 0.5),
+                    2,
+                    7,
+                    hex_to_rgb(timelinecolor),
+                )
+                text_surf = self.lineFont.render(f"{-int(currentT)} s", True, hex_to_rgb("#c2cbcd"))
+                text_rect = text_surf.get_rect(center=(currentX + 1, 20))
+                surf.blit(text_surf, text_rect)
+                pg.gfxdraw.vline(
+                    surf,
+                    int(currentX),
+                    35,
+                    bottom,
+                    hex_to_rgb("#262626"),
+                )
+            currentX += distance          
             currentT -= 1
 
         self.app.screen.blit(surf, (x_start, top))
@@ -200,27 +208,21 @@ class Timeline(Rect):
         )
         self.app.screen.blit(surf, (self.x + x_start, self.layersTop))
 
+    
+
     def drawContent(self):
         if not self.enabled: 
             return
         super().drawContent()
-        self.drawTimeline()
-        self.drawElements()
+        if self.mode == 'timeline': self.drawTimeline()
 
-    def update(self):
-        if not self.enabled: return
-        super().update()
+    def drawTimeline(self):
+        self.drawTimelineBgr()
+        self.drawElements()
+    
+    def updateTimeline(self):
         self.layersTop = 35 + self.y
         self.second_length = self.w / self.timeline_lenght
-
-        oldvideotime = self.app.videotime - self.app.deltatime * self.app.playbackspeed
-        for element in (x for x in elements if x.type == "audio"):
-            if self.app.videotime > element.start*1000 and oldvideotime < element.start*1000 and self.app.videorunning: 
-                element.pygamesound.set_volume(element.volumemul)
-                element.pygamesound.play()
-            elif not self.app.videorunning:
-                element.pygamesound.stop()
-
 
         if self.app.mbuttons[0] and not self.app.oldmbuttons[0]:
             self.selectedInTimeline = self.getSelected()
@@ -242,46 +244,60 @@ class Timeline(Rect):
         if self.selectedInTimeline != "outside" and self.hovered and self.app.mbuttons[0]:
             delta = self.app.mpos[0] - self.app.oldmpos[0]
             distance = self.zoomlevel * self.second_length  # assuming distance is the equivalent of one second
-            change =  delta / distance
+            change = 0
+            if distance != 0:
+                change =  delta / distance
             selecting = self.selectedInTimeline
-            if selecting == "timeline":   
-                self.currentTime += change
-            elif selecting == "element" and self.hoveredElement:
-                hovered = self.hoveredElement
-                hovered.selected = True
-                mLayer = int(max(self.app.mpos[1] - self.layersTop, 0)/self.layerSize)
-                hovered.layer = mLayer
-                if self.app.holdingShift:
-                    delta = hovered.start
-                    hovered.start = round(change+hovered.start, 1)
-                    delta = hovered.start - delta
-                    hovered.end += delta
-                else:
-                    hovered.start += change
-                    hovered.end += change
-            elif selecting == "videomark":
-                self.app.videorunning = False
-                if self.app.holdingShift:
-                   self.app.videotime = round(self.app.videotime + change * 1000, 1)
-                else:
-                   self.app.videotime += change * 1000
 
-            if selecting == "timeline" or selecting == "outside":
-                found = False
-                for element in elements:
-                    found = True
-                    element.selected = False
-                if found : self.app.event.fire_event(SELECT_ELEMENT_EVENT)
-
+            if self.app.holdingShift:
+                self.zoomlevel = clamp(self.zoomlevel + delta/800, 0.05, 90)
                 self.draw()
                 self.app.refresh(self.rect)
             else:
-                self.app.draw()
-                self.app.refresh()
+                if selecting == "timeline":   
+                    self.currentTime += change
+                elif selecting == "element" and self.hoveredElement:
+                    hovered = self.hoveredElement
+                    hovered.selected = True
+                    mLayer = int(max(self.app.mpos[1] - self.layersTop, 0)/self.layerSize)
+                    hovered.layer = mLayer
+                    if self.app.holdingShift:
+                        delta = hovered.start
+                        hovered.start = round(change+hovered.start, 1)
+                        delta = hovered.start - delta
+                        hovered.end += delta
+                    else:
+                        hovered.start += change
+                        hovered.end += change
+                elif selecting == "videomark":
+                    self.app.videorunning = False
+                    if self.app.holdingShift:
+                        self.app.videotime = round(self.app.videotime + change * 1000, 1)
+                    else:
+                        self.app.videotime += change * 1000
+                if selecting == "timeline" or selecting == "outside":
+                    found = False
+                    for element in elements:
+                        found = True
+                        element.selected = False
+                    if found : self.app.event.fire_event(SELECT_ELEMENT_EVENT)
+
+                    self.draw()
+                    self.app.refresh(self.rect)
+                else:
+                    self.app.draw()
+                    self.app.refresh()
 
         if self.app.videorunning:
             self.drawContent()
             self.app.refresh(self.rect)
+
+        
+
+    def update(self):
+        if not self.enabled: return
+        super().update()
+        if self.mode == "timeline": self.updateTimeline()
 
     def getTimeMarkPosition(self, time) -> float:
         return (time + self.currentTime + 1) * self.second_length * self.zoomlevel
@@ -291,10 +307,14 @@ class Timeline(Rect):
 
     def getMouseTime(self) -> float:
         mx, my = self.app.mpos
-        return mx / (self.second_length * self.zoomlevel ) - 3.5 - self.currentTime
+        sl = self.second_length * self.zoomlevel
+        currentTime = self.currentTime
+        secondsaonscreen = int(self.w / sl)
+        lastsecond = secondsaonscreen-currentTime-1
+        firstsecond = -self.currentTime-1
+
+        return lerpMap(self.x, self.x+self.w, firstsecond, lastsecond, mx)
     
-
-
     def getSelected(self) -> str:
         mx,my = self.app.mpos
         if not inRect(mx,my,self.x,self.y,self.w,self.h):
@@ -324,7 +344,7 @@ class BottomPropsTab(Rect):
         self.color = BGR_COLOR
 
         self.add_child([
-            Timeline((0, 45, '1x', '1y-50'), self.app, color = "#0e0e0e", borderRadius=4)
+            BottomPad((0, 45, '1x', '1y-50'), self.app, color = "#0e0e0e", borderRadius=4)
         ])
         self.onHoverModifiedColor = 0
     
@@ -352,12 +372,27 @@ class BottomPropsTab(Rect):
             detectHover=True
         ))
 
+        self.add_child(Image(
+            dimension=(175, 10, '25', '25'),
+            app = self.app,
+            pngSource= "razor.png",
+            color = "#262626",
+            scale=(0.7, 0.7),
+            centerImage=True,
+            detectHover=True
+        ))
+
     @property
     def renderButton(self):
         return self.children[1]
+
     @property
     def transformModeBtn(self):
         return self.children[2]
+    
+    @property
+    def cutmode(self):
+        return self.children[3]
 
     def update(self):
         super().update()

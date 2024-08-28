@@ -9,7 +9,7 @@ def renderFrame(videosize, t):
     frame: pg.Surface = pg.Surface(videosize, pg.SRCALPHA, 32)
 
     elements.sort(key= lambda el: -el.layer)
-    for element in elements:
+    for element in (element for element in elements if element.type == "video"):
         # if element appears on the video
         if t < element.start*1000 or t > element.end*1000: continue
 
@@ -88,8 +88,8 @@ class VideoPlayer(Rect):
         return (int(cx - object_w/2), int(cy - object_h/2))
 
     def drawBox(self, frame, x, y, w, h):
-        gfxdraw.box(frame, pg.Rect(x-10,y-10,w+20,h+20), (255,255,255))
-
+        gfxdraw.box(frame, pg.Rect(x-10,y-10,w+20,h+20), (250,210,50, 150))
+    
     def drawGridLines(self, frame, x, y, w, h):
         pg.draw.line(frame, (255,255,255, 100), (0, y+h/2), (self.videosize[0], y+h/2), 10)
         pg.draw.line(frame, (255,255,255, 100), (x+w/2, 0), (x+w/2, self.videosize[1]), 10)
@@ -144,8 +144,12 @@ class VideoPlayer(Rect):
                     self.refresh()
 
                 # move object if being dragged
+                
                 if element.dragging:
-                    if not self.app.holdingShift:
+                    if self.app.holdingCtrl:
+                        element.x = 0
+                        element.y = 0
+                    elif not self.app.holdingShift:
                         # move based on grid
                         new_x, new_y = self.roundElementCenter(mx, my, unit_x, unit_y, object_w, object_h)
                         element.x = new_x
@@ -158,8 +162,32 @@ class VideoPlayer(Rect):
 
                     self.refresh()
 
+        self.playAudio()
         # register video size change
         self.oldvideosize = self.videosize       
+
+    def playSound(self, sound: pg.mixer.Sound, soundTime: float):
+        time = self.app.videotime
+        oldtime = time - self.app.deltatime * self.app.playbackspeed
+
+        if time >= soundTime and oldtime < soundTime and self.app.videorunning: 
+            sound.play()
+        elif not self.app.videorunning:
+            sound.stop()
+
+
+    def playAudio(self):
+        for element in elements:
+            if element.type == "audio":
+                sound = element.pygamesound
+                sound.set_volume(element.volumemul)
+                self.playSound(sound, element.start * 1000)
+            elif element.type == "video":
+                sounds = element.instance.sounds
+                for sound, time in sounds:
+                    self.playSound(sound, time * 1000 + element.start * 1000)
+
+            
 
     def drawContent(self):
         # the conditions for rendering
@@ -167,7 +195,7 @@ class VideoPlayer(Rect):
         if self.videosize == (0,0): return
         if self.app.currentTime - self.lastRender < 30: return
         super().drawContent()
-        
+
         # frame and time variables
         frame = pg.Surface(self.videosize, pg.SRCALPHA, 32)
         t = self.app.videotime

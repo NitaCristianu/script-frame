@@ -73,7 +73,7 @@ class ElementGallery(Rect):
             inp = self.elementNameBox.value + ".py"
             self.fileExists = False
             
-            for filename in os.listdir(COMPONENTS_FOLDER_PATH):
+            for filename in os.listdir(COMPONENTS_DIRECTORY):
                 if inp == filename:
                     self.fileExists = True
                     break

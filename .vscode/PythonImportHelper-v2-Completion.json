@@ -1,0 +1,1662 @@
+[
+    {
+        "label": "pygame",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "pygame",
+        "description": "pygame",
+        "detail": "pygame",
+        "documentation": {}
+    },
+    {
+        "label": "gfxdraw",
+        "importPath": "pygame",
+        "description": "pygame",
+        "isExtraImport": true,
+        "detail": "pygame",
+        "documentation": {}
+    },
+    {
+        "label": "gfxdraw",
+        "importPath": "pygame",
+        "description": "pygame",
+        "isExtraImport": true,
+        "detail": "pygame",
+        "documentation": {}
+    },
+    {
+        "label": "gfxdraw",
+        "importPath": "pygame",
+        "description": "pygame",
+        "isExtraImport": true,
+        "detail": "pygame",
+        "documentation": {}
+    },
+    {
+        "label": "gfxdraw",
+        "importPath": "pygame",
+        "description": "pygame",
+        "isExtraImport": true,
+        "detail": "pygame",
+        "documentation": {}
+    },
+    {
+        "label": "List",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Optional",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Union",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Any",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Any",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "List",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Optional",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Literal",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Optional",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Any",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "List",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Optional",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Union",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Any",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "TypeVar",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Generic",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Callable",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "List",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "List",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Literal",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "uuid4",
+        "importPath": "uuid",
+        "description": "uuid",
+        "isExtraImport": true,
+        "detail": "uuid",
+        "documentation": {}
+    },
+    {
+        "label": "uuid4",
+        "importPath": "uuid",
+        "description": "uuid",
+        "isExtraImport": true,
+        "detail": "uuid",
+        "documentation": {}
+    },
+    {
+        "label": "uuid4",
+        "importPath": "uuid",
+        "description": "uuid",
+        "isExtraImport": true,
+        "detail": "uuid",
+        "documentation": {}
+    },
+    {
+        "label": "inRect",
+        "importPath": "utils.math",
+        "description": "utils.math",
+        "isExtraImport": true,
+        "detail": "utils.math",
+        "documentation": {}
+    },
+    {
+        "label": "*",
+        "importPath": "utils.math",
+        "description": "utils.math",
+        "isExtraImport": true,
+        "detail": "utils.math",
+        "documentation": {}
+    },
+    {
+        "label": "*",
+        "importPath": "utils.math",
+        "description": "utils.math",
+        "isExtraImport": true,
+        "detail": "utils.math",
+        "documentation": {}
+    },
+    {
+        "label": "*",
+        "importPath": "utils.math",
+        "description": "utils.math",
+        "isExtraImport": true,
+        "detail": "utils.math",
+        "documentation": {}
+    },
+    {
+        "label": "*",
+        "importPath": "utils.math",
+        "description": "utils.math",
+        "isExtraImport": true,
+        "detail": "utils.math",
+        "documentation": {}
+    },
+    {
+        "label": "*",
+        "importPath": "utils.math",
+        "description": "utils.math",
+        "isExtraImport": true,
+        "detail": "utils.math",
+        "documentation": {}
+    },
+    {
+        "label": "*",
+        "importPath": "utils.math",
+        "description": "utils.math",
+        "isExtraImport": true,
+        "detail": "utils.math",
+        "documentation": {}
+    },
+    {
+        "label": "clamp",
+        "importPath": "utils.math",
+        "description": "utils.math",
+        "isExtraImport": true,
+        "detail": "utils.math",
+        "documentation": {}
+    },
+    {
+        "label": "*",
+        "importPath": "classes.components.core.Rect",
+        "description": "classes.components.core.Rect",
+        "isExtraImport": true,
+        "detail": "classes.components.core.Rect",
+        "documentation": {}
+    },
+    {
+        "label": "*",
+        "importPath": "classes.components.core.Rect",
+        "description": "classes.components.core.Rect",
+        "isExtraImport": true,
+        "detail": "classes.components.core.Rect",
+        "documentation": {}
+    },
+    {
+        "label": "*",
+        "importPath": "classes.components.core.Rect",
+        "description": "classes.components.core.Rect",
+        "isExtraImport": true,
+        "detail": "classes.components.core.Rect",
+        "documentation": {}
+    },
+    {
+        "label": "*",
+        "importPath": "classes.components.core.Rect",
+        "description": "classes.components.core.Rect",
+        "isExtraImport": true,
+        "detail": "classes.components.core.Rect",
+        "documentation": {}
+    },
+    {
+        "label": "Rect",
+        "importPath": "classes.components.core.Rect",
+        "description": "classes.components.core.Rect",
+        "isExtraImport": true,
+        "detail": "classes.components.core.Rect",
+        "documentation": {}
+    },
+    {
+        "label": "*",
+        "importPath": "classes.components.core.Rect",
+        "description": "classes.components.core.Rect",
+        "isExtraImport": true,
+        "detail": "classes.components.core.Rect",
+        "documentation": {}
+    },
+    {
+        "label": "*",
+        "importPath": "classes.components.core.Rect",
+        "description": "classes.components.core.Rect",
+        "isExtraImport": true,
+        "detail": "classes.components.core.Rect",
+        "documentation": {}
+    },
+    {
+        "label": "Rect",
+        "importPath": "classes.components.core.Rect",
+        "description": "classes.components.core.Rect",
+        "isExtraImport": true,
+        "detail": "classes.components.core.Rect",
+        "documentation": {}
+    },
+    {
+        "label": "*",
+        "importPath": "classes.components.core.Rect",
+        "description": "classes.components.core.Rect",
+        "isExtraImport": true,
+        "detail": "classes.components.core.Rect",
+        "documentation": {}
+    },
+    {
+        "label": "*",
+        "importPath": "classes.components.core.Rect",
+        "description": "classes.components.core.Rect",
+        "isExtraImport": true,
+        "detail": "classes.components.core.Rect",
+        "documentation": {}
+    },
+    {
+        "label": "*",
+        "importPath": "classes.components.core.Rect",
+        "description": "classes.components.core.Rect",
+        "isExtraImport": true,
+        "detail": "classes.components.core.Rect",
+        "documentation": {}
+    },
+    {
+        "label": "*",
+        "importPath": "utils.colors",
+        "description": "utils.colors",
+        "isExtraImport": true,
+        "detail": "utils.colors",
+        "documentation": {}
+    },
+    {
+        "label": "hex_to_rgb",
+        "importPath": "utils.colors",
+        "description": "utils.colors",
+        "isExtraImport": true,
+        "detail": "utils.colors",
+        "documentation": {}
+    },
+    {
+        "label": "modifyRGB",
+        "importPath": "utils.colors",
+        "description": "utils.colors",
+        "isExtraImport": true,
+        "detail": "utils.colors",
+        "documentation": {}
+    },
+    {
+        "label": "*",
+        "importPath": "utils.colors",
+        "description": "utils.colors",
+        "isExtraImport": true,
+        "detail": "utils.colors",
+        "documentation": {}
+    },
+    {
+        "label": "*",
+        "importPath": "classes.components.core.Area",
+        "description": "classes.components.core.Area",
+        "isExtraImport": true,
+        "detail": "classes.components.core.Area",
+        "documentation": {}
+    },
+    {
+        "label": "*",
+        "importPath": "classes.components.core.Area",
+        "description": "classes.components.core.Area",
+        "isExtraImport": true,
+        "detail": "classes.components.core.Area",
+        "documentation": {}
+    },
+    {
+        "label": "*",
+        "importPath": "classes.components.core.Area",
+        "description": "classes.components.core.Area",
+        "isExtraImport": true,
+        "detail": "classes.components.core.Area",
+        "documentation": {}
+    },
+    {
+        "label": "*",
+        "importPath": "classes.components.core.Area",
+        "description": "classes.components.core.Area",
+        "isExtraImport": true,
+        "detail": "classes.components.core.Area",
+        "documentation": {}
+    },
+    {
+        "label": "dimension_type",
+        "importPath": "classes.components.core.Area",
+        "description": "classes.components.core.Area",
+        "isExtraImport": true,
+        "detail": "classes.components.core.Area",
+        "documentation": {}
+    },
+    {
+        "label": "*",
+        "importPath": "utils.shapes",
+        "description": "utils.shapes",
+        "isExtraImport": true,
+        "detail": "utils.shapes",
+        "documentation": {}
+    },
+    {
+        "label": "*",
+        "importPath": "utils.shapes",
+        "description": "utils.shapes",
+        "isExtraImport": true,
+        "detail": "utils.shapes",
+        "documentation": {}
+    },
+    {
+        "label": "*",
+        "importPath": "utils.shapes",
+        "description": "utils.shapes",
+        "isExtraImport": true,
+        "detail": "utils.shapes",
+        "documentation": {}
+    },
+    {
+        "label": "*",
+        "importPath": "utils.shapes",
+        "description": "utils.shapes",
+        "isExtraImport": true,
+        "detail": "utils.shapes",
+        "documentation": {}
+    },
+    {
+        "label": "*",
+        "importPath": "classes.components.core.Text",
+        "description": "classes.components.core.Text",
+        "isExtraImport": true,
+        "detail": "classes.components.core.Text",
+        "documentation": {}
+    },
+    {
+        "label": "*",
+        "importPath": "classes.components.core.Text",
+        "description": "classes.components.core.Text",
+        "isExtraImport": true,
+        "detail": "classes.components.core.Text",
+        "documentation": {}
+    },
+    {
+        "label": "*",
+        "importPath": "classes.components.core.Text",
+        "description": "classes.components.core.Text",
+        "isExtraImport": true,
+        "detail": "classes.components.core.Text",
+        "documentation": {}
+    },
+    {
+        "label": "*",
+        "importPath": "classes.components.core.Text",
+        "description": "classes.components.core.Text",
+        "isExtraImport": true,
+        "detail": "classes.components.core.Text",
+        "documentation": {}
+    },
+    {
+        "label": "*",
+        "importPath": "classes.components.core.Text",
+        "description": "classes.components.core.Text",
+        "isExtraImport": true,
+        "detail": "classes.components.core.Text",
+        "documentation": {}
+    },
+    {
+        "label": "*",
+        "importPath": "classes.components.core.Text",
+        "description": "classes.components.core.Text",
+        "isExtraImport": true,
+        "detail": "classes.components.core.Text",
+        "documentation": {}
+    },
+    {
+        "label": "getFont",
+        "importPath": "classes.components.core.Text",
+        "description": "classes.components.core.Text",
+        "isExtraImport": true,
+        "detail": "classes.components.core.Text",
+        "documentation": {}
+    },
+    {
+        "label": "os",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "os",
+        "description": "os",
+        "detail": "os",
+        "documentation": {}
+    },
+    {
+        "label": "*",
+        "importPath": "utils.keyconsts",
+        "description": "utils.keyconsts",
+        "isExtraImport": true,
+        "detail": "utils.keyconsts",
+        "documentation": {}
+    },
+    {
+        "label": "*",
+        "importPath": "classes.components.core.Image",
+        "description": "classes.components.core.Image",
+        "isExtraImport": true,
+        "detail": "classes.components.core.Image",
+        "documentation": {}
+    },
+    {
+        "label": "*",
+        "importPath": "classes.components.core.Image",
+        "description": "classes.components.core.Image",
+        "isExtraImport": true,
+        "detail": "classes.components.core.Image",
+        "documentation": {}
+    },
+    {
+        "label": "*",
+        "importPath": "classes.components.mains.MainEditorComponents.Videoplayer",
+        "description": "classes.components.mains.MainEditorComponents.Videoplayer",
+        "isExtraImport": true,
+        "detail": "classes.components.mains.MainEditorComponents.Videoplayer",
+        "documentation": {}
+    },
+    {
+        "label": "*",
+        "importPath": "classes.components.mains.MainEditorComponents.Videoplayer",
+        "description": "classes.components.mains.MainEditorComponents.Videoplayer",
+        "isExtraImport": true,
+        "detail": "classes.components.mains.MainEditorComponents.Videoplayer",
+        "documentation": {}
+    },
+    {
+        "label": "*",
+        "importPath": "classes.components.mains.MainEditorComponents.Videoplayer",
+        "description": "classes.components.mains.MainEditorComponents.Videoplayer",
+        "isExtraImport": true,
+        "detail": "classes.components.mains.MainEditorComponents.Videoplayer",
+        "documentation": {}
+    },
+    {
+        "label": "*",
+        "importPath": "config.projectData",
+        "description": "config.projectData",
+        "isExtraImport": true,
+        "detail": "config.projectData",
+        "documentation": {}
+    },
+    {
+        "label": "*",
+        "importPath": "config.projectData",
+        "description": "config.projectData",
+        "isExtraImport": true,
+        "detail": "config.projectData",
+        "documentation": {}
+    },
+    {
+        "label": "*",
+        "importPath": "config.projectData",
+        "description": "config.projectData",
+        "isExtraImport": true,
+        "detail": "config.projectData",
+        "documentation": {}
+    },
+    {
+        "label": "*",
+        "importPath": "config.projectData",
+        "description": "config.projectData",
+        "isExtraImport": true,
+        "detail": "config.projectData",
+        "documentation": {}
+    },
+    {
+        "label": "*",
+        "importPath": "config.projectData",
+        "description": "config.projectData",
+        "isExtraImport": true,
+        "detail": "config.projectData",
+        "documentation": {}
+    },
+    {
+        "label": "*",
+        "importPath": "config.projectData",
+        "description": "config.projectData",
+        "isExtraImport": true,
+        "detail": "config.projectData",
+        "documentation": {}
+    },
+    {
+        "label": "*",
+        "importPath": "config.projectData",
+        "description": "config.projectData",
+        "isExtraImport": true,
+        "detail": "config.projectData",
+        "documentation": {}
+    },
+    {
+        "label": "*",
+        "importPath": "config.projectData",
+        "description": "config.projectData",
+        "isExtraImport": true,
+        "detail": "config.projectData",
+        "documentation": {}
+    },
+    {
+        "label": "*",
+        "importPath": "config.consts",
+        "description": "config.consts",
+        "isExtraImport": true,
+        "detail": "config.consts",
+        "documentation": {}
+    },
+    {
+        "label": "*",
+        "importPath": "config.consts",
+        "description": "config.consts",
+        "isExtraImport": true,
+        "detail": "config.consts",
+        "documentation": {}
+    },
+    {
+        "label": "*",
+        "importPath": "config.consts",
+        "description": "config.consts",
+        "isExtraImport": true,
+        "detail": "config.consts",
+        "documentation": {}
+    },
+    {
+        "label": "*",
+        "importPath": "config.consts",
+        "description": "config.consts",
+        "isExtraImport": true,
+        "detail": "config.consts",
+        "documentation": {}
+    },
+    {
+        "label": "*",
+        "importPath": "config.consts",
+        "description": "config.consts",
+        "isExtraImport": true,
+        "detail": "config.consts",
+        "documentation": {}
+    },
+    {
+        "label": "*",
+        "importPath": "config.consts",
+        "description": "config.consts",
+        "isExtraImport": true,
+        "detail": "config.consts",
+        "documentation": {}
+    },
+    {
+        "label": "INITIAL_WIDTH",
+        "importPath": "config.consts",
+        "description": "config.consts",
+        "isExtraImport": true,
+        "detail": "config.consts",
+        "documentation": {}
+    },
+    {
+        "label": "INITIAL_HEIGHT",
+        "importPath": "config.consts",
+        "description": "config.consts",
+        "isExtraImport": true,
+        "detail": "config.consts",
+        "documentation": {}
+    },
+    {
+        "label": "*",
+        "importPath": "config.consts",
+        "description": "config.consts",
+        "isExtraImport": true,
+        "detail": "config.consts",
+        "documentation": {}
+    },
+    {
+        "label": "*",
+        "importPath": "config.consts",
+        "description": "config.consts",
+        "isExtraImport": true,
+        "detail": "config.consts",
+        "documentation": {}
+    },
+    {
+        "label": "*",
+        "importPath": "config.consts",
+        "description": "config.consts",
+        "isExtraImport": true,
+        "detail": "config.consts",
+        "documentation": {}
+    },
+    {
+        "label": "math",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "math",
+        "description": "math",
+        "detail": "math",
+        "documentation": {}
+    },
+    {
+        "label": "ceil",
+        "importPath": "math",
+        "description": "math",
+        "isExtraImport": true,
+        "detail": "math",
+        "documentation": {}
+    },
+    {
+        "label": "floor",
+        "importPath": "math",
+        "description": "math",
+        "isExtraImport": true,
+        "detail": "math",
+        "documentation": {}
+    },
+    {
+        "label": "*",
+        "importPath": "utils.event",
+        "description": "utils.event",
+        "isExtraImport": true,
+        "detail": "utils.event",
+        "documentation": {}
+    },
+    {
+        "label": "*",
+        "importPath": "utils.event",
+        "description": "utils.event",
+        "isExtraImport": true,
+        "detail": "utils.event",
+        "documentation": {}
+    },
+    {
+        "label": "*",
+        "importPath": "utils.event",
+        "description": "utils.event",
+        "isExtraImport": true,
+        "detail": "utils.event",
+        "documentation": {}
+    },
+    {
+        "label": "*",
+        "importPath": "classes.components.core.Slider",
+        "description": "classes.components.core.Slider",
+        "isExtraImport": true,
+        "detail": "classes.components.core.Slider",
+        "documentation": {}
+    },
+    {
+        "label": "*",
+        "importPath": "classes.components.core.ColorPicker",
+        "description": "classes.components.core.ColorPicker",
+        "isExtraImport": true,
+        "detail": "classes.components.core.ColorPicker",
+        "documentation": {}
+    },
+    {
+        "label": "*",
+        "importPath": "classes.components.core.Textbox",
+        "description": "classes.components.core.Textbox",
+        "isExtraImport": true,
+        "detail": "classes.components.core.Textbox",
+        "documentation": {}
+    },
+    {
+        "label": "*",
+        "importPath": "classes.components.core.Textbox",
+        "description": "classes.components.core.Textbox",
+        "isExtraImport": true,
+        "detail": "classes.components.core.Textbox",
+        "documentation": {}
+    },
+    {
+        "label": "*",
+        "importPath": "classes.components.mains.MainEditorComponents.BottomProps",
+        "description": "classes.components.mains.MainEditorComponents.BottomProps",
+        "isExtraImport": true,
+        "detail": "classes.components.mains.MainEditorComponents.BottomProps",
+        "documentation": {}
+    },
+    {
+        "label": "*",
+        "importPath": "classes.components.mains.MainEditorComponents.ElementsTab",
+        "description": "classes.components.mains.MainEditorComponents.ElementsTab",
+        "isExtraImport": true,
+        "detail": "classes.components.mains.MainEditorComponents.ElementsTab",
+        "documentation": {}
+    },
+    {
+        "label": "*",
+        "importPath": "classes.components.mains.MainEditorComponents.RightProps",
+        "description": "classes.components.mains.MainEditorComponents.RightProps",
+        "isExtraImport": true,
+        "detail": "classes.components.mains.MainEditorComponents.RightProps",
+        "documentation": {}
+    },
+    {
+        "label": "numpy",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "numpy",
+        "description": "numpy",
+        "detail": "numpy",
+        "documentation": {}
+    },
+    {
+        "label": "threading",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "threading",
+        "description": "threading",
+        "detail": "threading",
+        "documentation": {}
+    },
+    {
+        "label": "ImageSequenceClip",
+        "importPath": "moviepy.editor",
+        "description": "moviepy.editor",
+        "isExtraImport": true,
+        "detail": "moviepy.editor",
+        "documentation": {}
+    },
+    {
+        "label": "AudioClip",
+        "importPath": "moviepy.editor",
+        "description": "moviepy.editor",
+        "isExtraImport": true,
+        "detail": "moviepy.editor",
+        "documentation": {}
+    },
+    {
+        "label": "*",
+        "importPath": "classes.components.mains.MainEditor",
+        "description": "classes.components.mains.MainEditor",
+        "isExtraImport": true,
+        "detail": "classes.components.mains.MainEditor",
+        "documentation": {}
+    },
+    {
+        "label": "*",
+        "importPath": "classes.components.mains.ElementGallery",
+        "description": "classes.components.mains.ElementGallery",
+        "isExtraImport": true,
+        "detail": "classes.components.mains.ElementGallery",
+        "documentation": {}
+    },
+    {
+        "label": "*",
+        "importPath": "classes.components.mains.RenderMode",
+        "description": "classes.components.mains.RenderMode",
+        "isExtraImport": true,
+        "detail": "classes.components.mains.RenderMode",
+        "documentation": {}
+    },
+    {
+        "label": "*",
+        "importPath": "components.classes.node",
+        "description": "components.classes.node",
+        "isExtraImport": true,
+        "detail": "components.classes.node",
+        "documentation": {}
+    },
+    {
+        "label": "*",
+        "importPath": "components.classes.node",
+        "description": "components.classes.node",
+        "isExtraImport": true,
+        "detail": "components.classes.node",
+        "documentation": {}
+    },
+    {
+        "label": "*",
+        "importPath": "components.classes.node",
+        "description": "components.classes.node",
+        "isExtraImport": true,
+        "detail": "components.classes.node",
+        "documentation": {}
+    },
+    {
+        "label": "*",
+        "importPath": "components.classes.node",
+        "description": "components.classes.node",
+        "isExtraImport": true,
+        "detail": "components.classes.node",
+        "documentation": {}
+    },
+    {
+        "label": "*",
+        "importPath": "components.utils.easing",
+        "description": "components.utils.easing",
+        "isExtraImport": true,
+        "detail": "components.utils.easing",
+        "documentation": {}
+    },
+    {
+        "label": "*",
+        "importPath": "components.utils.easing",
+        "description": "components.utils.easing",
+        "isExtraImport": true,
+        "detail": "components.utils.easing",
+        "documentation": {}
+    },
+    {
+        "label": "*",
+        "importPath": "components.utils.easing",
+        "description": "components.utils.easing",
+        "isExtraImport": true,
+        "detail": "components.utils.easing",
+        "documentation": {}
+    },
+    {
+        "label": "*",
+        "importPath": "components.utils.signal",
+        "description": "components.utils.signal",
+        "isExtraImport": true,
+        "detail": "components.utils.signal",
+        "documentation": {}
+    },
+    {
+        "label": "*",
+        "importPath": "components.utils.signal",
+        "description": "components.utils.signal",
+        "isExtraImport": true,
+        "detail": "components.utils.signal",
+        "documentation": {}
+    },
+    {
+        "label": "inspect",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "inspect",
+        "description": "inspect",
+        "detail": "inspect",
+        "documentation": {}
+    },
+    {
+        "label": "*",
+        "importPath": "components.classes.scene",
+        "description": "components.classes.scene",
+        "isExtraImport": true,
+        "detail": "components.classes.scene",
+        "documentation": {}
+    },
+    {
+        "label": "*",
+        "importPath": "components.classes.shapes.rectangle",
+        "description": "components.classes.shapes.rectangle",
+        "isExtraImport": true,
+        "detail": "components.classes.shapes.rectangle",
+        "documentation": {}
+    },
+    {
+        "label": "*",
+        "importPath": "components.classes.shapes.text",
+        "description": "components.classes.shapes.text",
+        "isExtraImport": true,
+        "detail": "components.classes.shapes.text",
+        "documentation": {}
+    },
+    {
+        "label": "*",
+        "importPath": "utils.audio",
+        "description": "utils.audio",
+        "isExtraImport": true,
+        "detail": "utils.audio",
+        "documentation": {}
+    },
+    {
+        "label": "wave",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "wave",
+        "description": "wave",
+        "detail": "wave",
+        "documentation": {}
+    },
+    {
+        "label": "sys",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "sys",
+        "description": "sys",
+        "detail": "sys",
+        "documentation": {}
+    },
+    {
+        "label": "*",
+        "importPath": "classes.App",
+        "description": "classes.App",
+        "isExtraImport": true,
+        "detail": "classes.App",
+        "documentation": {}
+    },
+    {
+        "label": "Area",
+        "kind": 6,
+        "importPath": "source.classes.components.core.Area",
+        "description": "source.classes.components.core.Area",
+        "peekOfCode": "class Area:\n    w: int\n    h: int\n    x: int\n    y: int\n    id: Optional[str]\n    dimension: dimension_type\n    app: any  # App\n    children: List[\"Area\"]\n    parent: Optional[\"Area\"]",
+        "detail": "source.classes.components.core.Area",
+        "documentation": {}
+    },
+    {
+        "label": "dimension_type",
+        "kind": 5,
+        "importPath": "source.classes.components.core.Area",
+        "description": "source.classes.components.core.Area",
+        "peekOfCode": "dimension_type = tuple[\n    Union[str, int], Union[str, int], Union[str, int], Union[str, int]\n]\nclass Area:\n    w: int\n    h: int\n    x: int\n    y: int\n    id: Optional[str]\n    dimension: dimension_type",
+        "detail": "source.classes.components.core.Area",
+        "documentation": {}
+    },
+    {
+        "label": "ColorPicker",
+        "kind": 6,
+        "importPath": "source.classes.components.core.ColorPicker",
+        "description": "source.classes.components.core.ColorPicker",
+        "peekOfCode": "class ColorPicker(Rect):\n    def __init__(self, dimension: tuple[int, int, int, int], app: any, color: str | tuple[int, int, int, int] = \"#ffffff\", borderRadius=0, detectHover=True, onHoverModifiedColor=0.15) -> None:\n        super().__init__(dimension, app, color, borderRadius, detectHover, onHoverModifiedColor)\n        self.binds['changed'] = None\n        self.value = pg.Color(color)\n        self.huepos = lerpMap(0, 360, 0, self.w, self.value.hsla[0])\n        self.satpos = lerpMap(0, 100, 0, self.w, self.value.hsla[1])\n        self.lumpos = lerpMap(0, 100, 0, self.w, self.value.hsla[2])\n    def update(self):\n        super().update()",
+        "detail": "source.classes.components.core.ColorPicker",
+        "documentation": {}
+    },
+    {
+        "label": "Image",
+        "kind": 6,
+        "importPath": "source.classes.components.core.Image",
+        "description": "source.classes.components.core.Image",
+        "peekOfCode": "class Image(Rect):\n    def __init__(self,\n                 dimension: tuple[int, int, int, int],\n                 app: any,\n                 color: str | tuple[int, int, int, int] = \"#00000000\",\n                 borderRadius=0,\n                 detectHover=False,\n                 onHoverModifiedColor=0.3,\n                 pngSource=\"\",\n                 forceWidth=False,",
+        "detail": "source.classes.components.core.Image",
+        "documentation": {}
+    },
+    {
+        "label": "Rect",
+        "kind": 6,
+        "importPath": "source.classes.components.core.Rect",
+        "description": "source.classes.components.core.Rect",
+        "peekOfCode": "class Rect(Area):\n    color: pg.Color\n    borderRadius: float # >= 0 and <= 1   \n    def __init__(\n        self,\n        dimension: tuple[int, int, int, int],\n        app: any,\n        color: str | tuple[int, int, int, int] = \"#ffffff\",\n        borderRadius=0,\n        detectHover = False,",
+        "detail": "source.classes.components.core.Rect",
+        "documentation": {}
+    },
+    {
+        "label": "Slider",
+        "kind": 6,
+        "importPath": "source.classes.components.core.Slider",
+        "description": "source.classes.components.core.Slider",
+        "peekOfCode": "class Slider(Rect):\n    def __init__(self, dimension: tuple[int, int, int, int], app: any, color: str | tuple[int, int, int, int] = \"#ffffff\", borderRadius=0, detectHover=False, onHoverModifiedColor=0.15) -> None:\n        super().__init__(dimension, app, color, borderRadius, detectHover, onHoverModifiedColor)\n        self.value = 0.5\n        self.padding = 10\n        self.dragging = False\n        self.range = (0, 1)\n        self.binds['changed'] = None\n        self.font = getFont(fontHeight=10, weight='extralight')\n    def getValuePoint(self):",
+        "detail": "source.classes.components.core.Slider",
+        "documentation": {}
+    },
+    {
+        "label": "Text",
+        "kind": 6,
+        "importPath": "source.classes.components.core.Text",
+        "description": "source.classes.components.core.Text",
+        "peekOfCode": "class Text(Rect):\n    text: str\n    align: str\n    fontColor: str\n    fontHeight: int\n    padding: int\n    autoHeight: True\n    def __init__(self,\n                 dimension: tuple[int, int, int, int],\n                 app: any,",
+        "detail": "source.classes.components.core.Text",
+        "documentation": {}
+    },
+    {
+        "label": "getFont",
+        "kind": 2,
+        "importPath": "source.classes.components.core.Text",
+        "description": "source.classes.components.core.Text",
+        "peekOfCode": "def getFont(font=\"Poppins\",\n            italic=False,\n            weight='normal',\n            fontHeight=25\n            ) -> pg.font.Font:\n    return pg.font.Font(FONTS[font][italic and \"italic\" or \"normal\"][weight], int(fontHeight))\nclass Text(Rect):\n    text: str\n    align: str\n    fontColor: str",
+        "detail": "source.classes.components.core.Text",
+        "documentation": {}
+    },
+    {
+        "label": "FONTS",
+        "kind": 5,
+        "importPath": "source.classes.components.core.Text",
+        "description": "source.classes.components.core.Text",
+        "peekOfCode": "FONTS = {\n    'Poppins': {\n        'italic': {\n            'black': r\"assets\\font\\blackitalic.ttf\",\n            'extrabold': r\"assets\\font\\extrabolditalic.ttf\",\n            'bold': r\"assets\\font\\bolditalic.ttf\",\n            'semibold': r\"assets\\font\\semibolditalic.ttf\",\n            'medium': r\"assets\\font\\mediumitalic.ttf\",\n            'normal': r\"assets\\font\\italic.ttf\",\n            'thin': r\"assets\\font\\thinitalic.ttf\",",
+        "detail": "source.classes.components.core.Text",
+        "documentation": {}
+    },
+    {
+        "label": "Textbox",
+        "kind": 6,
+        "importPath": "source.classes.components.core.Textbox",
+        "description": "source.classes.components.core.Textbox",
+        "peekOfCode": "class Textbox(Text):\n    holding = False\n    lastPressedTime = \"\"\n    delay = 0\n    changed = False\n    placeholder = \"\"\n    def __init__(self, dimension: tuple[int, int, int, int], app: any, color: str = \"#00000000\", borderRadius=0, font=\"Poppins\", italic=False, weight='normal', fontHeight=25, text=\"\", align=\"center\", fontColor=\"#ececec\", padding=0, autoHeight=True, detectHover=True, onHoverModifiedColor=0, placeholder = \"\", starterInput = \"\") -> None:\n        super().__init__(dimension, app, color, borderRadius, font, italic, weight, fontHeight, text, align, fontColor, padding, autoHeight, detectHover, onHoverModifiedColor)\n        self.holding = self.changed = False\n        self.lastDeleted = self.delay = 0",
+        "detail": "source.classes.components.core.Textbox",
+        "documentation": {}
+    },
+    {
+        "label": "selected_id",
+        "kind": 5,
+        "importPath": "source.classes.components.core.Textbox",
+        "description": "source.classes.components.core.Textbox",
+        "peekOfCode": "selected_id = None  # Global variable to store the selected textbox id\nclass Textbox(Text):\n    holding = False\n    lastPressedTime = \"\"\n    delay = 0\n    changed = False\n    placeholder = \"\"\n    def __init__(self, dimension: tuple[int, int, int, int], app: any, color: str = \"#00000000\", borderRadius=0, font=\"Poppins\", italic=False, weight='normal', fontHeight=25, text=\"\", align=\"center\", fontColor=\"#ececec\", padding=0, autoHeight=True, detectHover=True, onHoverModifiedColor=0, placeholder = \"\", starterInput = \"\") -> None:\n        super().__init__(dimension, app, color, borderRadius, font, italic, weight, fontHeight, text, align, fontColor, padding, autoHeight, detectHover, onHoverModifiedColor)\n        self.holding = self.changed = False",
+        "detail": "source.classes.components.core.Textbox",
+        "documentation": {}
+    },
+    {
+        "label": "BottomPad",
+        "kind": 6,
+        "importPath": "source.classes.components.mains.MainEditorComponents.BottomProps",
+        "description": "source.classes.components.mains.MainEditorComponents.BottomProps",
+        "peekOfCode": "class BottomPad(Rect):\n    def __init__(self, dimension: tuple[int, int, int, int], app: any, color: str | tuple[int, int, int, int] = \"#ffffff\", borderRadius=0, detectHover=False, onHoverModifiedColor=0) -> None:\n        super().__init__(dimension, app, color, borderRadius, detectHover, onHoverModifiedColor)\n        self.currentTime = 0.5\n        self.mode: Literal[\"timeline\", \"recordingmic\"] = \"timeline\"\n        self.zoomlevel = 1\n        self.detectHover = True\n        self.lineFont = getFont(fontHeight=10, weight='semibold')\n        self.layersTop = 0\n        self.layerSize = 100",
+        "detail": "source.classes.components.mains.MainEditorComponents.BottomProps",
+        "documentation": {}
+    },
+    {
+        "label": "BottomPropsTab",
+        "kind": 6,
+        "importPath": "source.classes.components.mains.MainEditorComponents.BottomProps",
+        "description": "source.classes.components.mains.MainEditorComponents.BottomProps",
+        "peekOfCode": "class BottomPropsTab(Rect):\n    def __init__(\n        self,\n        dimension: tuple[int, int, int, int],\n        app: any,    ) -> None:\n        super().__init__(dimension, app)\n        self.color = BGR_COLOR\n        self.add_child([\n            BottomPad((0, 45, '1x', '1y-50'), self.app, color = \"#0e0e0e\", borderRadius=4)\n        ])",
+        "detail": "source.classes.components.mains.MainEditorComponents.BottomProps",
+        "documentation": {}
+    },
+    {
+        "label": "x_start_offset",
+        "kind": 5,
+        "importPath": "source.classes.components.mains.MainEditorComponents.BottomProps",
+        "description": "source.classes.components.mains.MainEditorComponents.BottomProps",
+        "peekOfCode": "x_start_offset = 2\nclass BottomPad(Rect):\n    def __init__(self, dimension: tuple[int, int, int, int], app: any, color: str | tuple[int, int, int, int] = \"#ffffff\", borderRadius=0, detectHover=False, onHoverModifiedColor=0) -> None:\n        super().__init__(dimension, app, color, borderRadius, detectHover, onHoverModifiedColor)\n        self.currentTime = 0.5\n        self.mode: Literal[\"timeline\", \"recordingmic\"] = \"timeline\"\n        self.zoomlevel = 1\n        self.detectHover = True\n        self.lineFont = getFont(fontHeight=10, weight='semibold')\n        self.layersTop = 0",
+        "detail": "source.classes.components.mains.MainEditorComponents.BottomProps",
+        "documentation": {}
+    },
+    {
+        "label": "ElementsTab",
+        "kind": 6,
+        "importPath": "source.classes.components.mains.MainEditorComponents.ElementsTab",
+        "description": "source.classes.components.mains.MainEditorComponents.ElementsTab",
+        "peekOfCode": "class ElementsTab(Rect):\n    pad = 0\n    page = 0\n    elements_per_page = 0\n    num_of_pages = 0\n    leftArrow = None\n    rightArrow = None\n    createButton = None\n    def __init__(\n        self,",
+        "detail": "source.classes.components.mains.MainEditorComponents.ElementsTab",
+        "documentation": {}
+    },
+    {
+        "label": "selectElementById",
+        "kind": 2,
+        "importPath": "source.classes.components.mains.MainEditorComponents.ElementsTab",
+        "description": "source.classes.components.mains.MainEditorComponents.ElementsTab",
+        "peekOfCode": "def selectElementById(id: str, self : any):\n    if not self.app.holdingCtrl:\n        for element in elements:\n            element.selected = False\n    matching_element = next((element for element in elements if element.id == id), None)\n    matching_element.selected = not matching_element.selected\n    self.app.event.fire_event(SELECT_ELEMENT_EVENT)\nclass ElementsTab(Rect):\n    pad = 0\n    page = 0",
+        "detail": "source.classes.components.mains.MainEditorComponents.ElementsTab",
+        "documentation": {}
+    },
+    {
+        "label": "element_size",
+        "kind": 5,
+        "importPath": "source.classes.components.mains.MainEditorComponents.ElementsTab",
+        "description": "source.classes.components.mains.MainEditorComponents.ElementsTab",
+        "peekOfCode": "element_size = 30\ndef selectElementById(id: str, self : any):\n    if not self.app.holdingCtrl:\n        for element in elements:\n            element.selected = False\n    matching_element = next((element for element in elements if element.id == id), None)\n    matching_element.selected = not matching_element.selected\n    self.app.event.fire_event(SELECT_ELEMENT_EVENT)\nclass ElementsTab(Rect):\n    pad = 0",
+        "detail": "source.classes.components.mains.MainEditorComponents.ElementsTab",
+        "documentation": {}
+    },
+    {
+        "label": "RightPropsTab",
+        "kind": 6,
+        "importPath": "source.classes.components.mains.MainEditorComponents.RightProps",
+        "description": "source.classes.components.mains.MainEditorComponents.RightProps",
+        "peekOfCode": "class RightPropsTab(Rect):\n    def __init__(\n        self,\n        dimension: tuple[int, int, int, int],\n        app: any,\n    ) -> None:\n        super().__init__(dimension, app)\n        self.color = \"#1e1e24\"\n        app.event.add_listener(SELECT_ELEMENT_EVENT, lambda : self.setProps())\n    def addProp(self, lastY, prop, element: Optional['Element'] = None) -> Area:",
+        "detail": "source.classes.components.mains.MainEditorComponents.RightProps",
+        "documentation": {}
+    },
+    {
+        "label": "gap",
+        "kind": 5,
+        "importPath": "source.classes.components.mains.MainEditorComponents.RightProps",
+        "description": "source.classes.components.mains.MainEditorComponents.RightProps",
+        "peekOfCode": "gap = 15\npadding = 15\ntitle_size = 20\npropSize = 50\nclass RightPropsTab(Rect):\n    def __init__(\n        self,\n        dimension: tuple[int, int, int, int],\n        app: any,\n    ) -> None:",
+        "detail": "source.classes.components.mains.MainEditorComponents.RightProps",
+        "documentation": {}
+    },
+    {
+        "label": "padding",
+        "kind": 5,
+        "importPath": "source.classes.components.mains.MainEditorComponents.RightProps",
+        "description": "source.classes.components.mains.MainEditorComponents.RightProps",
+        "peekOfCode": "padding = 15\ntitle_size = 20\npropSize = 50\nclass RightPropsTab(Rect):\n    def __init__(\n        self,\n        dimension: tuple[int, int, int, int],\n        app: any,\n    ) -> None:\n        super().__init__(dimension, app)",
+        "detail": "source.classes.components.mains.MainEditorComponents.RightProps",
+        "documentation": {}
+    },
+    {
+        "label": "title_size",
+        "kind": 5,
+        "importPath": "source.classes.components.mains.MainEditorComponents.RightProps",
+        "description": "source.classes.components.mains.MainEditorComponents.RightProps",
+        "peekOfCode": "title_size = 20\npropSize = 50\nclass RightPropsTab(Rect):\n    def __init__(\n        self,\n        dimension: tuple[int, int, int, int],\n        app: any,\n    ) -> None:\n        super().__init__(dimension, app)\n        self.color = \"#1e1e24\"",
+        "detail": "source.classes.components.mains.MainEditorComponents.RightProps",
+        "documentation": {}
+    },
+    {
+        "label": "propSize",
+        "kind": 5,
+        "importPath": "source.classes.components.mains.MainEditorComponents.RightProps",
+        "description": "source.classes.components.mains.MainEditorComponents.RightProps",
+        "peekOfCode": "propSize = 50\nclass RightPropsTab(Rect):\n    def __init__(\n        self,\n        dimension: tuple[int, int, int, int],\n        app: any,\n    ) -> None:\n        super().__init__(dimension, app)\n        self.color = \"#1e1e24\"\n        app.event.add_listener(SELECT_ELEMENT_EVENT, lambda : self.setProps())",
+        "detail": "source.classes.components.mains.MainEditorComponents.RightProps",
+        "documentation": {}
+    },
+    {
+        "label": "VideoPlayer",
+        "kind": 6,
+        "importPath": "source.classes.components.mains.MainEditorComponents.Videoplayer",
+        "description": "source.classes.components.mains.MainEditorComponents.Videoplayer",
+        "peekOfCode": "class VideoPlayer(Rect):\n    def __init__(\n        self,\n        dimension: tuple[int, int, int, int],\n        app: any,\n    ) -> None:\n        super().__init__(dimension, app)\n        self.color = \"#0e0e0e\"\n        size = (1600, 900)\n        self.videoscale = 0.25",
+        "detail": "source.classes.components.mains.MainEditorComponents.Videoplayer",
+        "documentation": {}
+    },
+    {
+        "label": "renderFrame",
+        "kind": 2,
+        "importPath": "source.classes.components.mains.MainEditorComponents.Videoplayer",
+        "description": "source.classes.components.mains.MainEditorComponents.Videoplayer",
+        "peekOfCode": "def renderFrame(videosize, t):\n    frame: pg.Surface = pg.Surface(videosize, pg.SRCALPHA, 32)\n    elements.sort(key= lambda el: -el.layer)\n    for element in (element for element in elements if element.type == \"video\"):\n        # if element appears on the video\n        if t < element.start*1000 or t > element.end*1000: continue\n        element.instance.render_start(t/1000 - element.start)\n        result: pg.Surface = element.instance.render_end()\n        # set element lenght\n        if hasattr(element.instance, 'lenght'):",
+        "detail": "source.classes.components.mains.MainEditorComponents.Videoplayer",
+        "documentation": {}
+    },
+    {
+        "label": "ElementGallery",
+        "kind": 6,
+        "importPath": "source.classes.components.mains.ElementGallery",
+        "description": "source.classes.components.mains.ElementGallery",
+        "peekOfCode": "class ElementGallery(Rect):\n    def __init__(self, dimension: tuple[int, int, int, int] = (0, 0, '1x', '1y'), app: any = None, color: str | tuple[int, int, int, int] = \"#080807\", borderValue=0, detectHover=False, onHoverModifiedColor=0.15) -> None:\n        super().__init__(dimension, app, color, borderValue, detectHover, onHoverModifiedColor)\n        self.add_child([\n            Textbox(\n                ('0.25x', '0.33y', '0.5x', '0.1y'),\n                self.app,\n                autoHeight = False,\n                placeholder = \"type module name\",\n                detectHover= True,",
+        "detail": "source.classes.components.mains.ElementGallery",
+        "documentation": {}
+    },
+    {
+        "label": "MainEditor",
+        "kind": 6,
+        "importPath": "source.classes.components.mains.MainEditor",
+        "description": "source.classes.components.mains.MainEditor",
+        "peekOfCode": "class MainEditor(Area):\n    def __init__(self, dimension: tuple[str | int, str | int, str | int, str | int] = (0, 0, '1x', '1y'), app: any = None, detectHover=False) -> None:\n        super().__init__(dimension, app, detectHover)\n        self.add_child([\n            ElementsTab((0, 0, \"0.25x\", \"1y\"), self.app),\n            VideoPlayer((\"0.25x\", 0, \"0.5x\", \"0.5y\"), self.app),\n            BottomPropsTab((\"0.25x\", \"0.5y\", \"0.5x\", \"0.5y\"), self.app),\n            RightPropsTab((\"0.75x\", 0, \"0.25x\", \"1y\"), self.app)\n        ])",
+        "detail": "source.classes.components.mains.MainEditor",
+        "documentation": {}
+    },
+    {
+        "label": "RenderMode",
+        "kind": 6,
+        "importPath": "source.classes.components.mains.RenderMode",
+        "description": "source.classes.components.mains.RenderMode",
+        "peekOfCode": "class RenderMode(Rect):\n    def __init__(self, dimension: tuple[int, int, int, int] = (0, 0, '1x', '1y'), app: any = None, color: str | tuple[int, int, int, int] = \"#0e0e0e00\", borderRadius=0, detectHover=False, onHoverModifiedColor=0.15) -> None:\n        super().__init__(dimension, app, color, borderRadius,\n                         detectHover, onHoverModifiedColor)\n        ends = tuple(el.end for el in elements)\n        n_frames = int(max(ends) * 1000 / fps)\n        self.frm = pg.Surface((0, 0))\n        self.add_child(Rect(\n            dimension=(0, 0, '1x', '1y'),\n            app=app,",
+        "detail": "source.classes.components.mains.RenderMode",
+        "documentation": {}
+    },
+    {
+        "label": "fps",
+        "kind": 5,
+        "importPath": "source.classes.components.mains.RenderMode",
+        "description": "source.classes.components.mains.RenderMode",
+        "peekOfCode": "fps = 30\nclass RenderMode(Rect):\n    def __init__(self, dimension: tuple[int, int, int, int] = (0, 0, '1x', '1y'), app: any = None, color: str | tuple[int, int, int, int] = \"#0e0e0e00\", borderRadius=0, detectHover=False, onHoverModifiedColor=0.15) -> None:\n        super().__init__(dimension, app, color, borderRadius,\n                         detectHover, onHoverModifiedColor)\n        ends = tuple(el.end for el in elements)\n        n_frames = int(max(ends) * 1000 / fps)\n        self.frm = pg.Surface((0, 0))\n        self.add_child(Rect(\n            dimension=(0, 0, '1x', '1y'),",
+        "detail": "source.classes.components.mains.RenderMode",
+        "documentation": {}
+    },
+    {
+        "label": "App",
+        "kind": 6,
+        "importPath": "source.classes.App",
+        "description": "source.classes.App",
+        "peekOfCode": "class App:\n    #--------- app components\n    display: pg.Surface\n    screen: pg.Surface\n    event = None\n    #-------- app related\n    windowMode = 0\n    transformMode = False\n    #                 0 - main editor\n    #                 1 - element gallery",
+        "detail": "source.classes.App",
+        "documentation": {}
+    },
+    {
+        "label": "rectangle",
+        "kind": 6,
+        "importPath": "source.components.classes.shapes.rectangle",
+        "description": "source.components.classes.shapes.rectangle",
+        "peekOfCode": "class rectangle(Node):\n    def __init__(self, master, **args) -> None:\n        super().__init__(master, **({'color' : 'white', 'radius' : 0} | args))\n    def render(self) -> None:\n        x,y,w,h = 0, 0, self.w(), self.h()\n        parent = self\n        while (parent):\n            x += parent.x()\n            y += parent.y()\n            parent = parent.parent",
+        "detail": "source.components.classes.shapes.rectangle",
+        "documentation": {}
+    },
+    {
+        "label": "text",
+        "kind": 6,
+        "importPath": "source.components.classes.shapes.text",
+        "description": "source.components.classes.shapes.text",
+        "peekOfCode": "class text(Node):\n    def __init__(self, master, **args) -> None:\n        super().__init__(master, **({\n            'color' : pg.Color('white'),\n            'text' : \"\", \n            'weight' : 'normal',\n            'fontheight' : 64,\n            'italic' : True,\n            'font' : \"Poppins\",\n            'centeredX' : False,",
+        "detail": "source.components.classes.shapes.text",
+        "documentation": {}
+    },
+    {
+        "label": "Node",
+        "kind": 6,
+        "importPath": "source.components.classes.node",
+        "description": "source.components.classes.node",
+        "peekOfCode": "class Node:\n    def __init__(self, master, **args) -> None:\n        self.children : List['Node'] = []\n        self.parent : Optional['Node'] = None\n        self.master = master\n        self.attributes = {\n            'x' : 0,\n            'y' : 0,\n            'w' : 0,\n            'h' : 0",
+        "detail": "source.components.classes.node",
+        "documentation": {}
+    },
+    {
+        "label": "Scene",
+        "kind": 6,
+        "importPath": "source.components.classes.scene",
+        "description": "source.components.classes.scene",
+        "peekOfCode": "class Scene:\n    def __init__(self) -> None:\n        self.father = Node(self)\n        self.surf = self.getSurface()\n        self.props: List['Prop'] = []\n        self.reqtime = 0\n        self.sounds = []\n        self.t = 0\n        self.lenght = 0\n    def playAudio(self, src: str, **args) -> None:",
+        "detail": "source.components.classes.scene",
+        "documentation": {}
+    },
+    {
+        "label": "linear",
+        "kind": 2,
+        "importPath": "source.components.utils.easing",
+        "description": "source.components.utils.easing",
+        "peekOfCode": "def linear(t: float):\n    return t\ndef inoutcubic(t : float):\n    return t < 0.5 and 4 * t * t * t or 1 - pow(-2 * t + 2, 3) / 2",
+        "detail": "source.components.utils.easing",
+        "documentation": {}
+    },
+    {
+        "label": "inoutcubic",
+        "kind": 2,
+        "importPath": "source.components.utils.easing",
+        "description": "source.components.utils.easing",
+        "peekOfCode": "def inoutcubic(t : float):\n    return t < 0.5 and 4 * t * t * t or 1 - pow(-2 * t + 2, 3) / 2",
+        "detail": "source.components.utils.easing",
+        "documentation": {}
+    },
+    {
+        "label": "Signal",
+        "kind": 6,
+        "importPath": "source.components.utils.signal",
+        "description": "source.components.utils.signal",
+        "peekOfCode": "class Signal(Generic[T]):\n    def __init__(self, value : T | Callable[[], T], master : any) -> None:\n        self._value = value\n        self._lastval = value\n        self.default = value\n        self.master = master\n        self.keyframes = {}\n        self.shared = False\n        self.name = \"\"\n    def share(self, signalName : str, propType: str, **kargs):",
+        "detail": "source.components.utils.signal",
+        "documentation": {}
+    },
+    {
+        "label": "T",
+        "kind": 5,
+        "importPath": "source.components.utils.signal",
+        "description": "source.components.utils.signal",
+        "peekOfCode": "T = TypeVar(\"T\")\nclass Signal(Generic[T]):\n    def __init__(self, value : T | Callable[[], T], master : any) -> None:\n        self._value = value\n        self._lastval = value\n        self.default = value\n        self.master = master\n        self.keyframes = {}\n        self.shared = False\n        self.name = \"\"",
+        "detail": "source.components.utils.signal",
+        "documentation": {}
+    },
+    {
+        "label": "Main",
+        "kind": 6,
+        "importPath": "source.components.testobj",
+        "description": "source.components.testobj",
+        "peekOfCode": "class Main(Scene):\n    def __init__(self) -> None:\n        super().__init__()\n        self.bgr = self.add(rectangle(self,\n                                    color = pg.Color(\"black\"),\n                                    w = 1600,\n                                    h = 900,\n                                    ))\n        self.a = self.add(text(self,\n                                    color = pg.Color(\"white\"),",
+        "detail": "source.components.testobj",
+        "documentation": {}
+    },
+    {
+        "label": "INITIAL_WIDTH",
+        "kind": 5,
+        "importPath": "source.config.consts",
+        "description": "source.config.consts",
+        "peekOfCode": "INITIAL_WIDTH = 800\nINITIAL_HEIGHT = 500\nCOMPONENTS_DIRECTORY = \"source\\\\components\"\nAUDIO_DIRECTORY = COMPONENTS_DIRECTORY + \"\\\\audio\"\nINITIAL_VIEWPORT_SIZE = (INITIAL_WIDTH, INITIAL_HEIGHT)\nADD_ELEMENT_EVENT = pg.USEREVENT + 1\nSELECT_ELEMENT_EVENT = pg.USEREVENT + 2\nAPPLY_PROPS = pg.USEREVENT + 3\nRENDER_VIDEO = pg.USEREVENT + 4\nNAME = \"ScriptFrame\"",
+        "detail": "source.config.consts",
+        "documentation": {}
+    },
+    {
+        "label": "INITIAL_HEIGHT",
+        "kind": 5,
+        "importPath": "source.config.consts",
+        "description": "source.config.consts",
+        "peekOfCode": "INITIAL_HEIGHT = 500\nCOMPONENTS_DIRECTORY = \"source\\\\components\"\nAUDIO_DIRECTORY = COMPONENTS_DIRECTORY + \"\\\\audio\"\nINITIAL_VIEWPORT_SIZE = (INITIAL_WIDTH, INITIAL_HEIGHT)\nADD_ELEMENT_EVENT = pg.USEREVENT + 1\nSELECT_ELEMENT_EVENT = pg.USEREVENT + 2\nAPPLY_PROPS = pg.USEREVENT + 3\nRENDER_VIDEO = pg.USEREVENT + 4\nNAME = \"ScriptFrame\"\nBGR_COLOR = \"#1e1e1e\"",
+        "detail": "source.config.consts",
+        "documentation": {}
+    },
+    {
+        "label": "COMPONENTS_DIRECTORY",
+        "kind": 5,
+        "importPath": "source.config.consts",
+        "description": "source.config.consts",
+        "peekOfCode": "COMPONENTS_DIRECTORY = \"source\\\\components\"\nAUDIO_DIRECTORY = COMPONENTS_DIRECTORY + \"\\\\audio\"\nINITIAL_VIEWPORT_SIZE = (INITIAL_WIDTH, INITIAL_HEIGHT)\nADD_ELEMENT_EVENT = pg.USEREVENT + 1\nSELECT_ELEMENT_EVENT = pg.USEREVENT + 2\nAPPLY_PROPS = pg.USEREVENT + 3\nRENDER_VIDEO = pg.USEREVENT + 4\nNAME = \"ScriptFrame\"\nBGR_COLOR = \"#1e1e1e\"",
+        "detail": "source.config.consts",
+        "documentation": {}
+    },
+    {
+        "label": "AUDIO_DIRECTORY",
+        "kind": 5,
+        "importPath": "source.config.consts",
+        "description": "source.config.consts",
+        "peekOfCode": "AUDIO_DIRECTORY = COMPONENTS_DIRECTORY + \"\\\\audio\"\nINITIAL_VIEWPORT_SIZE = (INITIAL_WIDTH, INITIAL_HEIGHT)\nADD_ELEMENT_EVENT = pg.USEREVENT + 1\nSELECT_ELEMENT_EVENT = pg.USEREVENT + 2\nAPPLY_PROPS = pg.USEREVENT + 3\nRENDER_VIDEO = pg.USEREVENT + 4\nNAME = \"ScriptFrame\"\nBGR_COLOR = \"#1e1e1e\"",
+        "detail": "source.config.consts",
+        "documentation": {}
+    },
+    {
+        "label": "INITIAL_VIEWPORT_SIZE",
+        "kind": 5,
+        "importPath": "source.config.consts",
+        "description": "source.config.consts",
+        "peekOfCode": "INITIAL_VIEWPORT_SIZE = (INITIAL_WIDTH, INITIAL_HEIGHT)\nADD_ELEMENT_EVENT = pg.USEREVENT + 1\nSELECT_ELEMENT_EVENT = pg.USEREVENT + 2\nAPPLY_PROPS = pg.USEREVENT + 3\nRENDER_VIDEO = pg.USEREVENT + 4\nNAME = \"ScriptFrame\"\nBGR_COLOR = \"#1e1e1e\"",
+        "detail": "source.config.consts",
+        "documentation": {}
+    },
+    {
+        "label": "ADD_ELEMENT_EVENT",
+        "kind": 5,
+        "importPath": "source.config.consts",
+        "description": "source.config.consts",
+        "peekOfCode": "ADD_ELEMENT_EVENT = pg.USEREVENT + 1\nSELECT_ELEMENT_EVENT = pg.USEREVENT + 2\nAPPLY_PROPS = pg.USEREVENT + 3\nRENDER_VIDEO = pg.USEREVENT + 4\nNAME = \"ScriptFrame\"\nBGR_COLOR = \"#1e1e1e\"",
+        "detail": "source.config.consts",
+        "documentation": {}
+    },
+    {
+        "label": "SELECT_ELEMENT_EVENT",
+        "kind": 5,
+        "importPath": "source.config.consts",
+        "description": "source.config.consts",
+        "peekOfCode": "SELECT_ELEMENT_EVENT = pg.USEREVENT + 2\nAPPLY_PROPS = pg.USEREVENT + 3\nRENDER_VIDEO = pg.USEREVENT + 4\nNAME = \"ScriptFrame\"\nBGR_COLOR = \"#1e1e1e\"",
+        "detail": "source.config.consts",
+        "documentation": {}
+    },
+    {
+        "label": "APPLY_PROPS",
+        "kind": 5,
+        "importPath": "source.config.consts",
+        "description": "source.config.consts",
+        "peekOfCode": "APPLY_PROPS = pg.USEREVENT + 3\nRENDER_VIDEO = pg.USEREVENT + 4\nNAME = \"ScriptFrame\"\nBGR_COLOR = \"#1e1e1e\"",
+        "detail": "source.config.consts",
+        "documentation": {}
+    },
+    {
+        "label": "RENDER_VIDEO",
+        "kind": 5,
+        "importPath": "source.config.consts",
+        "description": "source.config.consts",
+        "peekOfCode": "RENDER_VIDEO = pg.USEREVENT + 4\nNAME = \"ScriptFrame\"\nBGR_COLOR = \"#1e1e1e\"",
+        "detail": "source.config.consts",
+        "documentation": {}
+    },
+    {
+        "label": "NAME",
+        "kind": 5,
+        "importPath": "source.config.consts",
+        "description": "source.config.consts",
+        "peekOfCode": "NAME = \"ScriptFrame\"\nBGR_COLOR = \"#1e1e1e\"",
+        "detail": "source.config.consts",
+        "documentation": {}
+    },
+    {
+        "label": "BGR_COLOR",
+        "kind": 5,
+        "importPath": "source.config.consts",
+        "description": "source.config.consts",
+        "peekOfCode": "BGR_COLOR = \"#1e1e1e\"",
+        "detail": "source.config.consts",
+        "documentation": {}
+    },
+    {
+        "label": "Prop",
+        "kind": 6,
+        "importPath": "source.config.projectData",
+        "description": "source.config.projectData",
+        "peekOfCode": "class Prop:\n    name : str\n    value : any\n    propType : str\n    def __init__(self, name: str, value: any, propType: str) -> None:\n        self.name = name\n        self.value = value\n        self.propType = propType\nclass Element:\n    source : str",
+        "detail": "source.config.projectData",
+        "documentation": {}
+    },
+    {
+        "label": "Element",
+        "kind": 6,
+        "importPath": "source.config.projectData",
+        "description": "source.config.projectData",
+        "peekOfCode": "class Element:\n    source : str\n    name : str\n    icon : str\n    instance : any\n    color : pg.Color\n    start : float\n    end : float\n    layer : int\n    x: int",
+        "detail": "source.config.projectData",
+        "documentation": {}
+    },
+    {
+        "label": "read_wav",
+        "kind": 2,
+        "importPath": "source.utils.audio",
+        "description": "source.utils.audio",
+        "peekOfCode": "def read_wav(path, downsample_factor = 10):\n    with wave.open(path, \"rb\") as wav:\n        nchannels, sampwidth, framerate, nframes, _, _ = wav.getparams()\n        signed = sampwidth > 1  # 8 bit wavs are unsigned\n        byteorder = sys.byteorder  # wave module uses sys.byteorder for bytes\n        values = []  # e.g. for stereo, values[i] = [left_val, right_val]\n        maxval = -9999999999999\n        for _ in range(nframes):\n            frame = wav.readframes(1)  # read next frame\n            channel_vals = []  # mono has 1 channel, stereo 2, etc.",
+        "detail": "source.utils.audio",
+        "documentation": {}
+    },
+    {
+        "label": "hex_to_rgb",
+        "kind": 2,
+        "importPath": "source.utils.colors",
+        "description": "source.utils.colors",
+        "peekOfCode": "def hex_to_rgb(hex_color):\n    if isinstance(hex_color, pg.Color):\n        return (hex_color.r, hex_color.g, hex_color.b, hex_color.a)\n    hex_color = hex_color.lstrip('#')\n    # Determine if the hex color includes alpha\n    if len(hex_color) == 6:\n        # Convert the hex string to an integer tuple (R, G, B)\n        rgb_tuple = tuple(int(hex_color[i:i+2], 16) for i in (0, 2, 4))\n        return (rgb_tuple[0], rgb_tuple[1], rgb_tuple[2], 255)\n    elif len(hex_color) == 8:",
+        "detail": "source.utils.colors",
+        "documentation": {}
+    },
+    {
+        "label": "modifyRGB",
+        "kind": 2,
+        "importPath": "source.utils.colors",
+        "description": "source.utils.colors",
+        "peekOfCode": "def modifyRGB(rgbColor: tuple[int, int, int] | tuple[int, int, int, int], n: float):\n    if isinstance(rgbColor, str): return rgbColor\n    return (\n        tuple(int(clamp(i + n * 255, 0, 255)) for i in rgbColor)\n    )\ndef invertColor(rgbColor:tuple[int, int, int] | tuple[int, int, int, int] ):\n    if isinstance(rgbColor, str): return rgbColor\n    return (\n        255 - rgbColor[0],\n        255 - rgbColor[1],",
+        "detail": "source.utils.colors",
+        "documentation": {}
+    },
+    {
+        "label": "invertColor",
+        "kind": 2,
+        "importPath": "source.utils.colors",
+        "description": "source.utils.colors",
+        "peekOfCode": "def invertColor(rgbColor:tuple[int, int, int] | tuple[int, int, int, int] ):\n    if isinstance(rgbColor, str): return rgbColor\n    return (\n        255 - rgbColor[0],\n        255 - rgbColor[1],\n        255 - rgbColor[2],\n        len(rgbColor) == 3 and 255 or rgbColor[3]\n    )\nVALID_COLORS = {\n    'black', 'white', 'red', 'green', 'blue', 'yellow', 'cyan', 'magenta', 'gray', ",
+        "detail": "source.utils.colors",
+        "documentation": {}
+    },
+    {
+        "label": "isStringAColor",
+        "kind": 2,
+        "importPath": "source.utils.colors",
+        "description": "source.utils.colors",
+        "peekOfCode": "def isStringAColor(a:any):\n    if not isinstance(a, str): return False\n    if (len(a) == 7 or len(a) == 9) and a[0] == \"#\": return True\n    if a in VALID_COLORS: return True\n    return False",
+        "detail": "source.utils.colors",
+        "documentation": {}
+    },
+    {
+        "label": "VALID_COLORS",
+        "kind": 5,
+        "importPath": "source.utils.colors",
+        "description": "source.utils.colors",
+        "peekOfCode": "VALID_COLORS = {\n    'black', 'white', 'red', 'green', 'blue', 'yellow', 'cyan', 'magenta', 'gray', \n    'lightgray', 'darkgray', 'lightblue', 'darkblue', 'lightgreen', 'darkgreen', \n    'lightred', 'darkred', 'lightyellow', 'darkyellow', 'lightcyan', 'darkcyan', \n    'lightmagenta', 'darkmagenta', 'orange', 'purple', 'brown', 'pink'\n}\ndef isStringAColor(a:any):\n    if not isinstance(a, str): return False\n    if (len(a) == 7 or len(a) == 9) and a[0] == \"#\": return True\n    if a in VALID_COLORS: return True",
+        "detail": "source.utils.colors",
+        "documentation": {}
+    },
+    {
+        "label": "EventManager",
+        "kind": 6,
+        "importPath": "source.utils.event",
+        "description": "source.utils.event",
+        "peekOfCode": "class EventManager:\n    def __init__(self):\n        self.events = []  # List to store events\n        self.listeners = {}  # Dictionary to store listeners for each event type\n    def add_listener(self, event_type, callback):\n        \"\"\"Add a listener function for a specific event type.\"\"\"\n        if event_type not in self.listeners:\n            self.listeners[event_type] = []\n        self.listeners[event_type].append(callback)\n    def remove_listener(self, event_type, callback):",
+        "detail": "source.utils.event",
+        "documentation": {}
+    },
+    {
+        "label": "keyconsts",
+        "kind": 5,
+        "importPath": "source.utils.keyconsts",
+        "description": "source.utils.keyconsts",
+        "peekOfCode": "keyconsts = {\n    'a': pg.K_a,\n    'b': pg.K_b,\n    'c': pg.K_c,\n    'd': pg.K_d,\n    'e': pg.K_e,\n    'f': pg.K_f,\n    'g': pg.K_g,\n    'h': pg.K_h,\n    'i': pg.K_i,",
+        "detail": "source.utils.keyconsts",
+        "documentation": {}
+    },
+    {
+        "label": "inRect",
+        "kind": 2,
+        "importPath": "source.utils.math",
+        "description": "source.utils.math",
+        "peekOfCode": "def inRect(ax = 0, ay = 0, x = 0, y = 0, w = 0, h = 0):\n    return ax > x and ax < x + w and ay > y and ay < y + h \ndef invLerp(a, b, v):\n    if b == a: return 0\n    return (v-a) / (b-a)\ndef lerp(a,b,t):\n    return a + (b-a) * t\ndef lerpMap(a0,b0,a1,b1,v, ease = linear):\n    \"\"\"\n    returns from a0 - b0 space",
+        "detail": "source.utils.math",
+        "documentation": {}
+    },
+    {
+        "label": "invLerp",
+        "kind": 2,
+        "importPath": "source.utils.math",
+        "description": "source.utils.math",
+        "peekOfCode": "def invLerp(a, b, v):\n    if b == a: return 0\n    return (v-a) / (b-a)\ndef lerp(a,b,t):\n    return a + (b-a) * t\ndef lerpMap(a0,b0,a1,b1,v, ease = linear):\n    \"\"\"\n    returns from a0 - b0 space\n    to a1 b1 space\n    \"\"\"",
+        "detail": "source.utils.math",
+        "documentation": {}
+    },
+    {
+        "label": "lerp",
+        "kind": 2,
+        "importPath": "source.utils.math",
+        "description": "source.utils.math",
+        "peekOfCode": "def lerp(a,b,t):\n    return a + (b-a) * t\ndef lerpMap(a0,b0,a1,b1,v, ease = linear):\n    \"\"\"\n    returns from a0 - b0 space\n    to a1 b1 space\n    \"\"\"\n    return lerp(a1,b1,ease(invLerp(a0,b0,v)))\ndef clamp(x: float, mi : float, ma : float):\n    return min(max(x, mi), ma)",
+        "detail": "source.utils.math",
+        "documentation": {}
+    },
+    {
+        "label": "lerpMap",
+        "kind": 2,
+        "importPath": "source.utils.math",
+        "description": "source.utils.math",
+        "peekOfCode": "def lerpMap(a0,b0,a1,b1,v, ease = linear):\n    \"\"\"\n    returns from a0 - b0 space\n    to a1 b1 space\n    \"\"\"\n    return lerp(a1,b1,ease(invLerp(a0,b0,v)))\ndef clamp(x: float, mi : float, ma : float):\n    return min(max(x, mi), ma)\ndef distPoints(ax, ay, bx, by):\n    return (bx - ax) * (bx - ax) + (by - ay) * (by - ay)",
+        "detail": "source.utils.math",
+        "documentation": {}
+    },
+    {
+        "label": "clamp",
+        "kind": 2,
+        "importPath": "source.utils.math",
+        "description": "source.utils.math",
+        "peekOfCode": "def clamp(x: float, mi : float, ma : float):\n    return min(max(x, mi), ma)\ndef distPoints(ax, ay, bx, by):\n    return (bx - ax) * (bx - ax) + (by - ay) * (by - ay)",
+        "detail": "source.utils.math",
+        "documentation": {}
+    },
+    {
+        "label": "distPoints",
+        "kind": 2,
+        "importPath": "source.utils.math",
+        "description": "source.utils.math",
+        "peekOfCode": "def distPoints(ax, ay, bx, by):\n    return (bx - ax) * (bx - ax) + (by - ay) * (by - ay)",
+        "detail": "source.utils.math",
+        "documentation": {}
+    },
+    {
+        "label": "applyCorners",
+        "kind": 2,
+        "importPath": "source.utils.shapes",
+        "description": "source.utils.shapes",
+        "peekOfCode": "def applyCorners(surf: pygame.Surface, radius = 4):\n    mask = pygame.Surface(surf.get_size(), pygame.SRCALPHA, 32)\n    mask.fill((0,0,0,0))\n    pygame.draw.rect(mask, (255, 255, 255, 255), pygame.Rect(0, 0, *surf.get_size()), border_radius=radius)\n    cloned = surf.copy()\n    cloned.blit(mask, (0, 0), special_flags=pygame.BLEND_RGBA_MULT)\n    return cloned\ndef AAfilledRoundedRect(surface, rect, color, radius=10):\n    \"\"\"\n    Draws an anti-aliased filled rounded rectangle with a fixed corner radius.",
+        "detail": "source.utils.shapes",
+        "documentation": {}
+    },
+    {
+        "label": "AAfilledRoundedRect",
+        "kind": 2,
+        "importPath": "source.utils.shapes",
+        "description": "source.utils.shapes",
+        "peekOfCode": "def AAfilledRoundedRect(surface, rect, color, radius=10):\n    \"\"\"\n    Draws an anti-aliased filled rounded rectangle with a fixed corner radius.\n    surface : destination surface\n    rect    : pygame.Rect or tuple, defining the rectangle\n    color   : (R, G, B, A) color tuple\n    radius  : integer, fixed radius for the rounded corners\n    \"\"\"\n    rect = pygame.Rect(rect)\n    color = pygame.Color(*(isinstance(color, pygame.Color) and color or (isinstance(color, tuple) and pygame.Color(*color) or pygame.Color(color))))",
+        "detail": "source.utils.shapes",
+        "documentation": {}
+    },
+    {
+        "label": "main",
+        "kind": 2,
+        "importPath": "source.main",
+        "description": "source.main",
+        "peekOfCode": "def main():\n    pygame.init()\n    pygame.font.init()\n    pygame.mixer.init()\n    screen = pygame.display.set_mode(INITIAL_VIEWPORT_SIZE, pygame.RESIZABLE)\n    pygame.display.set_caption(NAME)\n    app = App(screen)\n    initialRenders = 0\n    while True:\n        events = pygame.event.get()",
+        "detail": "source.main",
+        "documentation": {}
+    }
+]

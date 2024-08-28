@@ -9,6 +9,11 @@ class Main(Scene):
 
     def __init__(self) -> None:
         super().__init__()
+        self.bgr = self.add(rectangle(self,
+                                    color = pg.Color("black"),
+                                    w = 1600,
+                                    h = 900,
+                                    ))
         self.a = self.add(text(self,
                                     color = pg.Color("white"),
                                     # centered = True,
@@ -18,11 +23,13 @@ class Main(Scene):
                                     x = 800,
                                     y = 450
                                     ))
-        self.a.color.share("rect color", "color1")
-        self.signalA = Signal("Scrie ceva", self).share("textA", "textbox")
 
     def render(self):
-        self.a.text("Scrie Ceva", 1)
+        self.a.text("Lorem ipsum", 1)
+        self.bgr.color(pg.Color("red"), 1)
         self.wait(2)
-        self.a.text(self.signalA(), .4, linear)
+        self.a.text("Ipsum Lorem", .4, linear)
+        self.bgr.color(pg.Color("blue"), 1)
+        self.wait(1)
+        self.playAudio("test3.wav")
         self.wait(2)

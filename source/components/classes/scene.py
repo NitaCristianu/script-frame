@@ -1,6 +1,7 @@
 import pygame as pg
 from components.classes.node import *
 from components.utils.signal import *
+from config.consts import *
 from config.projectData import *
 
 class Scene:
@@ -10,9 +11,15 @@ class Scene:
         self.surf = self.getSurface()
         self.props: List['Prop'] = []
         self.reqtime = 0
+        self.sounds = []
         self.t = 0
         self.lenght = 0
     
+    def playAudio(self, src: str, **args) -> None:
+        sound = pg.mixer.Sound(AUDIO_DIRECTORY + "\\" + src)
+        self.sounds.append((sound, self.reqtime))
+
+
     def getProperty(self, signal : Signal) -> None:
         prop = next((prop for prop in self.props if prop['name'] == signal.name), None)
         return prop['value'] if prop else signal._value
@@ -64,7 +71,9 @@ class Scene:
         self.reqtime = 0
         self.surf = pg.Surface(self.size, pg.SRCALPHA, 32)
         self.father.reset()
+        self.sounds.clear()
         self.centerFather()
+
         self.render()
 
     def render(self):
