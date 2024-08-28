@@ -869,6 +869,15 @@
         "documentation": {}
     },
     {
+        "label": "moviepy.editor",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "moviepy.editor",
+        "description": "moviepy.editor",
+        "detail": "moviepy.editor",
+        "documentation": {}
+    },
+    {
         "label": "ImageSequenceClip",
         "importPath": "moviepy.editor",
         "description": "moviepy.editor",
@@ -1014,6 +1023,15 @@
         "documentation": {}
     },
     {
+        "label": "copy",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "copy",
+        "description": "copy",
+        "detail": "copy",
+        "documentation": {}
+    },
+    {
         "label": "*",
         "importPath": "utils.audio",
         "description": "utils.audio",
@@ -1028,6 +1046,22 @@
         "importPath": "wave",
         "description": "wave",
         "detail": "wave",
+        "documentation": {}
+    },
+    {
+        "label": "BytesIO",
+        "importPath": "io",
+        "description": "io",
+        "isExtraImport": true,
+        "detail": "io",
+        "documentation": {}
+    },
+    {
+        "label": "BytesIO",
+        "importPath": "io",
+        "description": "io",
+        "isExtraImport": true,
+        "detail": "io",
         "documentation": {}
     },
     {
@@ -1493,7 +1527,7 @@
         "kind": 6,
         "importPath": "source.config.projectData",
         "description": "source.config.projectData",
-        "peekOfCode": "class Prop:\n    name : str\n    value : any\n    propType : str\n    def __init__(self, name: str, value: any, propType: str) -> None:\n        self.name = name\n        self.value = value\n        self.propType = propType\nclass Element:\n    source : str",
+        "peekOfCode": "class Prop:\n    name: str\n    value: any\n    propType: str\n    def __init__(self, name: str, value: any, propType: str) -> None:\n        self.name = name\n        self.value = value\n        self.propType = propType\nclass Element:\n    source: str",
         "detail": "source.config.projectData",
         "documentation": {}
     },
@@ -1502,7 +1536,7 @@
         "kind": 6,
         "importPath": "source.config.projectData",
         "description": "source.config.projectData",
-        "peekOfCode": "class Element:\n    source : str\n    name : str\n    icon : str\n    instance : any\n    color : pg.Color\n    start : float\n    end : float\n    layer : int\n    x: int",
+        "peekOfCode": "class Element:\n    source: str\n    name: str\n    icon: str\n    instance: any\n    color: pg.Color\n    start: float\n    end: float\n    layer: int\n    x: int",
         "detail": "source.config.projectData",
         "documentation": {}
     },
@@ -1512,6 +1546,15 @@
         "importPath": "source.utils.audio",
         "description": "source.utils.audio",
         "peekOfCode": "def read_wav(path, downsample_factor = 10):\n    with wave.open(path, \"rb\") as wav:\n        nchannels, sampwidth, framerate, nframes, _, _ = wav.getparams()\n        signed = sampwidth > 1  # 8 bit wavs are unsigned\n        byteorder = sys.byteorder  # wave module uses sys.byteorder for bytes\n        values = []  # e.g. for stereo, values[i] = [left_val, right_val]\n        maxval = -9999999999999\n        for _ in range(nframes):\n            frame = wav.readframes(1)  # read next frame\n            channel_vals = []  # mono has 1 channel, stereo 2, etc.",
+        "detail": "source.utils.audio",
+        "documentation": {}
+    },
+    {
+        "label": "splitaudio",
+        "kind": 2,
+        "importPath": "source.utils.audio",
+        "description": "source.utils.audio",
+        "peekOfCode": "def splitaudio(sound_array : np.ndarray, framerate: int, nchannels : int, sampwidth : float, split_time_sec):\n    sound_array = sound_array.reshape(-1, nchannels)\n    split_frame = int(framerate * split_time_sec)\n    print(\"spliting time:\" , round(split_time_sec, 2))\n    print(\"spliting frame\", split_frame)\n    print(\"lenght\", len(sound_array))\n    print(\"---------\")\n    part1_array = sound_array[:split_frame]\n    part2_array = sound_array[split_frame:]\n    a = len(part1_array)",
         "detail": "source.utils.audio",
         "documentation": {}
     },

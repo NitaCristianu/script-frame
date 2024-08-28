@@ -30,7 +30,7 @@ class BottomPad(Rect):
         self.elementsrect = []
         self.hoveredElement : "Element" = None
         self.elementFont = getFont(weight="bold", fontHeight=15)
-        
+        self.cutmode = False
 
         app.event.add_listener(APPLY_PROPS, lambda: (self.app.draw(), app.refresh(self.rect)))
 
@@ -206,9 +206,7 @@ class BottomPad(Rect):
             bottom,
             hex_to_rgb("#6de6b7")
         )
-        self.app.screen.blit(surf, (self.x + x_start, self.layersTop))
-
-    
+        self.app.screen.blit(surf, (self.x + x_start, self.layersTop)) 
 
     def drawContent(self):
         if not self.enabled: 
@@ -249,7 +247,7 @@ class BottomPad(Rect):
                 change =  delta / distance
             selecting = self.selectedInTimeline
 
-            if self.app.holdingShift:
+            if self.app.holdingCtrl:
                 self.zoomlevel = clamp(self.zoomlevel + delta/800, 0.05, 90)
                 self.draw()
                 self.app.refresh(self.rect)
@@ -287,6 +285,24 @@ class BottomPad(Rect):
                 else:
                     self.app.draw()
                     self.app.refresh()
+
+        if self.app.keyUp(pygame.K_c) and self.cutmode:
+            # cut audio
+            for element in (element for element in elements if element.type == 'audio' and element.selected):
+                start = element.start
+                end = element.end
+
+                current = self.app.videotime / 1000
+                if not(start <= current and end > current): continue
+
+                dist_start = current - start
+                
+                element.splitaudio(dist_start)
+                self.app.event.fire_event(ADD_ELEMENT_EVENT)
+                
+                self.drawContent()
+                self.app.refresh(self.rect)
+            
 
         if self.app.videorunning:
             self.drawContent()
@@ -391,7 +407,7 @@ class BottomPropsTab(Rect):
         return self.children[2]
     
     @property
-    def cutmode(self):
+    def cutmodebtn(self):
         return self.children[3]
 
     def update(self):
@@ -401,16 +417,18 @@ class BottomPropsTab(Rect):
             self.app.setWindowMode(2)
             self.app.draw()
             self.app.event.fire_event(RENDER_VIDEO)
-        if self.transformModeBtn.clicked:
+        elif self.transformModeBtn.clicked:
             self.app.transformMode = not self.app.transformMode
+            self.draw()
+            self.app.refresh(self.rect)
+        elif self.cutmodebtn.clicked:
+            self.children[0].cutmode = not self.children[0].cutmode
             self.draw()
             self.app.refresh(self.rect)
 
 
     def drawContent(self):
-        if self.app.transformMode:
-            self.transformModeBtn.color = "#6b5a0d"
-        else:
-            self.transformModeBtn.color = "#262626"
+        self.transformModeBtn.color = "#6b5a0d" if self.app.transformMode else "#262626"
+        self.cutmodebtn.color = "#6b5a0d" if self.children[0].cutmode else "#262626"
 
         super().drawContent()
