@@ -1,13 +1,11 @@
-import copy
-import moviepy.editor
 from typing import List
-import pygame
 from uuid import uuid4
 from typing import List, Literal
 from utils.audio import *
 from config.consts import *
+from pydub import AudioSegment
+from math import ceil
 import wave
-from io import BytesIO
 
 
 class Prop:
@@ -61,76 +59,63 @@ class Element:
         if len(self.source) > 0 and self.calcInstance:
             self.setInstance()
 
-    def getFullSource(self):
+    def getfullsource(self):
+        if self.source.startswith(AUDIO_DIRECTORY) or self.source.startswith(COMPONENTS_DIRECTORY): return self.source
+        
         if self.type == 'audio':
-            return COMPONENTS_DIRECTORY + f'\\audio\\{self.source}'
+            return f'{AUDIO_DIRECTORY}\\{self.source}'
         else:
-            return COMPONENTS_DIRECTORY + f'\\{self.source}.py'
+            return  f'{COMPONENTS_DIRECTORY}\\{self.source}.py'
 
     def splitaudio(self, t: float):
-        if self.calcInstance:
-            # this is original audio
-            self.instance = wave.open(self.getFullSource(), "rb")
-            self.sound_array = np.frombuffer(self.instance.readframes(-1), dtype=np.int16)
-            self.framerate = self.instance.getframerate()
-            self.nchannels = self.instance.getnchannels()
-            self.samplewidth = self.instance.getsampwidth()
-        if isinstance(self.sound_array, BytesIO): return
-        print(self.sound_array)
-        (wav1, wav1_data), (wav2, wav2_data) = splitaudio(self.sound_array, self.framerate, self.nchannels, self.samplewidth, t)
-        print("Split 1 duration :", wav1.getnframes() / wav1.getframerate())
-        print("Split 2 duration :", wav2.getnframes() / wav2.getframerate())
-        original_end = self.lenght
-        self.calcSoundProps(wav1, wav1_data)
-
-        element2 = Element(name=self.name,
-                           source=self.source,
-                           icon=self.icon,
-                           layer=self.layer,
-                           start=self.end,
-                           end=original_end,
-                           type='audio',
-                           selected=True,
-                           volumemul=self.volumemul,
-                           calcInstance=False
-                           )
+        start = self.start
+        end = self.end
         
-        element2.calcSoundProps(wav2, wav2_data)
+        # cut times seconds
+        diststart = t - start
+        distend = end - t
+
+        audio: AudioSegment = AudioSegment.from_wav(self.getfullsource())
+
+        cut1 = audio[int(diststart*1000):]
+        cut2 = audio[:ceil(-distend*1000)]
+        dir1 = f"{AUDIO_DIRECTORY}\\l__{self.source}"
+        dir2 = f"{AUDIO_DIRECTORY}\\r__{self.source}"
+
+        cut1.export(dir1, format="wav")
+        cut2.export(dir2, format="wav")
+
+        element1 = Element(name=self.name, source=dir1, type="audio", start = diststart + self.start)
+        element2 = Element(name=self.name, source=dir2, type="audio", start = self.start)
+        elements.append(element1)
         elements.append(element2)
 
-    def calcSoundProps(self, wave_file, wave_data):
-        self.instance = wave_file
-        self.pygamesound = pg.mixer.Sound(wave_data)
+        elements.remove(self)
+        del self
 
-        self.freq = self.instance.getframerate()
-        self.samplewidth = self.instance.getsampwidth()
-        self.sound_array = wave_data
-        self.nchannels = self.instance.getnchannels()
-        self.nframes = self.instance.getnframes()
-        self.lenght = self.nframes / self.freq
 
-        self.data, self.framerate = read_wav(
-            self.getFullSource(), downsample_factor=10)
-
-        self.end = self.start + self.lenght
+    def __del__(self):
+        self.pygamesound.stop()
 
     def setInstance(self):
         if self.type == "audio":
+            
             self.instance: wave.Wave_read | wave.Wave_write = wave.open(
-                self.getFullSource(), "rb")
+                self.getfullsource(), "rb")
             self.pygamesound: pg.mixer.Sound = pg.mixer.Sound(
-                self.getFullSource())
+                self.getfullsource())
 
             self.freq = self.instance.getframerate()
             self.samplewidth = self.instance.getsampwidth()
             self.nchannels = self.instance.getnchannels()
             self.nframes = self.instance.getnframes()
 
-            self.sound_array = np.frombuffer(self.instance.readframes(-1), dtype=np.int16)
+            self.sound_array = np.frombuffer(
+                self.instance.readframes(-1), dtype=np.int16)
             self.lenght = self.nframes / self.freq
 
             self.data, self.framerate = read_wav(
-                self.getFullSource(), downsample_factor=10)
+                self.getfullsource(), downsample_factor=10)
 
             self.end = self.start + self.lenght
         elif self.type == "video":
@@ -138,9 +123,10 @@ class Element:
             import sys
             from pathlib import Path
 
-            file_path = Path(self.getFullSource())
+            file_path = Path(self.getfullsource())
             module_name = self.source
-            spec = importlib.util.spec_from_file_location(module_name, file_path)
+            spec = importlib.util.spec_from_file_location(
+                module_name, file_path)
             module = importlib.util.module_from_spec(spec)
             sys.modules[module_name] = module
             spec.loader.exec_module(module)
@@ -153,5 +139,5 @@ class Element:
 pg.mixer.init()
 elements: List["Element"] = [
     Element("testobj", layer=1),
-    Element("test.wav", type="audio")
+    Element("testaudio", source = "test.wav", type="audio")
 ]

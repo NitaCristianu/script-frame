@@ -7,6 +7,7 @@ from utils.event import *
 from config.consts import *
 
 element_size = 30
+btn_color = "#110f01"
 
 def selectElementById(id: str, self : any):
     if not self.app.holdingCtrl:
@@ -38,12 +39,12 @@ class ElementsTab(Rect):
         self.pad = 10
         self.add_child(
             Rect((self.pad, 1 * self.pad, f'1x - {2*self.pad}', f'1y - {self.pad*2}'), app,
-                 color="#28282d", borderRadius=4)
+                 color="#0a0a0a", borderRadius=4)
         )
         self.tabIndex = 0
-        self.color = "#0e0e0e"
+        self.color = "#050505"
         
-        app.event.add_listener(ADD_ELEMENT_EVENT, lambda : self.setElements())
+        app.event.add_listener(ADD_ELEMENT_EVENT, lambda : (self.setElements(), self.app.event.fire_event(SELECT_ELEMENT_EVENT)))
 
     def setElements(self):
         pad = self.pad
@@ -53,7 +54,6 @@ class ElementsTab(Rect):
         self.elements_per_page = 0
         index = 0
         while True:
-
             y = 50 * (index + 1) + pad * (index + 1) + pad  # including height
             if y > maxheight:
                 self.elements_per_page = index
@@ -78,7 +78,8 @@ class ElementsTab(Rect):
                 padding=60,
                 detectHover=True,
                 borderRadius=4,
-                color="#1e1e1e",
+                color=saturate(hex_to_rgb(element.color), .3),
+                fontColor=modifyRGB(saturate(hex_to_rgb(element.color), .3),0.65),
                 onHoverModifiedColor=0.15,
                 align='left',
                 autoHeight=False
@@ -105,7 +106,7 @@ class ElementsTab(Rect):
             self.children[0].add_child(Rect(
                 dimension=dimension,
                 app=self.app,
-                color="#222221",
+                color=btn_color,
                 borderRadius=4,
                 detectHover=True,
                 onHoverModifiedColor=0.07
@@ -117,7 +118,7 @@ class ElementsTab(Rect):
             self.children[0].add_child(Rect(
                 dimension=dimension,
                 app=self.app,
-                color="#222221",
+                color=btn_color,
                 borderRadius=4,
                 detectHover=True,
                 onHoverModifiedColor=0.07
@@ -159,7 +160,7 @@ class ElementsTab(Rect):
         self.children[0].add_child(Rect(
             dimension=dimension,
             app=self.app,
-            color="#222221",
+            color=btn_color,
             borderRadius=4,
             detectHover=True,
             onHoverModifiedColor=0.07

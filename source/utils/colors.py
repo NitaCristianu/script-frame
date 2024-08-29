@@ -1,9 +1,11 @@
 from utils.math import clamp
-import pygame as pg
+import pygame
 
 def hex_to_rgb(hex_color):
-    if isinstance(hex_color, pg.Color):
+    if isinstance(hex_color, pygame.Color):
         return (hex_color.r, hex_color.g, hex_color.b, hex_color.a)
+    if isinstance(hex_color, tuple):
+        return hex_color
     hex_color = hex_color.lstrip('#')
 
     # Determine if the hex color includes alpha
@@ -18,6 +20,10 @@ def hex_to_rgb(hex_color):
     else:
         return hex_color
 
+def saturate(rgb, n : float):
+    col = pygame.Color(*rgb)
+    col.hsla = (col.hsla[0], clamp(col.hsla[1] + n * col.hsla[1], 0, 100), col.hsla[2], col.hsla[3])
+    return hex_to_rgb(col)
 
 def modifyRGB(rgbColor: tuple[int, int, int] | tuple[int, int, int, int], n: float):
     if isinstance(rgbColor, str): return rgbColor

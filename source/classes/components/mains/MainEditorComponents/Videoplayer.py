@@ -38,7 +38,7 @@ class VideoPlayer(Rect):
         app: any,
     ) -> None:
         super().__init__(dimension, app)
-        self.color = "#0e0e0e"
+        self.color = "#050505"
         size = (1600, 900)
         self.videoscale = 0.25
         self.videosize = size

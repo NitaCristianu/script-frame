@@ -24,7 +24,7 @@ class BottomPad(Rect):
         self.detectHover = True
         self.lineFont = getFont(fontHeight=10, weight='semibold')
         self.layersTop = 0
-        self.layerSize = 100
+        self.layerSize = 70
         self.timeline_lenght = 5
         self.selectedInTimeline = "outside"
         self.elementsrect = []
@@ -33,6 +33,7 @@ class BottomPad(Rect):
         self.cutmode = False
 
         app.event.add_listener(APPLY_PROPS, lambda: (self.app.draw(), app.refresh(self.rect)))
+        app.event.add_listener(SELECT_ELEMENT_EVENT, lambda: (self.app.draw(), app.refresh(self.rect)))
 
     def getTimelineStartTime(self):
         return min(-self.currentTime, -self.timeline_lenght+self.currentTime)
@@ -238,6 +239,22 @@ class BottomPad(Rect):
             self.app.draw()
             self.app.refresh(self.rect)
 
+        if self.app.keyUp(pg.K_BACKSPACE):
+            
+            foundOne = False
+            while True:
+                found = False
+                for element in elements:
+                    if element.selected:
+                        found = True
+                        foundOne = True
+                        elements.remove(element)
+                        break
+                if not found: break
+            if foundOne:
+                self.draw()
+                self.app.refresh(self.rect)
+                self.app.event.fire_event(ADD_ELEMENT_EVENT)
 
         if self.selectedInTimeline != "outside" and self.hovered and self.app.mbuttons[0]:
             delta = self.app.mpos[0] - self.app.oldmpos[0]
@@ -357,10 +374,11 @@ class BottomPropsTab(Rect):
         dimension: tuple[int, int, int, int],
         app: any,    ) -> None:
         super().__init__(dimension, app)
-        self.color = BGR_COLOR
+        self.color = "#0a0a0a"
+        self.onHoverModifiedColor = 0
 
         self.add_child([
-            BottomPad((0, 45, '1x', '1y-50'), self.app, color = "#0e0e0e", borderRadius=4)
+            BottomPad((0, 45, '1x', '1y-50'), self.app, color = "#050505", borderRadius=4)
         ])
         self.onHoverModifiedColor = 0
     
@@ -369,7 +387,8 @@ class BottomPropsTab(Rect):
             app = self.app,
             text="RENDER",
             weight="semibold",
-            color="#262626",
+            color="#021303",
+            fontColor="#04f72c",
             autoHeight=False,
             padding=10,
             fontHeight=20,
@@ -428,7 +447,7 @@ class BottomPropsTab(Rect):
 
 
     def drawContent(self):
-        self.transformModeBtn.color = "#6b5a0d" if self.app.transformMode else "#262626"
-        self.cutmodebtn.color = "#6b5a0d" if self.children[0].cutmode else "#262626"
+        self.transformModeBtn.color = "#1e61f1" if self.app.transformMode else self.color
+        self.cutmodebtn.color = "#9716ec" if self.children[0].cutmode else self.color
 
         super().drawContent()

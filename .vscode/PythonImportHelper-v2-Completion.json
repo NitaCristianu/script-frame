@@ -771,6 +771,14 @@
         "documentation": {}
     },
     {
+        "label": "ceil",
+        "importPath": "math",
+        "description": "math",
+        "isExtraImport": true,
+        "detail": "math",
+        "documentation": {}
+    },
+    {
         "label": "*",
         "importPath": "utils.event",
         "description": "utils.event",
@@ -866,15 +874,6 @@
         "importPath": "threading",
         "description": "threading",
         "detail": "threading",
-        "documentation": {}
-    },
-    {
-        "label": "moviepy.editor",
-        "kind": 6,
-        "isExtraImport": true,
-        "importPath": "moviepy.editor",
-        "description": "moviepy.editor",
-        "detail": "moviepy.editor",
         "documentation": {}
     },
     {
@@ -1023,20 +1022,19 @@
         "documentation": {}
     },
     {
-        "label": "copy",
-        "kind": 6,
-        "isExtraImport": true,
-        "importPath": "copy",
-        "description": "copy",
-        "detail": "copy",
-        "documentation": {}
-    },
-    {
         "label": "*",
         "importPath": "utils.audio",
         "description": "utils.audio",
         "isExtraImport": true,
         "detail": "utils.audio",
+        "documentation": {}
+    },
+    {
+        "label": "AudioSegment",
+        "importPath": "pydub",
+        "description": "pydub",
+        "isExtraImport": true,
+        "detail": "pydub",
         "documentation": {}
     },
     {
@@ -1049,28 +1047,20 @@
         "documentation": {}
     },
     {
-        "label": "BytesIO",
-        "importPath": "io",
-        "description": "io",
-        "isExtraImport": true,
-        "detail": "io",
-        "documentation": {}
-    },
-    {
-        "label": "BytesIO",
-        "importPath": "io",
-        "description": "io",
-        "isExtraImport": true,
-        "detail": "io",
-        "documentation": {}
-    },
-    {
         "label": "sys",
         "kind": 6,
         "isExtraImport": true,
         "importPath": "sys",
         "description": "sys",
         "detail": "sys",
+        "documentation": {}
+    },
+    {
+        "label": "BytesIO",
+        "importPath": "io",
+        "description": "io",
+        "isExtraImport": true,
+        "detail": "io",
         "documentation": {}
     },
     {
@@ -1131,7 +1121,7 @@
         "kind": 6,
         "importPath": "source.classes.components.core.Slider",
         "description": "source.classes.components.core.Slider",
-        "peekOfCode": "class Slider(Rect):\n    def __init__(self, dimension: tuple[int, int, int, int], app: any, color: str | tuple[int, int, int, int] = \"#ffffff\", borderRadius=0, detectHover=False, onHoverModifiedColor=0.15) -> None:\n        super().__init__(dimension, app, color, borderRadius, detectHover, onHoverModifiedColor)\n        self.value = 0.5\n        self.padding = 10\n        self.dragging = False\n        self.range = (0, 1)\n        self.binds['changed'] = None\n        self.font = getFont(fontHeight=10, weight='extralight')\n    def getValuePoint(self):",
+        "peekOfCode": "class Slider(Rect):\n    def __init__(self, dimension: tuple[int, int, int, int], app: any, color: str | tuple[int, int, int, int] = \"#ffffff\", borderRadius=0, detectHover=False, onHoverModifiedColor=0.15) -> None:\n        super().__init__(dimension, app, color, borderRadius, detectHover, onHoverModifiedColor)\n        self.value = 0.5\n        self.padding = 10\n        self.dragging = False\n        self.range = (0, 1)\n        self.binds['changed'] = None\n        self.font = getFont(fontHeight=10, weight='light')\n    def getValuePoint(self):",
         "detail": "source.classes.components.core.Slider",
         "documentation": {}
     },
@@ -1185,7 +1175,7 @@
         "kind": 6,
         "importPath": "source.classes.components.mains.MainEditorComponents.BottomProps",
         "description": "source.classes.components.mains.MainEditorComponents.BottomProps",
-        "peekOfCode": "class BottomPad(Rect):\n    def __init__(self, dimension: tuple[int, int, int, int], app: any, color: str | tuple[int, int, int, int] = \"#ffffff\", borderRadius=0, detectHover=False, onHoverModifiedColor=0) -> None:\n        super().__init__(dimension, app, color, borderRadius, detectHover, onHoverModifiedColor)\n        self.currentTime = 0.5\n        self.mode: Literal[\"timeline\", \"recordingmic\"] = \"timeline\"\n        self.zoomlevel = 1\n        self.detectHover = True\n        self.lineFont = getFont(fontHeight=10, weight='semibold')\n        self.layersTop = 0\n        self.layerSize = 100",
+        "peekOfCode": "class BottomPad(Rect):\n    def __init__(self, dimension: tuple[int, int, int, int], app: any, color: str | tuple[int, int, int, int] = \"#ffffff\", borderRadius=0, detectHover=False, onHoverModifiedColor=0) -> None:\n        super().__init__(dimension, app, color, borderRadius, detectHover, onHoverModifiedColor)\n        self.currentTime = 0.5\n        self.mode: Literal[\"timeline\", \"recordingmic\"] = \"timeline\"\n        self.zoomlevel = 1\n        self.detectHover = True\n        self.lineFont = getFont(fontHeight=10, weight='semibold')\n        self.layersTop = 0\n        self.layerSize = 70",
         "detail": "source.classes.components.mains.MainEditorComponents.BottomProps",
         "documentation": {}
     },
@@ -1194,7 +1184,7 @@
         "kind": 6,
         "importPath": "source.classes.components.mains.MainEditorComponents.BottomProps",
         "description": "source.classes.components.mains.MainEditorComponents.BottomProps",
-        "peekOfCode": "class BottomPropsTab(Rect):\n    def __init__(\n        self,\n        dimension: tuple[int, int, int, int],\n        app: any,    ) -> None:\n        super().__init__(dimension, app)\n        self.color = BGR_COLOR\n        self.add_child([\n            BottomPad((0, 45, '1x', '1y-50'), self.app, color = \"#0e0e0e\", borderRadius=4)\n        ])",
+        "peekOfCode": "class BottomPropsTab(Rect):\n    def __init__(\n        self,\n        dimension: tuple[int, int, int, int],\n        app: any,    ) -> None:\n        super().__init__(dimension, app)\n        self.color = \"#0a0a0a\"\n        self.onHoverModifiedColor = 0\n        self.add_child([\n            BottomPad((0, 45, '1x', '1y-50'), self.app, color = \"#050505\", borderRadius=4)",
         "detail": "source.classes.components.mains.MainEditorComponents.BottomProps",
         "documentation": {}
     },
@@ -1230,7 +1220,16 @@
         "kind": 5,
         "importPath": "source.classes.components.mains.MainEditorComponents.ElementsTab",
         "description": "source.classes.components.mains.MainEditorComponents.ElementsTab",
-        "peekOfCode": "element_size = 30\ndef selectElementById(id: str, self : any):\n    if not self.app.holdingCtrl:\n        for element in elements:\n            element.selected = False\n    matching_element = next((element for element in elements if element.id == id), None)\n    matching_element.selected = not matching_element.selected\n    self.app.event.fire_event(SELECT_ELEMENT_EVENT)\nclass ElementsTab(Rect):\n    pad = 0",
+        "peekOfCode": "element_size = 30\nbtn_color = \"#110f01\"\ndef selectElementById(id: str, self : any):\n    if not self.app.holdingCtrl:\n        for element in elements:\n            element.selected = False\n    matching_element = next((element for element in elements if element.id == id), None)\n    matching_element.selected = not matching_element.selected\n    self.app.event.fire_event(SELECT_ELEMENT_EVENT)\nclass ElementsTab(Rect):",
+        "detail": "source.classes.components.mains.MainEditorComponents.ElementsTab",
+        "documentation": {}
+    },
+    {
+        "label": "btn_color",
+        "kind": 5,
+        "importPath": "source.classes.components.mains.MainEditorComponents.ElementsTab",
+        "description": "source.classes.components.mains.MainEditorComponents.ElementsTab",
+        "peekOfCode": "btn_color = \"#110f01\"\ndef selectElementById(id: str, self : any):\n    if not self.app.holdingCtrl:\n        for element in elements:\n            element.selected = False\n    matching_element = next((element for element in elements if element.id == id), None)\n    matching_element.selected = not matching_element.selected\n    self.app.event.fire_event(SELECT_ELEMENT_EVENT)\nclass ElementsTab(Rect):\n    pad = 0",
         "detail": "source.classes.components.mains.MainEditorComponents.ElementsTab",
         "documentation": {}
     },
@@ -1239,7 +1238,7 @@
         "kind": 6,
         "importPath": "source.classes.components.mains.MainEditorComponents.RightProps",
         "description": "source.classes.components.mains.MainEditorComponents.RightProps",
-        "peekOfCode": "class RightPropsTab(Rect):\n    def __init__(\n        self,\n        dimension: tuple[int, int, int, int],\n        app: any,\n    ) -> None:\n        super().__init__(dimension, app)\n        self.color = \"#1e1e24\"\n        app.event.add_listener(SELECT_ELEMENT_EVENT, lambda : self.setProps())\n    def addProp(self, lastY, prop, element: Optional['Element'] = None) -> Area:",
+        "peekOfCode": "class RightPropsTab(Rect):\n    def __init__(\n        self,\n        dimension: tuple[int, int, int, int],\n        app: any,\n    ) -> None:\n        super().__init__(dimension, app)\n        self.color = \"#050505\"\n        app.event.add_listener(SELECT_ELEMENT_EVENT, lambda : self.setProps())\n    def addProp(self, lastY, prop, element: Optional['Element'] = None) -> Area:",
         "detail": "source.classes.components.mains.MainEditorComponents.RightProps",
         "documentation": {}
     },
@@ -1266,7 +1265,7 @@
         "kind": 5,
         "importPath": "source.classes.components.mains.MainEditorComponents.RightProps",
         "description": "source.classes.components.mains.MainEditorComponents.RightProps",
-        "peekOfCode": "title_size = 20\npropSize = 50\nclass RightPropsTab(Rect):\n    def __init__(\n        self,\n        dimension: tuple[int, int, int, int],\n        app: any,\n    ) -> None:\n        super().__init__(dimension, app)\n        self.color = \"#1e1e24\"",
+        "peekOfCode": "title_size = 20\npropSize = 50\nclass RightPropsTab(Rect):\n    def __init__(\n        self,\n        dimension: tuple[int, int, int, int],\n        app: any,\n    ) -> None:\n        super().__init__(dimension, app)\n        self.color = \"#050505\"",
         "detail": "source.classes.components.mains.MainEditorComponents.RightProps",
         "documentation": {}
     },
@@ -1275,7 +1274,7 @@
         "kind": 5,
         "importPath": "source.classes.components.mains.MainEditorComponents.RightProps",
         "description": "source.classes.components.mains.MainEditorComponents.RightProps",
-        "peekOfCode": "propSize = 50\nclass RightPropsTab(Rect):\n    def __init__(\n        self,\n        dimension: tuple[int, int, int, int],\n        app: any,\n    ) -> None:\n        super().__init__(dimension, app)\n        self.color = \"#1e1e24\"\n        app.event.add_listener(SELECT_ELEMENT_EVENT, lambda : self.setProps())",
+        "peekOfCode": "propSize = 50\nclass RightPropsTab(Rect):\n    def __init__(\n        self,\n        dimension: tuple[int, int, int, int],\n        app: any,\n    ) -> None:\n        super().__init__(dimension, app)\n        self.color = \"#050505\"\n        app.event.add_listener(SELECT_ELEMENT_EVENT, lambda : self.setProps())",
         "detail": "source.classes.components.mains.MainEditorComponents.RightProps",
         "documentation": {}
     },
@@ -1284,7 +1283,7 @@
         "kind": 6,
         "importPath": "source.classes.components.mains.MainEditorComponents.Videoplayer",
         "description": "source.classes.components.mains.MainEditorComponents.Videoplayer",
-        "peekOfCode": "class VideoPlayer(Rect):\n    def __init__(\n        self,\n        dimension: tuple[int, int, int, int],\n        app: any,\n    ) -> None:\n        super().__init__(dimension, app)\n        self.color = \"#0e0e0e\"\n        size = (1600, 900)\n        self.videoscale = 0.25",
+        "peekOfCode": "class VideoPlayer(Rect):\n    def __init__(\n        self,\n        dimension: tuple[int, int, int, int],\n        app: any,\n    ) -> None:\n        super().__init__(dimension, app)\n        self.color = \"#050505\"\n        size = (1600, 900)\n        self.videoscale = 0.25",
         "detail": "source.classes.components.mains.MainEditorComponents.Videoplayer",
         "documentation": {}
     },
@@ -1563,7 +1562,16 @@
         "kind": 2,
         "importPath": "source.utils.colors",
         "description": "source.utils.colors",
-        "peekOfCode": "def hex_to_rgb(hex_color):\n    if isinstance(hex_color, pg.Color):\n        return (hex_color.r, hex_color.g, hex_color.b, hex_color.a)\n    hex_color = hex_color.lstrip('#')\n    # Determine if the hex color includes alpha\n    if len(hex_color) == 6:\n        # Convert the hex string to an integer tuple (R, G, B)\n        rgb_tuple = tuple(int(hex_color[i:i+2], 16) for i in (0, 2, 4))\n        return (rgb_tuple[0], rgb_tuple[1], rgb_tuple[2], 255)\n    elif len(hex_color) == 8:",
+        "peekOfCode": "def hex_to_rgb(hex_color):\n    if isinstance(hex_color, pygame.Color):\n        return (hex_color.r, hex_color.g, hex_color.b, hex_color.a)\n    if isinstance(hex_color, tuple):\n        return hex_color\n    hex_color = hex_color.lstrip('#')\n    # Determine if the hex color includes alpha\n    if len(hex_color) == 6:\n        # Convert the hex string to an integer tuple (R, G, B)\n        rgb_tuple = tuple(int(hex_color[i:i+2], 16) for i in (0, 2, 4))",
+        "detail": "source.utils.colors",
+        "documentation": {}
+    },
+    {
+        "label": "saturate",
+        "kind": 2,
+        "importPath": "source.utils.colors",
+        "description": "source.utils.colors",
+        "peekOfCode": "def saturate(rgb, n : float):\n    col = pygame.Color(*rgb)\n    col.hsla = (col.hsla[0], clamp(col.hsla[1] + n * col.hsla[1], 0, 100), col.hsla[2], col.hsla[3])\n    return hex_to_rgb(col)\ndef modifyRGB(rgbColor: tuple[int, int, int] | tuple[int, int, int, int], n: float):\n    if isinstance(rgbColor, str): return rgbColor\n    return (\n        tuple(int(clamp(i + n * 255, 0, 255)) for i in rgbColor)\n    )\ndef invertColor(rgbColor:tuple[int, int, int] | tuple[int, int, int, int] ):",
         "detail": "source.utils.colors",
         "documentation": {}
     },

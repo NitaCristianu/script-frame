@@ -19,7 +19,7 @@ class RightPropsTab(Rect):
         app: any,
     ) -> None:
         super().__init__(dimension, app)
-        self.color = "#1e1e24"
+        self.color = "#050505"
         app.event.add_listener(SELECT_ELEMENT_EVENT, lambda : self.setProps())
 
     def addProp(self, lastY, prop, element: Optional['Element'] = None) -> Area:
@@ -31,9 +31,9 @@ class RightPropsTab(Rect):
         showtitle = True
         if prop['propType'] == 'slider':
             obj = Slider(
-                (x, y, w, propSize),
+                (x, y, w, propSize*0.7),
                 self.app,
-                color="#181818",
+                color="#050505",
                 onHoverModifiedColor = 0
             )
             obj.range = (prop['min'], prop['max'])
@@ -104,7 +104,7 @@ class RightPropsTab(Rect):
         obj2 = Rect(
             (x - padding/2, y-title_size - 5, w + padding, obj.h + 2 * title_size + 10),
             self.app,
-            color="#181818",
+            color="#050505",
             borderRadius=4
         )
         obj2.add_child(Text(
