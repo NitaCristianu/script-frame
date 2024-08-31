@@ -16,7 +16,9 @@ class RenderMode(Rect):
                          detectHover, onHoverModifiedColor)
 
         ends = tuple(el.end for el in elements)
-        n_frames = int(max(ends) * 1000 / fps)
+        
+        n_frames = int(max(ends) * 1000 / fps) if len(ends) > 0 else 0
+        
         self.frm = pg.Surface((0, 0))
         self.add_child(Rect(
             dimension=(0, 0, '1x', '1y'),

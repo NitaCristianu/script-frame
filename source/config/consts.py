@@ -1,4 +1,6 @@
+import pyaudio
 import pygame as pg
+
 INITIAL_WIDTH = 800
 INITIAL_HEIGHT = 500
 COMPONENTS_DIRECTORY = "source\\components"
@@ -13,3 +15,11 @@ RENDER_VIDEO = pg.USEREVENT + 4
 NAME = "ScriptFrame"
 
 BGR_COLOR = "#1e1e1e"
+
+# MIC DATA
+FORMAT = pyaudio.paInt16
+CHANNELS = 2
+RATE = 48000
+CHUNK = 1024
+RECORD_SECONDS = 5
+OUTPUT_FILENAME = "output.wav"

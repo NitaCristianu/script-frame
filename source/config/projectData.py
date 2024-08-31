@@ -3,10 +3,14 @@ from uuid import uuid4
 from typing import List, Literal
 from utils.audio import *
 from config.consts import *
+from config.errorobj import *
 from pydub import AudioSegment
 from math import ceil
+import os 
 import wave
 
+def get_modification_time(file_path):
+    return os.path.getmtime(file_path)
 
 class Prop:
     name: str
@@ -34,6 +38,8 @@ class Element:
     selected: bool
     id: str
     type: str
+    lastmodified: float
+    enabled : bool
 
     def __init__(self, name: str, **args) -> None:
         self.name = name
@@ -46,8 +52,10 @@ class Element:
         self.type: Literal['video', 'audio'] = 'video'
         self.selected = False
         self.volumemul = 1
+        self.lastmodified = 0
         self.dragging = False
         self.calcInstance = True  # determines if the isntance will be calculated
+        self.enabled = False
 
         for key, val in args.items():
             if hasattr(self, key):
@@ -56,8 +64,14 @@ class Element:
             self.source = self.name
         self.color = "#364799" if self.type == "video" else "#7c1d77"
 
+        if self.icon == "customicon.png" and self.type == "audio":
+            self.icon = "musicnote.png"
+
         if len(self.source) > 0 and self.calcInstance:
             self.setInstance()
+
+    def getfilename(self):
+        return os.path.basename(self.getfullsource())
 
     def getfullsource(self):
         if self.source.startswith(AUDIO_DIRECTORY) or self.source.startswith(COMPONENTS_DIRECTORY): return self.source
@@ -65,7 +79,7 @@ class Element:
         if self.type == 'audio':
             return f'{AUDIO_DIRECTORY}\\{self.source}'
         else:
-            return  f'{COMPONENTS_DIRECTORY}\\{self.source}.py'
+            return  f'{COMPONENTS_DIRECTORY}\\{self.source}'
 
     def splitaudio(self, t: float):
         start = self.start
@@ -79,23 +93,19 @@ class Element:
 
         cut1 = audio[int(diststart*1000):]
         cut2 = audio[:ceil(-distend*1000)]
-        dir1 = f"{AUDIO_DIRECTORY}\\l__{self.source}"
-        dir2 = f"{AUDIO_DIRECTORY}\\r__{self.source}"
+        dir1 = f"{AUDIO_DIRECTORY}\\r__{self.getfilename()}"
+        dir2 = f"{AUDIO_DIRECTORY}\\l__{self.getfilename()}"
 
         cut1.export(dir1, format="wav")
         cut2.export(dir2, format="wav")
 
-        element1 = Element(name=self.name, source=dir1, type="audio", start = diststart + self.start)
-        element2 = Element(name=self.name, source=dir2, type="audio", start = self.start)
+        element1 = Element(name=self.name, source=dir1, type="audio", start = diststart + self.start, volumemul = self.volumemul)
+        element2 = Element(name=self.name, source=dir2, type="audio", start = self.start, volumemul = self.volumemul)
         elements.append(element1)
         elements.append(element2)
 
         elements.remove(self)
         del self
-
-
-    def __del__(self):
-        self.pygamesound.stop()
 
     def setInstance(self):
         if self.type == "audio":
@@ -107,15 +117,14 @@ class Element:
 
             self.freq = self.instance.getframerate()
             self.samplewidth = self.instance.getsampwidth()
-            self.nchannels = self.instance.getnchannels()
+            self.nchannels = self.instance.getnchannels() 
             self.nframes = self.instance.getnframes()
 
             self.sound_array = np.frombuffer(
                 self.instance.readframes(-1), dtype=np.int16)
             self.lenght = self.nframes / self.freq
 
-            self.data, self.framerate = read_wav(
-                self.getfullsource(), downsample_factor=10)
+            self.data, self.framerate = read_wav(self.getfullsource())
 
             self.end = self.start + self.lenght
         elif self.type == "video":
@@ -123,21 +132,26 @@ class Element:
             import sys
             from pathlib import Path
 
-            file_path = Path(self.getfullsource())
-            module_name = self.source
-            spec = importlib.util.spec_from_file_location(
-                module_name, file_path)
-            module = importlib.util.module_from_spec(spec)
-            sys.modules[module_name] = module
-            spec.loader.exec_module(module)
+            try:
+                file_path = Path(self.getfullsource())
+                module_name = self.source
+                spec = importlib.util.spec_from_file_location(
+                    module_name, file_path)
+                module = importlib.util.module_from_spec(spec)
+                sys.modules[module_name] = module
+                spec.loader.exec_module(module)
+                Class = getattr(module, 'Main')
+                self.instance = Class()
+            except Exception as e:
+                self.instance = Main()
+                self.instance.errormessage = str(e)
+                print(e)
 
-            Class = getattr(module, 'Main')
-
-            self.instance = Class()
-
+    def update(self):
+        new_modified_time = get_modification_time(self.getfullsource())
+        if self.lastmodified != new_modified_time:
+            self.lastmodified = get_modification_time(self.getfullsource())
+            self.setInstance()
 
 pg.mixer.init()
-elements: List["Element"] = [
-    Element("testobj", layer=1),
-    Element("testaudio", source = "test.wav", type="audio")
-]
+elements: List["Element"] = []

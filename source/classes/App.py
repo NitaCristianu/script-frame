@@ -38,6 +38,10 @@ class App:
     dragging = False
     lastClick = 0
 
+    #---- project related
+    projectVersion = 0
+    projectName = "test1"
+
     #------ video related
     videotime = 0
     playbackspeed = 1
@@ -143,6 +147,9 @@ class App:
 
     def update(self) -> None:
         # Initializing
+        for element in elements:
+            element.update()
+
         self.setInput()
         self.event.process_events()
 
@@ -153,6 +160,7 @@ class App:
         self.resize = False
         self.deltatime = self.clock.tick(30)
         self.currentTime += self.deltatime
+
 
     def refresh(self, section: pg.Rect | None = None ) -> None:
         if section == None: section = pg.Rect(0, 0, self.width, self.height)

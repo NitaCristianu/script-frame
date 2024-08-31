@@ -2,6 +2,7 @@ from classes.components.core.Rect import Rect
 from classes.components.core.Area import *
 from classes.components.core.Text import *
 from classes.components.core.Image import *
+from classes.components.core.Textbox import *
 from classes.components.mains.MainEditorComponents.Videoplayer import *
 from config.projectData import *
 from config.consts import *
@@ -10,16 +11,14 @@ from utils.colors import *
 from utils.shapes import *
 from utils.math import *
 from math import ceil
-from typing import Literal
 
 x_start_offset = 2
 
-class BottomPad(Rect):
+class TimelineSeciton(Rect):
     def __init__(self, dimension: tuple[int, int, int, int], app: any, color: str | tuple[int, int, int, int] = "#ffffff", borderRadius=0, detectHover=False, onHoverModifiedColor=0) -> None:
         super().__init__(dimension, app, color, borderRadius, detectHover, onHoverModifiedColor)
 
         self.currentTime = 0.5
-        self.mode: Literal["timeline", "recordingmic"] = "timeline"
         self.zoomlevel = 1
         self.detectHover = True
         self.lineFont = getFont(fontHeight=10, weight='semibold')
@@ -169,20 +168,24 @@ class BottomPad(Rect):
                     leftval = data[index][0]
                     leftval *= element.volumemul * 8
                     y0 = -clamp(-leftval, 0, height//4)
-                    rightval = data[index][1]
-                    rightval *= element.volumemul * 8
-                    y1 = clamp(rightval, 0, height//4)
                     center = top + int(height*.75)
                     leftchannel.append((int(index / len(data) * width + left), center-y0))
-                    rightchannel.append((int(index / len(data) * width + left), center-y1))
+                    if len(data[index]) > 1:
+                        rightval = data[index][1]
+                        rightval *= element.volumemul * 8
+                        y1 = clamp(rightval, 0, height//4)
+                        rightchannel.append((int(index / len(data) * width + left), center-y1))
+
+                if len(rightchannel) > 1:
+                    gfxdraw.filled_polygon(
+                        surf,
+                        rightchannel,
+                        inverted
+                    )
+
                 gfxdraw.filled_polygon(
                     surf,
                     leftchannel,
-                    inverted
-                )
-                gfxdraw.filled_polygon(
-                    surf,
-                    rightchannel,
                     inverted
                 )
            
@@ -213,13 +216,12 @@ class BottomPad(Rect):
         if not self.enabled: 
             return
         super().drawContent()
-        if self.mode == 'timeline': self.drawTimeline()
-
-    def drawTimeline(self):
         self.drawTimelineBgr()
         self.drawElements()
     
-    def updateTimeline(self):
+    def update(self):
+        if not self.enabled: return
+        super().update()
         self.layersTop = 35 + self.y
         self.second_length = self.w / self.timeline_lenght
 
@@ -311,10 +313,8 @@ class BottomPad(Rect):
 
                 current = self.app.videotime / 1000
                 if not(start <= current and end > current): continue
-
-                dist_start = current - start
                 
-                element.splitaudio(dist_start)
+                element.splitaudio(current)
                 self.app.event.fire_event(ADD_ELEMENT_EVENT)
                 
                 self.drawContent()
@@ -324,13 +324,6 @@ class BottomPad(Rect):
         if self.app.videorunning:
             self.drawContent()
             self.app.refresh(self.rect)
-
-        
-
-    def update(self):
-        if not self.enabled: return
-        super().update()
-        if self.mode == "timeline": self.updateTimeline()
 
     def getTimeMarkPosition(self, time) -> float:
         return (time + self.currentTime + 1) * self.second_length * self.zoomlevel
@@ -367,6 +360,48 @@ class BottomPad(Rect):
 
         return "timeline"
 
+class ProjectSettings(Rect):
+    def __init__(self, dimension: tuple[int, int, int, int], app: any, color: str | tuple[int, int, int, int] = "#ffffff", borderRadius=0, detectHover=False, onHoverModifiedColor=0.15) -> None:
+        super().__init__(dimension, app, color, borderRadius, detectHover, onHoverModifiedColor)
+        self.enabled = False
+
+        self.bgr = self.add_child(Rect(
+            (5, 5, '1x - 10', '1x - 10'),
+            self.app,
+            "#0a0a0a",
+            borderRadius=4,
+            onHoverModifiedColor=0
+
+
+        ))
+
+        self.versionLabel = self.add_child(Text(
+            (0, 10, '1x', '40'),
+            self.app,
+            fontColor= (22, 22, 22),
+            text = f'version: {str(self.app.projectVersion)}',
+            fontHeight=15
+            
+        ))
+
+        innerbuttonsColor = "#ec2416"
+        self.projectnameLabel = self.add_child(Textbox(
+            (".1x", '30', '.8x', '30'),
+            self.app,
+            autoHeight=False,
+            color=innerbuttonsColor,
+            starterInput=self.app.projectName,
+            fontHeight = 20,
+            borderRadius=4
+        ))
+        def changename(label : Textbox):
+            self.app.projectName = label.value
+            self.draw()
+            self.app.refresh(self.rect)
+        self.projectnameLabel.binds['changed'] = changename
+    
+
+
 class BottomPropsTab(Rect):
     
     def __init__(
@@ -378,7 +413,8 @@ class BottomPropsTab(Rect):
         self.onHoverModifiedColor = 0
 
         self.add_child([
-            BottomPad((0, 45, '1x', '1y-50'), self.app, color = "#050505", borderRadius=4)
+            TimelineSeciton((0, 45, '1x', '1y-50'), self.app, color = "#050505", borderRadius=4),
+            ProjectSettings((0, 45, '1x', '1y-50'), self.app, color = "#050505", borderRadius=4)
         ])
         self.onHoverModifiedColor = 0
     
@@ -417,17 +453,31 @@ class BottomPropsTab(Rect):
             detectHover=True
         ))
 
+        self.add_child(Image(
+            dimension=(210, 10, '25', '25'),
+            app = self.app,
+            pngSource= "settings.png",
+            color = "#262626",
+            scale=(0.7, 0.7),
+            centerImage=True,
+            detectHover=True
+        ))
+
     @property
     def renderButton(self):
-        return self.children[1]
+        return self.children[2]
 
     @property
     def transformModeBtn(self):
-        return self.children[2]
+        return self.children[3]
     
     @property
     def cutmodebtn(self):
-        return self.children[3]
+        return self.children[4]
+
+    @property
+    def settingbtton(self):
+        return self.children[5]
 
     def update(self):
         super().update()
@@ -444,10 +494,16 @@ class BottomPropsTab(Rect):
             self.children[0].cutmode = not self.children[0].cutmode
             self.draw()
             self.app.refresh(self.rect)
+        elif self.settingbtton.clicked:
+            self.children[0].enabled = not self.children[0].enabled
+            self.children[1].enabled = not self.children[1].enabled
+            self.draw()
+            self.app.refresh(self.rect)
 
 
     def drawContent(self):
         self.transformModeBtn.color = "#1e61f1" if self.app.transformMode else self.color
         self.cutmodebtn.color = "#9716ec" if self.children[0].cutmode else self.color
+        self.settingbtton.color = "#ec2416" if self.children[1].enabled else self.color
 
         super().drawContent()

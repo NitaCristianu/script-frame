@@ -1,35 +1,40 @@
-import inspect
 import wave
 import sys
-import math
 import numpy as np
 from io import BytesIO
 
-
-def read_wav(path, downsample_factor = 10):
+def read_wav(path):
     with wave.open(path, "rb") as wav:
         nchannels, sampwidth, framerate, nframes, _, _ = wav.getparams()
 
-        signed = sampwidth > 1  # 8 bit wavs are unsigned
+        signed = sampwidth > 1  # 8-bit WAVs are unsigned
         byteorder = sys.byteorder  # wave module uses sys.byteorder for bytes
 
-        values = []  # e.g. for stereo, values[i] = [left_val, right_val]
-        maxval = -9999999999999
-        for _ in range(nframes):
-            frame = wav.readframes(1)  # read next frame
-            channel_vals = []  # mono has 1 channel, stereo 2, etc.
+        # Preallocate list for efficiency
+        values = [None] * nframes  
+        maxval = -float('inf')
+
+        # Read all frames at once for faster processing
+        frames = wav.readframes(nframes)
+
+        for i in range(nframes):
+            frame_start = i * sampwidth * nchannels
+            channel_vals = [None] * nchannels
             for channel in range(nchannels):
-                as_bytes = frame[channel * sampwidth: (channel + 1) * sampwidth]
+                as_bytes = frames[frame_start + channel * sampwidth: frame_start + (channel + 1) * sampwidth]
                 as_int = int.from_bytes(as_bytes, byteorder, signed=signed)
                 if as_int > maxval: maxval = as_int
-                channel_vals.append(as_int)
-            values.append(channel_vals)
+                channel_vals[channel] = as_int
+            values[i] = channel_vals
 
-        for i, val in enumerate(values):
-            for j, chan in enumerate(val):
-                values[i][j] /= maxval
+        # Normalize in-place
+        maxval = float(maxval)
+        for val in values:
+            for j in range(nchannels):
+                val[j] /= maxval
 
     return values, framerate
+
 
 def splitaudio(sound_array : np.ndarray, framerate: int, nchannels : int, sampwidth : float, split_time_sec):
     sound_array = sound_array.reshape(-1, nchannels)

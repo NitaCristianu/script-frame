@@ -3,7 +3,9 @@ from config.projectData import *
 from config.consts import *
 from utils.math import *
 from pygame import gfxdraw
+from config.errorobj import Main as ErrorScene
 from classes.components.core.Area import *
+
 
 def renderFrame(videosize, t):
     frame: pg.Surface = pg.Surface(videosize, pg.SRCALPHA, 32)
@@ -39,10 +41,9 @@ class VideoPlayer(Rect):
     ) -> None:
         super().__init__(dimension, app)
         self.color = "#050505"
-        size = (1600, 900)
         self.videoscale = 0.25
-        self.videosize = size
-        self.oldvideosize = size
+        self.videosize = (1920, 1080)
+        self.oldvideosize = self.videosize
         self.lastRender = app.currentTime 
         self.elementData= []
         self.onHoverModifiedColor = 0
@@ -177,6 +178,7 @@ class VideoPlayer(Rect):
 
 
     def playAudio(self):
+
         for element in elements:
             if element.type == "audio":
                 sound = element.pygamesound
@@ -209,7 +211,14 @@ class VideoPlayer(Rect):
             # if element appears on the video
             if t < element.start*1000 or t > element.end*1000 or not element.type == "video" : continue
 
-            element.instance.render_start(t/1000 - element.start)
+            try:
+                element.instance.render_start(t/1000 - element.start)
+            except Exception as e:
+                element.instance = ErrorScene()
+                element.instance.errormessage = str(e)
+                element.instance.render_start(t/1000 - element.start)
+                print(e)
+
             result: pg.Surface = element.instance.render_end()
 
             # set element lenght

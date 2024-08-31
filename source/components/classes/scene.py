@@ -61,18 +61,12 @@ class Scene:
     def getSurface(self):
         return pg.Surface(self.size, pg.SRCALPHA, 32)
 
-    def centerFather(self):
-        w,h = self.surf.get_size()
-        self.father.x(w//2)
-        self.father.y(h//2)
-
     def render_start(self, t : int):
         self.t = t
         self.reqtime = 0
         self.surf = pg.Surface(self.size, pg.SRCALPHA, 32)
         self.father.reset()
         self.sounds.clear()
-        self.centerFather()
 
         self.render()
 

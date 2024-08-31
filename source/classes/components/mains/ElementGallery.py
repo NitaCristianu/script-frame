@@ -15,10 +15,10 @@ class ElementGallery(Rect):
             Textbox(
                 ('0.25x', '0.33y', '0.5x', '0.1y'),
                 self.app,
-                autoHeight = False,
-                placeholder = "type module name",
-                detectHover= True,
-                borderRadius = .2,
+                autoHeight=False,
+                placeholder="type module name",
+                detectHover=True,
+                borderRadius=.2,
                 fontHeight=20,
                 color="#080807",
                 onHoverModifiedColor=0.025,
@@ -26,11 +26,11 @@ class ElementGallery(Rect):
             ),
             Text(
                 ('0.275x', '0.5y', '0.20x', '0.1y'),
-                app = self.app,
-                text = "Create",
+                app=self.app,
+                text="Create",
                 fontColor="#0066ff",
-                detectHover= True,
-                borderRadius = .2,
+                detectHover=True,
+                borderRadius=.2,
                 fontHeight=20,
                 color="#111111",
                 onHoverModifiedColor=0.05,
@@ -40,10 +40,10 @@ class ElementGallery(Rect):
             ),
             Text(
                 ('0.525x', '0.5y', '0.20x', '0.1y'),
-                app = self.app,
-                text = "Cancel",
-                detectHover= True,
-                borderRadius = .2,
+                app=self.app,
+                text="Cancel",
+                detectHover=True,
+                borderRadius=.2,
                 fontHeight=20,
                 color="#111111",
                 onHoverModifiedColor=0.05,
@@ -51,54 +51,87 @@ class ElementGallery(Rect):
                 autoHeight=False
 
             ),
-            ]
+        ]
         )
-    
+
         self.fileExists = False
-    
+        self.file: Literal['component', 'audio'] = 'component'
+
     def exit(self):
         self.elementNameBox.setInput("")
         self.app.setWindowMode(0)
 
-
     def update(self):
-        if not self.enabled: return
+        if not self.enabled:
+            return
         super().update()
         if self.CreateButton:
             pass
 
-        if self.CancelButton.clicked: self.exit()
-        
-        if self.elementNameBox.changed:
-            inp = self.elementNameBox.value + ".py"
-            self.fileExists = False
-            
-            for filename in os.listdir(COMPONENTS_DIRECTORY):
+        if self.CancelButton.clicked:
+            self.exit()
+
+        inp = self.elementNameBox.value
+        self.fileExists = False
+
+        if len(inp) > 4 and inp[-4:] == '.wav':
+            self.file = 'audio'
+        else:
+            self.file = 'component'
+
+        if self.file == 'audio':
+            for filename in os.listdir(AUDIO_DIRECTORY):
                 if inp == filename:
+                    self.fileExists = True
+                    break
+            if self.fileExists:
+                self.CreateButton.text = "Use Audio"
+        elif self.file == 'component':
+            for filename in os.listdir(COMPONENTS_DIRECTORY):
+                if inp+".py" == filename or inp == filename:
                     self.fileExists = True
                     break
             if self.fileExists:
                 self.CreateButton.text = "Use"
             else:
                 self.CreateButton.text = "Create"
-            self.CreateButton.drawContent()
-            self.app.refresh(self.rect)
+        self.CreateButton.drawContent()
+        self.app.refresh(self.rect)
 
         if self.CreateButton.clicked:
             filename = self.elementNameBox.value
-            if not len(filename) > 0: return
-            if self.fileExists:
-                elements.append(Element(
-                    name = filename,
-                    source=filename
-                ))
+            if not len(filename) > 0:
+                return
+            if self.file == 'component':
+                if self.fileExists:
+                    elements.append(Element(
+                        name=filename,
+                        source= filename if filename[-3:] == ".py" else filename + ".py"
+                    ))
+                    self.app.event.fire_event(ADD_ELEMENT_EVENT)
+                    self.exit()
+                else:
+                    with open(f'{COMPONENTS_DIRECTORY}\\{filename}', 'w') as file:
+                        file.write("""
+    from config.projectData import *
+    from components.classes.scene import *
+
+    class Main(Scene):
+
+        def __init__(self) -> None:
+            super().__init__()
+            
+        def render(self):
+            pass
+    """)
+            elif self.fileExists:
+                elements.append(
+                    Element(name=inp[:-4], source=inp, type="audio"))
                 self.app.event.fire_event(ADD_ELEMENT_EVENT)
                 self.exit()
-            else:
-                pass
 
     @property
-    def CreateButton(self)-> Text: return self.children[1]
+    def CreateButton(self) -> Text: return self.children[1]
     @property
     def CancelButton(self) -> Text: return self.children[2]
     @property

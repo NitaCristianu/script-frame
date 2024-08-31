@@ -136,6 +136,7 @@ class Area:
             self.children.append(child)
         for child in self.children:
             child.parent = self
+        return child
 
     def update(self):
         # only recalculates if self is relative

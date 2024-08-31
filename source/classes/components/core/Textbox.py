@@ -113,6 +113,7 @@ class Textbox(Text):
             
             if self.changed:
                 self.text = len(self.value) > 0 and self.value or self.placeholder
-                self.binds['changed'](self)
+                if 'changed' in self.binds and self.binds['changed']:
+                    self.binds['changed'](self)
                 self.app.draw()
                 self.app.refresh(self.rect)
