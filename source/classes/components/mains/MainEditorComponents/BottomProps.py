@@ -14,6 +14,17 @@ from math import ceil
 
 x_start_offset = 2
 
+def revertCut(element, element1, element2, refr):
+    try:
+        if element1 in elements and element2 in elements:
+            elements.remove(element1)
+            elements.remove(element2)
+            elements.append(element)
+            refr(ADD_ELEMENT_EVENT)
+    except Exception as e:
+        print(e)
+
+
 class TimelineSeciton(Rect):
     def __init__(self, dimension: tuple[int, int, int, int], app: any, color: str | tuple[int, int, int, int] = "#ffffff", borderRadius=0, detectHover=False, onHoverModifiedColor=0) -> None:
         super().__init__(dimension, app, color, borderRadius, detectHover, onHoverModifiedColor)
@@ -314,7 +325,8 @@ class TimelineSeciton(Rect):
                 current = self.app.videotime / 1000
                 if not(start <= current and end > current): continue
                 
-                element.splitaudio(current)
+                elements12 = element.splitaudio(current)
+                self.app.addAction(revertCut, [element, *elements12, self.app.event.fire_event])
                 self.app.event.fire_event(ADD_ELEMENT_EVENT)
                 
                 self.drawContent()

@@ -105,7 +105,7 @@ class Element:
         elements.append(element2)
 
         elements.remove(self)
-        del self
+        return element1, element2
 
     def setInstance(self):
         if self.type == "audio":

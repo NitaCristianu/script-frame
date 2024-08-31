@@ -125,8 +125,10 @@ class ElementGallery(Rect):
             pass
     """)
             elif self.fileExists:
-                elements.append(
-                    Element(name=inp[:-4], source=inp, type="audio"))
+                element = Element(name=inp[:-4], source=inp, type="audio")
+                x = lambda el: (elements.remove(el), self.app.event.fire_event(ADD_ELEMENT_EVENT))
+                self.app.addAction(x, [element])
+                elements.append(element)
                 self.app.event.fire_event(ADD_ELEMENT_EVENT)
                 self.exit()
 

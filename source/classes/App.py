@@ -4,6 +4,7 @@ from config.consts import INITIAL_WIDTH, INITIAL_HEIGHT
 from classes.components.mains.MainEditor import *
 from classes.components.mains.ElementGallery import *
 from classes.components.mains.RenderMode import *
+from typing import Callable
 from utils.event import *
 
 
@@ -38,6 +39,15 @@ class App:
     dragging = False
     lastClick = 0
 
+    #---- actions
+    actions : list[
+        tuple[
+            Callable[[any], None],
+            any
+        ]
+        ] = []
+    action_i = -1
+
     #---- project related
     projectVersion = 0
     projectName = "test1"
@@ -56,6 +66,7 @@ class App:
         self.resize = True
         self.event = EventManager()
         self.mpos = self.oldmpos = pg.mouse.get_pos()
+        self.undoing = False
         self.setInput()
 
         self.MainEditor = MainEditor(app = self)
@@ -63,6 +74,26 @@ class App:
         self.RenderTab = RenderMode(app = self)
 
         self.setWindowMode(0, update = False)
+
+    def addAction(self, callback, data):
+        self.action_i += 1
+        if self.undoing:
+            self.actions.clear()
+            self.action_i = 0
+        self.actions.append((callback, data))
+
+    def undoAction(self):
+        if self.action_i == -1: return
+        try:
+            self.actions[self.action_i][0](*self.actions[self.action_i][1])
+        except Exception as e:
+            print(e)           
+        self.action_i -= 1
+        self.undoing = True
+        self.draw()
+        self.refresh()
+
+        
 
     def setInput(self):
         self.doubleclick = False
@@ -146,12 +177,16 @@ class App:
         return self.keyboard[keyName] and not self.oldkeyboard[keyName]
 
     def update(self) -> None:
-        # Initializing
+        # Initializing before update
         for element in elements:
             element.update()
 
+        # update
         self.setInput()
         self.event.process_events()
+
+        # handle undo
+        if self.keyUp(pg.K_z) and self.holdingCtrl: self.undoAction()
 
         self.ElementGallery.update()
         self.MainEditor.update()
