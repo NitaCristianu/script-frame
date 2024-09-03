@@ -3,6 +3,7 @@ from classes.components.core.Textbox import *
 from config.consts import *
 from utils.event import *
 from config.projectData import *
+from pathlib import Path
 import os
 
 
@@ -79,6 +80,13 @@ class ElementGallery(Rect):
         else:
             self.file = 'component'
 
+        p = Path(COMPONENTS_DIRECTORY)
+        audiodir = p / "audio"
+
+        if not audiodir.exists():
+            audiodir.mkdir(parents = True)
+        
+
         if self.file == 'audio':
             for filename in os.listdir(AUDIO_DIRECTORY):
                 if inp == filename:
@@ -106,25 +114,25 @@ class ElementGallery(Rect):
                 if self.fileExists:
                     elements.append(Element(
                         name=filename,
-                        source= filename if filename[-3:] == ".py" else filename + ".py"
+                        source= filename + ".py"
                     ))
                     self.app.event.fire_event(ADD_ELEMENT_EVENT)
                     self.exit()
                 else:
-                    with open(f'{COMPONENTS_DIRECTORY}\\{filename}', 'w') as file:
+                    with open(f'{COMPONENTS_DIRECTORY}\\{filename}.py', 'w') as file:
                         file.write("""
-    from config.projectData import *
-    from components.classes.scene import *
+from components.classes.scene import *
 
-    class Main(Scene):
+class Main(Scene):
 
-        def __init__(self) -> None:
-            super().__init__()
-            
-        def render(self):
-            pass
+    def __init__(self) -> None:
+        super().__init__()
+        
+    def render(self):
+        pass
     """)
             elif self.fileExists:
+                # only use not craete sound!
                 element = Element(name=inp[:-4], source=inp, type="audio")
                 x = lambda el: (elements.remove(el), self.app.event.fire_event(ADD_ELEMENT_EVENT))
                 self.app.addAction(x, [element])

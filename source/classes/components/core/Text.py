@@ -5,27 +5,42 @@ from classes.components.core.Rect import *
 FONTS = {
     'Poppins': {
         'italic': {
-            'black': r"assets\font\blackitalic.ttf",
-            'extrabold': r"assets\font\extrabolditalic.ttf",
-            'bold': r"assets\font\bolditalic.ttf",
-            'semibold': r"assets\font\semibolditalic.ttf",
-            'medium': r"assets\font\mediumitalic.ttf",
-            'normal': r"assets\font\italic.ttf",
-            'thin': r"assets\font\thinitalic.ttf",
-            'light': r"assets\font\lightitalic.ttf",
-            'extralight': r"assets\font\extralightitalic.ttf",
+            'black': r"assets\font\poppins\blackitalic.ttf",
+            'extrabold': r"assets\font\poppins\extrabolditalic.ttf",
+            'bold': r"assets\font\poppins\bolditalic.ttf",
+            'semibold': r"assets\font\poppins\semibolditalic.ttf",
+            'medium': r"assets\font\poppins\mediumitalic.ttf",
+            'normal': r"assets\font\poppins\italic.ttf",
+            'thin': r"assets\font\poppins\thinitalic.ttf",
+            'light': r"assets\font\poppins\lightitalic.ttf",
+            'extralight': r"assets\font\poppins\extralightitalic.ttf",
         },
         'normal': {
-            'black': r"assets\font\black.ttf",
-            'extrabold': r"assets\font\extrabold.ttf",
-            'bold': r"assets\font\bold.ttf",
-            'semibold': r"assets\font\semibold.ttf",
-            'medium': r"assets\font\medium.ttf",
-            'normal': r"assets\font\regular.ttf",
-            'thin': r"assets\font\thin.ttf",
-            'light': r"assets\font\light.ttf",
-            'extralight': r"assets\font\extralight.ttf",
-
+            'black': r"assets\font\poppins\black.ttf",
+            'extrabold': r"assets\font\poppins\extrabold.ttf",
+            'bold': r"assets\font\poppins\bold.ttf",
+            'semibold': r"assets\font\poppins\semibold.ttf",
+            'medium': r"assets\font\poppins\medium.ttf",
+            'normal': r"assets\font\poppins\regular.ttf",
+            'thin': r"assets\font\poppins\thin.ttf",
+            'light': r"assets\font\poppins\light.ttf",
+            'extralight': r"assets\font\poppins\extralight.ttf",
+        }
+    },
+    'FiraCode': {
+        'normal': {
+            'bold': r"assets\font\firacode\bold.ttf",
+            'semibold': r"assets\font\firacode\semibold.ttf",
+            'medium': r"assets\font\firacode\medium.ttf",
+            'normal': r"assets\font\firacode\regular.ttf",
+            'light': r"assets\font\firacode\light.ttf",
+        },
+        'italic': {
+            'bold': r"assets\font\firacode\bold.ttf",
+            'semibold': r"assets\font\firacode\semibold.ttf",
+            'medium': r"assets\font\firacode\medium.ttf",
+            'normal': r"assets\font\firacode\regular.ttf",
+            'light': r"assets\font\firacode\light.ttf",
         }
     }
 }
@@ -37,6 +52,7 @@ def getFont(font="Poppins",
             fontHeight=25
             ) -> pg.font.Font:
     return pg.font.Font(FONTS[font][italic and "italic" or "normal"][weight], int(fontHeight))
+
 
 class Text(Rect):
 
@@ -83,7 +99,8 @@ class Text(Rect):
         self.font = getFont(font, italic, weight, fontHeight)
 
     def drawContent(self):
-        if not self.enabled: return False
+        if not self.enabled:
+            return False
         super().drawContent()
         text_surface = self.font.render(self.text, True, self.fontColor)
         h = self.autoHeight and self.fontHeight or self.h

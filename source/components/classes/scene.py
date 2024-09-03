@@ -7,14 +7,19 @@ from config.projectData import *
 class Scene:
 
     def __init__(self) -> None:
-        self.father = Node(self)
+        self.w = self.h = 0
+        self.father = Node(self, x = lambda : self.w//2, y = lambda : self.h //2)
         self.surf = self.getSurface()
         self.props: List['Prop'] = []
         self.reqtime = 0
         self.sounds = []
         self.t = 0
         self.lenght = 0
+        self.start()
     
+    def start(self)->None:
+        pass
+
     def playAudio(self, src: str, **args) -> None:
         sound = pg.mixer.Sound(AUDIO_DIRECTORY + "\\" + src)
         self.sounds.append((sound, self.reqtime))
@@ -48,10 +53,10 @@ class Scene:
         returns the size in which every child fits
         """
         w, h = 0,0
-        
+
         for child in self.children:
-            w = max(child.x() + child.w(), w)
-            h = max(child.y() + child.h(), h)
+            w = max(child.rect.right, w)
+            h = max(child.rect.bottom, h)
 
         return w,h
 
@@ -61,12 +66,13 @@ class Scene:
     def getSurface(self):
         return pg.Surface(self.size, pg.SRCALPHA, 32)
 
-    def render_start(self, t : int):
+    def render_start(self, t : int, videosize : tuple[int, int]):
         self.t = t
         self.reqtime = 0
         self.surf = pg.Surface(self.size, pg.SRCALPHA, 32)
         self.father.reset()
         self.sounds.clear()
+        self.w, self.h = videosize
 
         self.render()
 

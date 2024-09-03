@@ -7,9 +7,11 @@ from classes.components.mains.MainEditorComponents.Videoplayer import *
 from config.projectData import *
 from config.consts import *
 from pygame import gfxdraw
+from pathlib import Path
 from utils.colors import *
 from utils.shapes import *
 from utils.math import *
+import json
 from math import ceil
 
 x_start_offset = 2
@@ -38,6 +40,7 @@ class TimelineSeciton(Rect):
         self.timeline_lenght = 5
         self.selectedInTimeline = "outside"
         self.elementsrect = []
+        self.second_length = 100
         self.hoveredElement : "Element" = None
         self.elementFont = getFont(weight="bold", fontHeight=15)
         self.cutmode = False
@@ -139,33 +142,17 @@ class TimelineSeciton(Rect):
         for element in elements:
             
             left, top, width, height = self.getElementSize(element)
-            
+            top += 2
+            height -= 4
             self.elementsrect.append((left+self.x+x_start, top+self.layersTop, width, height))
 
             color = hex_to_rgb(element.color)
             lighter = modifyRGB(color, .1)
             inverted = modifyRGB(invertColor(color), .1)
 
-            gfxdraw.box(
-                surf,
-                pg.Rect(left, top, width, height),
-                lighter
-            )
-            gfxdraw.rectangle(
-                surf,
-                pg.Rect(left, top, width+1, height+1),
-                lighter
-            )
-            gfxdraw.box(
-                surf,
-                pg.Rect(left, top+height/2, width, height/2),
-                color
-            )
-            gfxdraw.rectangle(
-                surf,
-                pg.Rect(left, top+height/2, width+1, height/2+1),
-                color
-            )
+            pg.draw.rect(surf, lighter, pg.Rect(left, top, width, height), 0, 4)
+            pg.draw.rect(surf, color, pg.Rect(left, top+height//2, width, height//2), 0, -1, -1, -1, 4, 4)
+
             text_surf = self.elementFont.render(len(element.name) < 10 and element.name or element[:7]+"...", True, inverted)
             text_rect = text_surf.get_rect(center = (left, top + height * 0.25))
             surf.blit(text_surf, pg.Rect(left + 3, text_rect.y, text_rect.w, text_rect.h))
@@ -201,16 +188,8 @@ class TimelineSeciton(Rect):
                 )
            
             if element.selected:
-                gfxdraw.rectangle(
-                    surf,
-                    pg.Rect(left, top, width+1, height+1),
-                    inverted
-                )
-                gfxdraw.rectangle(
-                    surf,
-                    pg.Rect(left-1, top-1, width+3, height+3),
-                    inverted
-                )
+                pg.draw.rect(surf, inverted, pg.Rect(left, top, width, height), 1, 4)
+               
                 
 
         videotime_x = self.getVideoTimeMarkPosition()
@@ -251,23 +230,6 @@ class TimelineSeciton(Rect):
                 self.app.videotime = self.getMouseTime() * 1000
             self.app.draw()
             self.app.refresh(self.rect)
-
-        if self.app.keyUp(pg.K_BACKSPACE):
-            
-            foundOne = False
-            while True:
-                found = False
-                for element in elements:
-                    if element.selected:
-                        found = True
-                        foundOne = True
-                        elements.remove(element)
-                        break
-                if not found: break
-            if foundOne:
-                self.draw()
-                self.app.refresh(self.rect)
-                self.app.event.fire_event(ADD_ELEMENT_EVENT)
 
         if self.selectedInTimeline != "outside" and self.hovered and self.app.mbuttons[0]:
             delta = self.app.mpos[0] - self.app.oldmpos[0]
@@ -378,7 +340,7 @@ class ProjectSettings(Rect):
         self.enabled = False
 
         self.bgr = self.add_child(Rect(
-            (5, 5, '1x - 10', '1x - 10'),
+            (5, 5, '1x - 5', '1y - 10'),
             self.app,
             "#0a0a0a",
             borderRadius=4,
@@ -390,28 +352,123 @@ class ProjectSettings(Rect):
         self.versionLabel = self.add_child(Text(
             (0, 10, '1x', '40'),
             self.app,
-            fontColor= (22, 22, 22),
+            fontColor= (42, 42, 42),
             text = f'version: {str(self.app.projectVersion)}',
             fontHeight=15
             
         ))
+        self.directoryLabel = self.add_child(Text(
+            (0, 30, '1x', '40'),
+            self.app,
+            fontColor= (42, 42, 42),
+            text = f'{COMPONENTS_DIRECTORY}',
+            fontHeight=10
+            
+        ))
 
-        innerbuttonsColor = "#ec2416"
-        self.projectnameLabel = self.add_child(Textbox(
-            (".1x", '30', '.8x', '30'),
+        innerbuttonsColor = "#1d1d1d"
+        self.projectnameLabel = self.add_child(Text(
+            (".1x", '60', '.8x', '30'),
             self.app,
             autoHeight=False,
             color=innerbuttonsColor,
-            starterInput=self.app.projectName,
+            text=self.app.projectName,
             fontHeight = 20,
-            borderRadius=4
+            borderRadius=4,
+            onHoverModifiedColor=0
         ))
-        def changename(label : Textbox):
-            self.app.projectName = label.value
-            self.draw()
-            self.app.refresh(self.rect)
-        self.projectnameLabel.binds['changed'] = changename
+
+        self.saveButton = self.add_child(Text(
+            (".25x", '100', '.5x', '30'),
+            self.app,
+            autoHeight=False,
+            color="#03140d",
+            fontColor="#2ef782",
+            text="SAVE",
+            fontHeight = 20,
+            borderRadius=4,
+            detectHover=True,
+            onHoverModifiedColor=0.06,
+            weight="bold"
+        ))
+        
+        self.renderButon = self.add_child(Text(
+            (".25x", '140', '.5x', '30'),
+            self.app,
+            autoHeight=False,
+            fontHeight = 20,
+            color="#060e24",
+            fontColor="#1342c5",
+            text="RENDER",
+            borderRadius=4,
+            detectHover=True,
+            onHoverModifiedColor=0.06,
+            weight="bold"
+        ))
+
+        self.exitButton = self.add_child(Text(
+            (".25x", '180', '.5x', '30'),
+            self.app,
+            autoHeight=False,
+            fontHeight = 20,
+            color="#240606",
+            fontColor="#f73232",
+            text="EXIT",
+            borderRadius=4,
+            detectHover=True,
+            onHoverModifiedColor=0.06,
+            weight="bold"
+        ))
+
+        self.saveButton.binds['onclick'] = lambda x: self.saveproject()
+        self.renderButon.binds['onclick'] = lambda x: (self.app.setWindowMode(2), self.app.draw(), self.app.event.fire_event(RENDER_VIDEO))
+        self.exitButton.binds['onclick'] = lambda x: (self.saveproject(), self.app.setWindowMode(3))
     
+    def draw(self):
+        self.versionLabel.text = "version: " + str(self.app.projectVersion)
+        super().draw()
+
+    def saveproject(self):
+        data = {}
+
+        data['name'] = self.app.projectName
+        data['version'] = self.app.projectVersion
+        data['directory'] = COMPONENTS_DIRECTORY
+        data['elements'] = []
+
+        for element in elements:
+            attr = ['name', 'source', 'start', 
+                    'layer', 'x', 'y',
+                    'id', 'type', 'volumemul', 'calcInstance']
+
+            elementobj = {}
+            elementobj['props'] = []
+            if element.type == 'video':
+                elementobj['props'] = element.instance.props
+
+            for x in attr:
+                elementobj[x] = getattr(element, x)
+        
+            data['elements'].append(elementobj)
+
+        directory = Path("versions")
+        foldername = self.app.projectName
+        targetfolder = directory / foldername
+
+        if not targetfolder.exists():
+            targetfolder.mkdir(parents = True)
+
+        jsonfilename = f"v{data['version']}.json"
+        filepath = targetfolder / jsonfilename
+
+        with open(filepath, 'w') as file:
+            json.dump(data, file, indent=4)
+
+        self.app.projectVersion += 1
+        self.draw()
+        self.app.refresh(self.rect)
+
+        
 
 
 class BottomPropsTab(Rect):
@@ -421,8 +478,16 @@ class BottomPropsTab(Rect):
         dimension: tuple[int, int, int, int],
         app: any,    ) -> None:
         super().__init__(dimension, app)
-        self.color = "#0a0a0a"
+        self.color = "#050505"
         self.onHoverModifiedColor = 0
+
+        self.add_child(Rect(
+            (4, 2, '1x - 4', '43'),
+            self.app,
+            color = "#0a0a0a",
+            onHoverModifiedColor=0,
+            borderRadius=4
+        ))
 
         self.add_child([
             TimelineSeciton((0, 45, '1x', '1y-50'), self.app, color = "#050505", borderRadius=4),
@@ -430,23 +495,8 @@ class BottomPropsTab(Rect):
         ])
         self.onHoverModifiedColor = 0
     
-        self.add_child(Text(
-            dimension=(10, 10, 120, '25'),
-            app = self.app,
-            text="RENDER",
-            weight="semibold",
-            color="#021303",
-            fontColor="#04f72c",
-            autoHeight=False,
-            padding=10,
-            fontHeight=20,
-            borderRadius=4,
-            detectHover=True
-        ))
-
-
         self.add_child(Image(
-            dimension=(140, 10, '25', '25'),
+            dimension=(10, 10, '25', '25'),
             app = self.app,
             pngSource= "transform.png",
             color = "#262626",
@@ -456,7 +506,7 @@ class BottomPropsTab(Rect):
         ))
 
         self.add_child(Image(
-            dimension=(175, 10, '25', '25'),
+            dimension=(45, 10, '25', '25'),
             app = self.app,
             pngSource= "razor.png",
             color = "#262626",
@@ -466,7 +516,7 @@ class BottomPropsTab(Rect):
         ))
 
         self.add_child(Image(
-            dimension=(210, 10, '25', '25'),
+            dimension=(80, 10, '25', '25'),
             app = self.app,
             pngSource= "settings.png",
             color = "#262626",
@@ -474,10 +524,6 @@ class BottomPropsTab(Rect):
             centerImage=True,
             detectHover=True
         ))
-
-    @property
-    def renderButton(self):
-        return self.children[2]
 
     @property
     def transformModeBtn(self):
@@ -494,28 +540,28 @@ class BottomPropsTab(Rect):
     def update(self):
         super().update()
 
-        if self.renderButton.clicked:
-            self.app.setWindowMode(2)
-            self.app.draw()
-            self.app.event.fire_event(RENDER_VIDEO)
-        elif self.transformModeBtn.clicked:
+        # if self.renderButton.clicked:
+        #     self.app.setWindowMode(2)
+        #     self.app.draw()
+        #     self.app.event.fire_event(RENDER_VIDEO)
+        if self.transformModeBtn.clicked:
             self.app.transformMode = not self.app.transformMode
             self.draw()
             self.app.refresh(self.rect)
         elif self.cutmodebtn.clicked:
-            self.children[0].cutmode = not self.children[0].cutmode
+            self.children[1].cutmode = not self.children[1].cutmode
             self.draw()
             self.app.refresh(self.rect)
         elif self.settingbtton.clicked:
-            self.children[0].enabled = not self.children[0].enabled
             self.children[1].enabled = not self.children[1].enabled
+            self.children[2].enabled = not self.children[2].enabled
             self.draw()
             self.app.refresh(self.rect)
 
 
     def drawContent(self):
         self.transformModeBtn.color = "#1e61f1" if self.app.transformMode else self.color
-        self.cutmodebtn.color = "#9716ec" if self.children[0].cutmode else self.color
-        self.settingbtton.color = "#ec2416" if self.children[1].enabled else self.color
+        self.cutmodebtn.color = "#9716ec" if self.children[1].cutmode else self.color
+        self.settingbtton.color = "#ec2416" if self.children[2].enabled else self.color
 
         super().drawContent()

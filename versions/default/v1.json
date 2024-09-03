@@ -1,0 +1,20 @@
+{
+    "name": "default",
+    "version": 1,
+    "directory": "C:\\Users\\andre\\Documents\\GitHub\\script-frame-master\\videodata",
+    "elements": [
+        {
+            "props": [],
+            "name": "cip",
+            "source": "cip.py",
+            "start": 0.0,
+            "layer": 0,
+            "x": 0,
+            "y": 0,
+            "id": "d29c1367e5de45d3828ac79f6e888244",
+            "type": "video",
+            "volumemul": 1,
+            "calcInstance": true
+        }
+    ]
+}

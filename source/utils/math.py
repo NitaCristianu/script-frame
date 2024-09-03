@@ -21,4 +21,5 @@ def clamp(x: float, mi : float, ma : float):
     return min(max(x, mi), ma)
 
 def distPoints(ax, ay, bx, by):
+
     return (bx - ax) * (bx - ax) + (by - ay) * (by - ay)

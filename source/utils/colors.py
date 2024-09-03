@@ -6,6 +6,8 @@ def hex_to_rgb(hex_color):
         return (hex_color.r, hex_color.g, hex_color.b, hex_color.a)
     if isinstance(hex_color, tuple):
         return hex_color
+    if isinstance(hex_color, list):
+        return tuple(hex_color)
     hex_color = hex_color.lstrip('#')
 
     # Determine if the hex color includes alpha

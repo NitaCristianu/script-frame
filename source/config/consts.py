@@ -1,9 +1,9 @@
-import pyaudio
 import pygame as pg
 
-INITIAL_WIDTH = 800
-INITIAL_HEIGHT = 500
-COMPONENTS_DIRECTORY = "source\\components"
+INITIAL_WIDTH = 1200
+INITIAL_HEIGHT = 700
+COMPONENTS_DIRECTORY = r"C:\Users\andre\Documents\GitHub\script-frame-master\videodata"
+ENABLE_ERRORS = True
 AUDIO_DIRECTORY = COMPONENTS_DIRECTORY + "\\audio"
 INITIAL_VIEWPORT_SIZE = (INITIAL_WIDTH, INITIAL_HEIGHT)
 
@@ -14,12 +14,6 @@ RENDER_VIDEO = pg.USEREVENT + 4
 
 NAME = "ScriptFrame"
 
-BGR_COLOR = "#1e1e1e"
-
-# MIC DATA
-FORMAT = pyaudio.paInt16
-CHANNELS = 2
-RATE = 48000
-CHUNK = 1024
-RECORD_SECONDS = 5
-OUTPUT_FILENAME = "output.wav"
+def setDirectory(location : str):
+    global COMPONENTS_DIRECTORY
+    COMPONENTS_DIRECTORY = location

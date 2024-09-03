@@ -1,0 +1,33 @@
+{
+    "name": "default",
+    "version": 2,
+    "directory": "C:\\Users\\andre\\Documents\\GitHub\\script-frame-master\\videodata",
+    "elements": [
+        {
+            "props": [],
+            "name": "sound",
+            "source": "C:\\Users\\andre\\Documents\\GitHub\\script-frame-master\\videodata\\audio\\r__sound.wav",
+            "start": 2.0204999999999997,
+            "layer": 0,
+            "x": 0,
+            "y": 0,
+            "id": "db2a9a1c42d241b0a4806c8c35597061",
+            "type": "audio",
+            "volumemul": 0.40959999999999996,
+            "calcInstance": true
+        },
+        {
+            "props": [],
+            "name": "sound",
+            "source": "C:\\Users\\andre\\Documents\\GitHub\\script-frame-master\\videodata\\audio\\l__sound.wav",
+            "start": -0.3000000000000001,
+            "layer": 0,
+            "x": 0,
+            "y": 0,
+            "id": "62ed29753f6d4a219d43f013d10b1669",
+            "type": "audio",
+            "volumemul": 0.40959999999999996,
+            "calcInstance": true
+        }
+    ]
+}

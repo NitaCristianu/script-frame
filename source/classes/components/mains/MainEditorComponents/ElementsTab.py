@@ -197,6 +197,23 @@ class ElementsTab(Rect):
     def update(self):
         super().update()
 
+        if self.app.keyUp(pg.K_BACKSPACE):
+            
+            foundOne = False
+            while True:
+                found = False
+                for element in elements:
+                    if element.selected:
+                        found = True
+                        foundOne = True
+                        elements.remove(element)
+                        break
+                if not found: break
+            if foundOne:
+                self.draw()
+                self.app.refresh(self.rect)
+                self.app.event.fire_event(ADD_ELEMENT_EVENT)
+        
         if self.rightArrow and self.rightArrow.clicked:
             self.page = min(self.page+1, self.num_of_pages)
             self.setElements()

@@ -56,6 +56,7 @@ class Element:
         self.dragging = False
         self.calcInstance = True  # determines if the isntance will be calculated
         self.enabled = False
+        self.props = []
 
         for key, val in args.items():
             if hasattr(self, key):
@@ -132,20 +133,36 @@ class Element:
             import sys
             from pathlib import Path
 
-            try:
+            def setins():
                 file_path = Path(self.getfullsource())
-                module_name = self.source
+                module_name = file_path.stem
                 spec = importlib.util.spec_from_file_location(
                     module_name, file_path)
                 module = importlib.util.module_from_spec(spec)
                 sys.modules[module_name] = module
-                spec.loader.exec_module(module)
+                if module:
+                    spec.loader.exec_module(module)
                 Class = getattr(module, 'Main')
                 self.instance = Class()
-            except Exception as e:
-                self.instance = Main()
-                self.instance.errormessage = str(e)
-                print(e)
+                self.instance.props = self.props
+
+                self.instance.render_start(0 - self.start, (0,0))
+
+                self.instance.render_end()
+
+                # set element lenght
+                if hasattr(self.instance, 'lenght'):
+                    self.end = self.start + self.instance.lenght
+
+            if ENABLE_ERRORS:
+                setins()
+            else:
+                try:
+                    setins()
+                except Exception as e:
+                    self.instance = Main()
+                    self.instance.errormessage = str(e)
+                    print(e)
 
     def update(self):
         new_modified_time = get_modification_time(self.getfullsource())

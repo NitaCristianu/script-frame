@@ -1,0 +1,33 @@
+{
+    "name": "default",
+    "version": 0,
+    "directory": "C:\\Users\\andre\\Documents\\GitHub\\script-frame-master\\videodata",
+    "elements": [
+        {
+            "props": [],
+            "name": "maniac",
+            "source": "maniac.py",
+            "start": 0.0,
+            "layer": 1,
+            "x": 0,
+            "y": 0,
+            "id": "b68f6101bd4e456e8a09dc9baa4b8017",
+            "type": "video",
+            "volumemul": 1,
+            "calcInstance": true
+        },
+        {
+            "props": [],
+            "name": "cip",
+            "source": "cip.py",
+            "start": 0.0,
+            "layer": 0,
+            "x": 0,
+            "y": 0,
+            "id": "d29c1367e5de45d3828ac79f6e888244",
+            "type": "video",
+            "volumemul": 1,
+            "calcInstance": true
+        }
+    ]
+}

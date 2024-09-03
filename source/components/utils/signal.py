@@ -16,6 +16,25 @@ class Signal(Generic[T]):
         self.shared = False
         self.name = ""
 
+
+    def isprocentage(self, val = None):
+        if val == None:
+            val = self.extract(self._value)
+        if isinstance(val, str) and val.endswith("%"):
+            number_part = val[:-1]
+            if number_part.startswith('-'):
+                number_part = number_part[1:]
+            if number_part.replace('.', '', 1).isdigit() and number_part.count('.') <= 1:
+                return True
+        return False
+
+    def getrelative(self, mul: float, val = None):
+        if val == None:
+            val = self.extract(self._value)
+        if self.isprocentage(val):
+            return float(val[:-1]) / 100 * mul
+        return val
+
     def share(self, signalName : str, propType: str, **kargs):
         self.shared = True
         self.name = signalName
@@ -46,8 +65,12 @@ class Signal(Generic[T]):
         return ''.join(blended)
 
     def transform_val(self, a, b, t):
+        # note:
+        # you can't convert procentage to actual float at the moment
         if isinstance(a, (int, float)): 
             return lerp(a, b, t)
+        elif self.isprocentage(a) and self.isprocentage(b):
+            return f"{lerp(float(a[:-1]),float(b[:-1]),t)}%"
         elif isinstance(a, pg.Color) or (isinstance(a, str) and len(a) > 0 and a[0] == "#"):
             return pg.Color(a).lerp(pg.Color(b), t)
         elif isinstance(a, (str)): 
@@ -84,7 +107,8 @@ class Signal(Generic[T]):
         if self.shared:
             return self.master.getProperty(self)
         if not args:
-            return self.extract(self._value)
+            value = self.extract(self._value)
+            return value
         elif len(args) == 1:
             return self(args[0], 0.0001, linear)
         elif len(args) > 1:

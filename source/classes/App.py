@@ -1,8 +1,10 @@
 import pygame as pg
+import json
 from classes.components.core.Rect import *
 from config.consts import INITIAL_WIDTH, INITIAL_HEIGHT
 from classes.components.mains.MainEditor import *
 from classes.components.mains.ElementGallery import *
+from classes.components.mains.ProjectGallery.Main import *
 from classes.components.mains.RenderMode import *
 from typing import Callable
 from utils.event import *
@@ -16,11 +18,12 @@ class App:
     event = None
 
     #-------- app related
-    windowMode = 0
+    windowMode = 3
     transformMode = False
     #                 0 - main editor
     #                 1 - element gallery
     #                 2 - render mode
+    #                 3 - project gallery
 
     deltatime = 0  # time between 2 renders
     currentTime = 0 # total time
@@ -50,7 +53,7 @@ class App:
 
     #---- project related
     projectVersion = 0
-    projectName = "test1"
+    projectName = "default"
 
     #------ video related
     videotime = 0
@@ -58,6 +61,7 @@ class App:
     videolenght = 5000 # 5000 ms
     videospeedmul = 1
     videorunning = False
+    videoevents = []
 
     def __init__(self, screen: pg.Surface) -> None:
         self.display = screen
@@ -71,9 +75,9 @@ class App:
 
         self.MainEditor = MainEditor(app = self)
         self.ElementGallery = ElementGallery(app = self)
+        self.ProjectGallery = ProjectGallery(app = self)
         self.RenderTab = RenderMode(app = self)
-
-        self.setWindowMode(0, update = False)
+        self.setWindowMode(3, update = False)
 
     def addAction(self, callback, data):
         self.action_i += 1
@@ -93,8 +97,6 @@ class App:
         self.draw()
         self.refresh()
 
-        
-
     def setInput(self):
         self.doubleclick = False
         self.mup = self.oldmbuttons[0] and not self.mbuttons[0]
@@ -112,14 +114,41 @@ class App:
                 self.doubleclick = True
             self.lastClick = self.currentTime
 
+        
+
+    def loadproject(self, projectName : str, version: int):
+        if version == -1:
+            self.projectName = projectName
+            self.projectVersion = version
+            elements.clear()
+            return
+        versionjson = Path(f"versions\\{projectName}\\v{version}.json")
+        with open(versionjson, 'r') as file:
+            data = json.load(file)
+            self.projectName = projectName
+            self.projectVersion = version
+            elements.clear()
+            for el in data['elements']:
+                name = el['name']
+                del el['name']
+                element = Element(name,**el)
+                elements.append(element)
+                if element and element.instance and element.type == 'video':
+                    element.instance.props = el['props']
+                
+            setDirectory(data['directory'])
+
+
+
     def setWindowMode(self, mode : int, update = True):
         self.windowMode = mode
         self.MainEditor.enabled = mode == 0
         self.ElementGallery.enabled = mode == 1
         self.RenderTab.enabled = mode == 2
+        self.ProjectGallery.enabled = mode == 3
         self.videorunning = False
         
-        if self.update:
+        if update:
             self.update()
             self.draw()
 
@@ -189,6 +218,7 @@ class App:
         if self.keyUp(pg.K_z) and self.holdingCtrl: self.undoAction()
 
         self.ElementGallery.update()
+        self.ProjectGallery.update()
         self.MainEditor.update()
         self.RenderTab.update()
         
@@ -204,7 +234,8 @@ class App:
         pg.display.update(section)
 
     def draw(self) -> None:
-        self.MainEditor.draw()
         self.ElementGallery.draw()
+        self.ProjectGallery.draw()
+        self.MainEditor.draw()
         self.RenderTab.draw()
         self.refresh()

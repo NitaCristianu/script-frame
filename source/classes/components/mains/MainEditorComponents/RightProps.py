@@ -80,7 +80,8 @@ class RightPropsTab(Rect):
                 if element and element.type == "audio":
                     pass
                 else:
-                    prop['value'] = colorpicker.value
+                    color: pg.Color = colorpicker.value
+                    prop['value'] = (color.r, color.b, color.g, color.a)
                 self.app.event.fire_event(APPLY_PROPS)
             obj.binds['changed'] = set
         elif prop['propType'] == 'textbox':

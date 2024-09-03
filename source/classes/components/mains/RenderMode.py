@@ -55,49 +55,57 @@ class RenderMode(Rect):
     def render(self):
 
         # AUDIO RENDER
-        totalsounds = [
-            *((element.pygamesound, element.start)
-              for element in elements if element.type == 'audio'),
-        ]
-        for element in (element for element in elements if element.type == 'video'):
-            sounds = element.instance.sounds
-            for sound in sounds:
-                totalsounds.append((sound[0], sound[1] + element.start))
+        try:
+            totalsounds = [
+                *((element.pygamesound, element.start)
+                for element in elements if element.type == 'audio'),
+            ]
+            for element in (element for element in elements if element.type == 'video'):
+                sounds = element.instance.sounds
+                for sound in sounds:
+                    totalsounds.append((sound[0], sound[1] + element.start))
 
-        sample_rate = 44100
-        max_len = 0
+            sample_rate = 44100
+            max_len = 0
 
-        for sound, start_time in totalsounds:
-            sound_array = pygame.sndarray.array(sound)
-            start_samples = int(sample_rate * start_time)
-            max_len = max(max_len, start_samples + len(sound_array))
+            for sound, start_time in totalsounds:
+                sound_array = pygame.sndarray.array(sound)
+                start_samples = int(sample_rate * start_time)
+                max_len = max(max_len, start_samples + len(sound_array))
 
-        mixed_array = np.zeros((max_len, 2), dtype=np.int16)
+            mixed_array = np.zeros((max_len, 2), dtype=np.int16)
 
-        for sound, start_time in totalsounds:
-            sound_array = pygame.sndarray.array(sound)
+            for sound, start_time in totalsounds:
+                sound_array = pygame.sndarray.array(sound)
 
-            # Ensure the sound is stereo (two channels)
-            if sound_array.ndim == 1:  # Mono sound
-                sound_array = np.stack((sound_array, sound_array), axis=-1)
+                # Ensure the sound is stereo (two channels)
+                if sound_array.ndim == 1:  # Mono sound
+                    sound_array = np.stack((sound_array, sound_array), axis=-1)
 
-            start_samples = int(sample_rate * start_time)
-            mixed_array[start_samples:start_samples +
-                        len(sound_array)] += sound_array
+                start_samples = int(sample_rate * start_time)
+                mixed_array[start_samples:start_samples +
+                            len(sound_array)] += sound_array
+        except Exception as e:
+            print(e)
+        duration = 0
+        mixed_audio = []
+        try:
+            max_val = np.max(np.abs(mixed_array))
+            if max_val:
+                mixed_array = (mixed_array / max_val) * 32767
+                mixed_array = mixed_array.astype(np.int16)
 
-        max_val = np.max(np.abs(mixed_array))
-        if max_val:
-            mixed_array = (mixed_array / max_val) * 32767
-            mixed_array = mixed_array.astype(np.int16)
-
-        mixed_audio = mixed_array.astype(np.float32) / 32768.0
-        duration = len(mixed_audio) / sample_rate
+            mixed_audio = mixed_array.astype(np.float32) / 32768.0
+            duration = len(mixed_audio) / sample_rate
+        except Exception as e:
+            print(e)
 
         def make_frame(t: np.ndarray | int):
             if isinstance(t, np.ndarray):
                 # Handle the case where t is a numpy array (vectorized)
                 indices = (t * sample_rate).astype(int)
                 # Ensure indices are within bounds
+                
                 indices = np.clip(indices, 0, len(mixed_audio) - 1)
                 return mixed_audio[indices]  # Return the array of samples
             else:
@@ -118,7 +126,7 @@ class RenderMode(Rect):
                 self.app.setWindowMode(0)
                 return
 
-            self.frm = renderFrame((1600, 900), index*fps)
+            self.frm : pg.Surface = renderFrame((1600, 900), index*fps)
 
             array = pg.surfarray.array3d(self.frm)
             array = np.transpose(array, (0, 1, 2))
@@ -135,8 +143,9 @@ class RenderMode(Rect):
         self.app.refresh()
 
         clip = ImageSequenceClip(frames, fps=fps)
-        audio_clip = AudioClip(make_frame=make_frame,
-                               duration=duration, fps=sample_rate)
-        clip.audio = audio_clip.subclip(0, clip.duration)
+        if duration > 0:
+            audio_clip = AudioClip(make_frame=make_frame,
+                                duration=duration, fps=sample_rate)
+            clip.audio = audio_clip.subclip(0, clip.duration)
         clip.write_videofile("output.mp4", codec="libx264", audio_codec="aac")
         self.app.setWindowMode(0)
