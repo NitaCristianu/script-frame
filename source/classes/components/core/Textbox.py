@@ -4,6 +4,11 @@ from pygame import gfxdraw
 
 selected_id = None  # Global variable to store the selected textbox id
 
+def typing():
+    # doesn't work
+    global selected_id
+    return selected_id != None
+
 class Textbox(Text):
     
     holding = False
@@ -11,6 +16,10 @@ class Textbox(Text):
     delay = 0
     changed = False
     placeholder = ""
+
+    def __del__(self):
+        global selected_id
+        if self.selected: selected_id = None
 
     def __init__(self, dimension: tuple[int, int, int, int], app: any, color: str = "#00000000", borderRadius=0, font="Poppins", italic=False, weight='normal', fontHeight=25, text="", align="center", fontColor="#ececec", padding=0, autoHeight=True, detectHover=True, onHoverModifiedColor=0, placeholder = "", starterInput = "") -> None:
         super().__init__(dimension, app, color, borderRadius, font, italic, weight, fontHeight, text, align, fontColor, padding, autoHeight, detectHover, onHoverModifiedColor)

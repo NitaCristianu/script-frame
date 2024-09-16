@@ -38,6 +38,15 @@ class Node:
     def getabs_coords(self):
         return self.getabs_xy(), self.getabs_wh()
 
+    def get_opacity(self):
+        opacity = self.opacity.getrelative(1) * 255
+        parent = self.parent
+        while parent:
+            opacity *= self.parent.opacity.getrelative(1) * 255
+            parent = parent.parent
+        
+        return round(opacity)
+
     @property
     def rect(self):
         r = pg.Rect(0, 0, *self.getabs_wh())
@@ -62,5 +71,6 @@ class Node:
         return node
 
     def render(self) -> None:
+        if self.get_opacity() < 0.0001: return
         for child in self.children:
             child.render()

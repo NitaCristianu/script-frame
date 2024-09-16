@@ -117,7 +117,7 @@ class RenderMode(Rect):
                     return (0.0, 0.0)
 
         # VIDEO RENDER
-        n_frames = int(max(tuple(el.end for el in elements)) * 1000 / fps)
+        n_frames = self.app.getvideolenght() // fps
         frames = []
         self.children[2].text = "press ESC to cancel"
         for index in range(n_frames):

@@ -115,6 +115,10 @@ class VideoPlayer(Rect):
         super().update()
 
         if self.app.keyUp(pg.K_SPACE):
+            if self.app.videorunning:
+                for el in elements:
+                    if el.type == "audio" and el.instance: continue
+                    el.setInstance()
             self.app.videorunning = not self.app.videorunning
         if self.app.videorunning:
             self.app.videotime += self.app.deltatime * self.app.playbackspeed

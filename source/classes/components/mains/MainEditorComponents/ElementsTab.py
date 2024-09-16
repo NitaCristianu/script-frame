@@ -1,4 +1,5 @@
 from classes.components.core.Text import *
+from classes.components.core.Textbox import typing
 from classes.components.core.Image import *
 from classes.components.core.Rect import *
 from config.projectData import *
@@ -45,6 +46,7 @@ class ElementsTab(Rect):
         self.color = "#050505"
         
         app.event.add_listener(ADD_ELEMENT_EVENT, lambda : (self.setElements(), self.app.event.fire_event(SELECT_ELEMENT_EVENT)))
+        app.event.add_listener(APPLY_PROPS, lambda : (self.setElements()))
 
     def setElements(self):
         pad = self.pad
@@ -197,7 +199,11 @@ class ElementsTab(Rect):
     def update(self):
         super().update()
 
-        if self.app.keyUp(pg.K_BACKSPACE):
+        if (self.app.keyUp(pg.K_r)) and not typing():
+            for el in (el for el in elements if el.selected):
+                el.reset()
+
+        if self.app.keyUp(pg.K_DELETE) and not typing():
             
             foundOne = False
             while True:

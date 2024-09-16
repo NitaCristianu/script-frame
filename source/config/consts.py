@@ -3,8 +3,9 @@ import pygame as pg
 INITIAL_WIDTH = 1200
 INITIAL_HEIGHT = 700
 COMPONENTS_DIRECTORY = r"C:\Users\andre\Documents\GitHub\script-frame-master\videodata"
-ENABLE_ERRORS = True
 AUDIO_DIRECTORY = COMPONENTS_DIRECTORY + "\\audio"
+EDITOR_DIRECTORY = r"C:\Users\andre\Documents\GitHub\script-frame-master"
+ENABLE_ERRORS = True
 INITIAL_VIEWPORT_SIZE = (INITIAL_WIDTH, INITIAL_HEIGHT)
 
 ADD_ELEMENT_EVENT = pg.USEREVENT + 1

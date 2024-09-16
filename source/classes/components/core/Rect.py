@@ -47,10 +47,11 @@ class Rect(Area):
         surface = pg.Surface((w, h), pg.SRCALPHA)
 
         color = self.parsedColor
-        if self.hovered:
-            color = modifyRGB(color, self.onHoverModifiedColor)
-        if self.mdown:
-            color = modifyRGB(color, self.onHoverModifiedColor*1.2)
+        if self.detectHover:
+            if self.hovered:
+                color = modifyRGB(color, self.onHoverModifiedColor)
+            if self.mdown:
+                color = modifyRGB(color, self.onHoverModifiedColor*1.2)
         
         AAfilledRoundedRect(
             surface,

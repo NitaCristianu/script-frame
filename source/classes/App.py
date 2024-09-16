@@ -106,6 +106,7 @@ class App:
         self.mpos = pg.mouse.get_pos()
         self.oldmbuttons = self.mbuttons
         self.mbuttons = pg.mouse.get_pressed()
+        
         self.holdingShift = self.keyboard[pg.K_LSHIFT] or self.keyboard[pg.K_RIGHT]
         self.holdingCtrl = self.keyboard[pg.K_LCTRL] or self.keyboard[pg.K_LCTRL]
 
@@ -114,6 +115,8 @@ class App:
                 self.doubleclick = True
             self.lastClick = self.currentTime
 
+    def getvideolenght(self):
+        return int(max(tuple(el.end for el in elements)) * 1000)
         
 
     def loadproject(self, projectName : str, version: int):

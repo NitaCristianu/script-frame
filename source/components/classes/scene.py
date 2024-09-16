@@ -15,10 +15,20 @@ class Scene:
         self.sounds = []
         self.t = 0
         self.lenght = 0
+        self.called = []
         self.start()
     
     def start(self)->None:
         pass
+    
+    def callin(self, callback, t : float, _id:str):
+        """callback runs in t time"""
+        startAt = self.reqtime + t
+        if self.t >= startAt and not _id in self.called:
+            callback()
+            self.called.append(_id)
+        if self.t < startAt and _id in self.called:
+            self.called.remove(_id)
 
     def playAudio(self, src: str, **args) -> None:
         sound = pg.mixer.Sound(AUDIO_DIRECTORY + "\\" + src)
@@ -38,6 +48,10 @@ class Scene:
                 break
         if not found:
             self.props.append({'name' : name, 'value' : signal(), 'propType' : propType, **kargs})
+
+    @property
+    def reset(self):
+        return self.father.reset
 
     @property
     def add(self):
@@ -70,7 +84,7 @@ class Scene:
         self.t = t
         self.reqtime = 0
         self.surf = pg.Surface(self.size, pg.SRCALPHA, 32)
-        self.father.reset()
+        self.reset()
         self.sounds.clear()
         self.w, self.h = videosize
 

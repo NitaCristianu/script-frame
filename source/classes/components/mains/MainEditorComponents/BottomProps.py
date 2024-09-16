@@ -144,6 +144,7 @@ class TimelineSeciton(Rect):
             left, top, width, height = self.getElementSize(element)
             top += 2
             height -= 4
+
             self.elementsrect.append((left+self.x+x_start, top+self.layersTop, width, height))
 
             color = hex_to_rgb(element.color)
@@ -153,15 +154,36 @@ class TimelineSeciton(Rect):
             pg.draw.rect(surf, lighter, pg.Rect(left, top, width, height), 0, 4)
             pg.draw.rect(surf, color, pg.Rect(left, top+height//2, width, height//2), 0, -1, -1, -1, 4, 4)
 
-            text_surf = self.elementFont.render(len(element.name) < 10 and element.name or element[:7]+"...", True, inverted)
-            text_rect = text_surf.get_rect(center = (left, top + height * 0.25))
-            surf.blit(text_surf, pg.Rect(left + 3, text_rect.y, text_rect.w, text_rect.h))
+            dotsize = self.elementFont.size("...")
+            if isinstance(element.name, str) and element.name != "":
+                letters = len(element.name)
+                
+                # Measure the size of the full string once
+                text_size = self.elementFont.size(element.name)
+                
+                # If the full string fits, no need to truncate
+                if text_size[0] <= width:
+                    text_surf = self.elementFont.render(element.name, True, inverted)
+                else:
+                    # Calculate average width per character
+                    avg_char_width = text_size[0] / letters
+                    
+                    # Estimate how many letters can fit within the width
+                    max_letters = int((width - dotsize[0]) / avg_char_width)
+                    
+                    # Render text with truncation
+                    text_surf = self.elementFont.render(element.name[:max_letters] + "...", True, inverted)
+                
+                text_rect = text_surf.get_rect(center=(left, top + height * 0.25))
+                surf.blit(text_surf, pg.Rect(left + 3, text_rect.y, text_rect.w, text_rect.h))
+
              
             if element.type == 'audio' and element.selected:
                 data = element.data
                 downscale_factor = 500
                 leftchannel = []
                 rightchannel = []
+
                 for index in range(0, len(data), downscale_factor):
                     leftval = data[index][0]
                     leftval *= element.volumemul * 8
@@ -224,6 +246,9 @@ class TimelineSeciton(Rect):
                 self.hoveredElement.selected = True
                 self.app.event.fire_event(SELECT_ELEMENT_EVENT)
         if self.selectedInTimeline == "timeline" and self.app.doubleclick:
+            for el in elements:
+                if el.type != "video": continue
+                el.setInstance()
             if self.app.holdingShift:
                 self.app.videotime = round(self.getMouseTime() * 1000, 1)
             else:
@@ -259,6 +284,7 @@ class TimelineSeciton(Rect):
                     else:
                         hovered.start += change
                         hovered.end += change
+                    self.app.event.fire_event(SELECT_ELEMENT_EVENT)
                 elif selecting == "videomark":
                     self.app.videorunning = False
                     if self.app.holdingShift:

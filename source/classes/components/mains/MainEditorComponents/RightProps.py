@@ -7,7 +7,7 @@ from config.projectData import *
 from config.consts import *
 from typing import Optional
 
-gap = 15
+gap = 10
 padding = 15
 title_size = 20
 propSize = 50
@@ -43,7 +43,7 @@ class RightPropsTab(Rect):
                     prop['max'],
                     prop['value']
                 )
-            elif element and element.type == 'audio':
+            elif element:
                 name = prop['name']
                 if name == 'volume': name = 'volumemul'
                 obj.value = invLerp(
@@ -52,7 +52,7 @@ class RightPropsTab(Rect):
                     getattr(element, name)
                 )
             def set(slider):
-                if element and element.type == "audio":
+                if element:
                     name = prop['name']
                     if name == 'volume': name = 'volumemul'
                     setattr(element, name, lerp(prop['min'], prop['max'], slider.value))
@@ -60,14 +60,15 @@ class RightPropsTab(Rect):
                     prop['value'] = lerp(prop['min'], prop['max'], slider.value)
                 self.app.event.fire_event(APPLY_PROPS)
             obj.binds['changed'] = set
-        elif prop['propType'] == 'consttext1':
+        elif prop['propType'] == 'consttext':
             obj = Text(
-                (x, y-20, w, propSize/4),
+                (x, y-40, w, 10),
                 self.app,
                 onHoverModifiedColor= 0,
-                fontHeight=propSize/3,
+                fontHeight=propSize/4,
                 autoHeight=True,
-                text=prop['value']
+                text=prop['value'],
+                fontColor= "#414141",
             )
             showtitle = False
         elif prop['propType'] == 'color1':
@@ -86,16 +87,23 @@ class RightPropsTab(Rect):
             obj.binds['changed'] = set
         elif prop['propType'] == 'textbox':
             obj = Textbox(
-                (x, y, w, propSize),
+                (x, y+2, w, propSize/2),
                 self.app,
                 starterInput = prop['value'],
                 placeholder="enter text",
                 fontHeight=15,
-                autoHeight=False
+                autoHeight=True
             )
+
             def set(textbox):
-                prop['value'] = textbox.value
+                if element:
+                    name = prop['name']
+                    if name == 'volume': name = 'volumemul'
+                    setattr(element, name, textbox.value)
+                elif not element:
+                    prop['value'] = textbox.value
                 self.app.event.fire_event(APPLY_PROPS)
+
             obj.binds['changed'] = set
         
         
@@ -137,9 +145,27 @@ class RightPropsTab(Rect):
             {
                 'name' : 'name',
                 'value' : element.name,
-                'propType' : 'consttext1',
+                'propType' : 'textbox',
+            },
+            {
+                'name' : 'source',
+                'value' : 'source: ' + element.getfilename(),
+                'propType' : 'consttext',
+            },
+            {
+                'name' : 'start',
+                'value' : element.start,
+                'propType' : 'slider',
+                'min' : 0,
+                'max' : self.app.getvideolenght()/1000,
+            },
+            {
+                'name' : 'lenght',
+                'value' : 'lenght : ' + str(element.end - element.start),
+                'propType' : 'consttext',
             },
         ]
+        
         if element.type == "audio":
             defaults: List['Prop'] = [
                 *defaults,
@@ -151,16 +177,13 @@ class RightPropsTab(Rect):
                     'max' : 10
                 }
             ]
-        if element.type == "video":
-            defaults: List['Prop'] = [
-                *defaults,
-                *element.instance.props,
-                ]
 
         for prop in defaults:
-            element_arg = None
-            if element.type == 'audio': element_arg = element
-            lastY += self.addProp(lastY, prop, element_arg).h + gap
+            lastY += self.addProp(lastY, prop, element).h + gap
+        
+        if element.type == "video":
+            for prop in element.instance.props:
+                lastY += self.addProp(lastY, prop).h + gap
         self.draw()
         self.app.refresh(self.rect)
 

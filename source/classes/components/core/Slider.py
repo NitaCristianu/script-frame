@@ -1,5 +1,5 @@
 from classes.components.core.Rect import *
-from classes.components.core.Text import *
+from classes.components.core.Textbox import *
 from utils.math import *
 from pygame import gfxdraw
 
@@ -12,7 +12,25 @@ class Slider(Rect):
         self.dragging = False
         self.range = (0, 1)
         self.binds['changed'] = None
-        self.font = getFont(fontHeight=10, weight='light')
+        self.add_child(Textbox(
+            (self.x, self.y+3, self.w, 10),
+            app,
+            fontColor= "#1992e8",
+            starterInput="0",
+            autoHeight=False,
+            fontHeight=8,
+            
+        ))
+        
+        def setText(text: Textbox):
+            try:
+                self.value = invLerp(*self.range , float(text.value))
+                self.children[0].input = f'{round(lerp(*self.range, self.value)*100)/100}'
+                if self.binds['changed']:
+                    self.binds['changed'](self)
+            except Exception as e:
+                return
+        self.children[0].binds['changed'] = setText
     
     def getValuePoint(self):
         r = self.h  // 6
@@ -42,6 +60,7 @@ class Slider(Rect):
             delta /= self.w - 2 * self.padding
             self.value += delta
             self.value = clamp(self.value, 0, 1)
+            self.children[0].input = f'{round(lerp(self.range[0], self.range[1], self.value)*100)/100}'
             if self.binds['changed']:
                 self.binds['changed'](self)
             self.drawContent()
@@ -49,7 +68,6 @@ class Slider(Rect):
 
     def drawContent(self):
         if not self.enabled: return
-        super().drawContent()
         r = self.h  // 6
         color = hex_to_rgb("#1992e8")
         centerA = (int(r*1.5), int(self.h/2))
@@ -64,8 +82,7 @@ class Slider(Rect):
                             r
                             )
         
-        text_surf = self.font.render(f'{round(lerp(self.range[0], self.range[1], self.value)*100)/100}', 1, color)
-        text_rect = text_surf.get_rect(center = (self.x + self.w//2, self.y + self.h//4))                
+        
 
         gfxdraw.filled_circle(surf,
                               *centerA,
@@ -97,6 +114,5 @@ class Slider(Rect):
                               )
                               
         self.app.screen.blit(surf, (self.x, self.y))
-        self.app.screen.blit(text_surf, text_rect)
 
 

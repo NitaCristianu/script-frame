@@ -1,4 +1,5 @@
 import inspect
+import copy
 import pygame as pg
 from typing import Any, TypeVar, Generic, Callable
 from components.utils.easing import *
@@ -10,7 +11,7 @@ class Signal(Generic[T]):
     def __init__(self, value : T | Callable[[], T], master : any) -> None:
         self._value = value
         self._lastval = value
-        self.default = value
+        self.default = copy.deepcopy(value)
         self.master = master
         self.keyframes = {}
         self.shared = False
@@ -110,7 +111,9 @@ class Signal(Generic[T]):
             value = self.extract(self._value)
             return value
         elif len(args) == 1:
-            return self(args[0], 0.0001, linear)
+            self._lastval = copy.deepcopy(args[0])
+            self._value = copy.deepcopy(args[0])
+            return args[0]
         elif len(args) > 1:
             # set keyframe using ease func
             valueB = self.extract(args[0])
@@ -119,6 +122,7 @@ class Signal(Generic[T]):
             ease = args[2] if len(args) > 2 else inoutcubic
             animstart = self.master.reqtime
             animfinish = animstart + time 
+            
             if self.master.t > animfinish:
                 self._lastval = args[0]
             elif self.master.t > animstart and self.master.t <= animfinish:
@@ -128,4 +132,5 @@ class Signal(Generic[T]):
                 return self._value
 
     def reset(self):
-        self(self.default)
+        self._value = copy.deepcopy(self.default)
+        self._lastval = copy.deepcopy(self.default)

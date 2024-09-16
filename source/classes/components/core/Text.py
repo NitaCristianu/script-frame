@@ -51,7 +51,8 @@ def getFont(font="Poppins",
             weight='normal',
             fontHeight=25
             ) -> pg.font.Font:
-    return pg.font.Font(FONTS[font][italic and "italic" or "normal"][weight], int(fontHeight))
+    dir = FONTS[font][italic and "italic" or "normal"][weight]
+    return pg.font.Font(dir, int(fontHeight))
 
 
 class Text(Rect):

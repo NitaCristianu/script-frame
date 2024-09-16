@@ -71,6 +71,9 @@ class Element:
         if len(self.source) > 0 and self.calcInstance:
             self.setInstance()
 
+    def reset(self):
+        self.setInstance()
+
     def getfilename(self):
         return os.path.basename(self.getfullsource())
 
